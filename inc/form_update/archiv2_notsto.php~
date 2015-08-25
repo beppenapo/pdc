@@ -1,0 +1,22 @@
+<div id="archiv2_fondo_form">
+<input type="hidden" id="idArchiv2" name="idArchiv2" value="<?php echo($idArchiv2); ?>" />
+ 
+ <label>DESCRIZIONE</label>
+ <textarea id="archiv2_dscfondo_update" class="form noteform"><?php echo($fondo); ?></textarea>
+ 
+ <label>CONSISTENZA</label>
+ <textarea id="archiv2_consist_update" class="form noteform"><?php echo($consist); ?> </textarea>
+ 
+ <label>TIPOLOGIA DOCUMENTI</label>
+ <textarea id="archiv2_tipodoc_update" class="form noteform"><?php echo($tipo); ?> </textarea>
+ 
+ <label>LINGUA</label>
+ <textarea id="archiv2_lingua_update" class="form"><?php echo($lingua); ?> </textarea>
+ 
+ <label>NOTE</label>
+ <textarea id="archiv2_fondonote_update" class="form noteform"><?php echo($note); ?> </textarea>
+
+ <div class="login2" style="margin-top:20px;" id="archiv2_fondo_salva">Salva modifiche</div>
+ <div class="chiudiForm login2">Annulla modifiche</div>
+</div>
+

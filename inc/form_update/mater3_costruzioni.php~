@@ -1,0 +1,22 @@
+<div id="mater3_costruzioni_form">
+<input type="hidden" id="idMater3" name="idMater3" value="<?php echo($idMater3); ?>" />
+
+<label>COMMITTENTE</label>
+<textarea id="mater3_cst_commnome" class="form"><?php echo($commnome); ?> </textarea>
+
+<label>ESECUTORE</label>
+<textarea id="mater3_cst_esecnome" class="form"><?php echo($esecnome); ?> </textarea>
+
+<label>DATA COSTRUZIONE</label>
+<textarea id="mater3_cst_commdat" class="form"><?php echo($commdat); ?> </textarea>
+
+<label>MOTIVAZIONE DATA COSTRUZIONE</label>
+<textarea id="mater3_cst_commfnt" class="form"><?php echo($commfnt); ?> </textarea>
+
+<label>NOTE</label>
+<textarea id="mater3_cst_note" class="form noteform"><?php echo($note5); ?> </textarea>
+
+
+ <div class="login2" style="margin-top:20px;" id="mater3_costruzioni_salva">Salva modifiche</div>
+ <div class="chiudiForm login2">Annulla modifiche</div>
+</div>
