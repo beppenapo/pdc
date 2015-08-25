@@ -1,2 +1,2 @@
 # pdc
-Archivio iconografico dei paesaggi di nostra comunità
+Archivio iconografico dei paesaggi di comunità
