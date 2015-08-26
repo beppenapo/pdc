@@ -15,10 +15,10 @@
    </p>
    <hr>
    <h1>Foto, cartoline, immagini</h1>
-   <p>La pubblicazione delle foto, delle cartoline e di tutte le immagini presenti nel sito è stata gentilmente concessa dai proprietari dell'immagine originale (i legali detentori dell'opera originale sono indicati nella sezione "Anagrafica" del singolo record). La loro versione digitale, pubblicata nel presente sito è pertanto soggetta alla legge sul diritto d'autore, ogni utilizzo, riproduzione o modifica è vietata.</p>
+   <p>La pubblicazione delle foto, delle cartoline e di tutte le immagini presenti nel sito è stata gentilmente concessa dai legali detentori dell'opera, indicati nella sezione "Anagrafica" di ogni singolo record. La versione digitale, pubblicata nel presente sito, è pertanto soggetta alla legge sul diritto d'autore, ogni utilizzo, riproduzione o modifica è vietata.</p>
    <hr>
    <h1>Testi, icone e loghi del sito</h1>
-   <p>Tutti i testi, le icone e le immagini che compongono il sito, ad eccezione dei dati estratti dal database, sono distribuiti con licenza <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribuzione 4.0 Internazionale (CC-BY)</a></p>
+   <p>Tutti i testi e le icone che compongono il sito, ad eccezione dei dati estratti dal database, sono distribuiti con licenza <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribuzione 4.0 Internazionale (CC-BY)</a></p>
    <hr>
    </div>
  </div>

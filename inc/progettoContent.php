@@ -112,7 +112,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
    AUDIO/VIDEO <input type="checkbox" id="tipoMedia" name="tipoButt" value="1">
   </label>
   <label for="tipoStampa" class="labelRadio pointer">
-   MATERIALE A STAMPA <input type="checkbox" id="tipoStampa" name="tipoButt" value="5">
+   EDITORIA <input type="checkbox" id="tipoStampa" name="tipoButt" value="5">
   </label>
   
   

@@ -63,14 +63,15 @@ $(document).ready(function() {
  var section = $("section#image");
  var label = $('.caption');
  var backgrounds = new Array();
-
- backgrounds.push({img:'img/layout/09.jpg',cap:'Località Tonezzeri, Centa San Nicolò (1979-1980) - Archivio Servizio Urbanistica Comunità Alta Valsugana e Bersntol'});
- backgrounds.push({img:'img/layout/08.jpg',cap:'Levico Terme (1950) - Biblioteca Comunale di Levico Terme'});
  backgrounds.push({img:'img/layout/07.jpg',cap:'Lago di Serraia, Baselga di Pinè (2000) - Biblioteca Comunale di Baselga di Pinè'});
  backgrounds.push({img:'img/layout/06.jpg',cap:'Chiesa pievana, Calceranica al Lago (1890-1910) - Collezione SAT Sezione di Caldonazzo'});
+ backgrounds.push({img:'img/layout/02.jpg',cap:'Lago di Erdemolo, Palù del Fersina (2000-2015) - Collezione privata Giorgio Marasca'});
+ backgrounds.push({img:'img/layout/09.jpg',cap:'Località Tonezzeri, Centa San Nicolò (1979-1980) - Archivio Servizio Urbanistica Comunità Alta Valsugana e Bersntol'});
+ backgrounds.push({img:'img/layout/08.jpg',cap:'Levico Terme (1950) - Biblioteca Comunale di Levico Terme'});
+
  backgrounds.push({img:'img/layout/05.jpg',cap:'Comunità Alta Valsugana e Bersntol (2000-2015) - Collezione privata Fiorenza Marasca'});
  backgrounds.push({img:'img/layout/01.jpg',cap:'Chiesa di Santa Zita, Levico Terme (2000-2015) - Collezione privata Giorgio Marasca'});
- backgrounds.push({img:'img/layout/02.jpg',cap:'Lago di Erdemolo, Palù del Fersina (2000-2015) - Collezione privata Giorgio Marasca'});
+
  backgrounds.push({img:'img/layout/03.jpg',cap:'Castel Pergine, Pergine Valsugana (2000-2015) - Collezione privata Giorgio Marasca'});
 // backgrounds.push({img:'img/layout/04.jpg',cap:'Calceranica al Lago (2000-2015) - Collezione privata Giorgio Marasca'});
 
