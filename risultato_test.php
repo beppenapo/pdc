@@ -38,11 +38,25 @@ with
 ,crono as (select a.id, a.dgn_numsch, a.dgn_dnogg, c.cro_spec
            from area a, cronologia c 
            where a.id = c.id_scheda and ((c.cro_iniz between $ci and $cf) or (c.cro_fin between $ci and $cf)))
-, fts as (select c.id, c.cro_spec, c.dgn_numsch, c.dgn_dnogg, coalesce(foto1.foto1_vector,'')||coalesce(foto2.foto2_vector,'') as v 
+, fts as (select c.id
+        , c.cro_spec
+        , c.dgn_numsch
+        , c.dgn_dnogg
+        , coalesce(foto1.foto1_vector,'')||coalesce(foto2.foto2_vector,'')||coalesce(scheda.scheda_vector) as v 
           from crono c 
+          left join scheda on scheda.id = c.id
           left join foto on foto.id_scheda = c.id
           left join foto1 on foto1.dgn_numsch1 = foto.dgn_numsch
           left join foto2 on foto2.dgn_numsch2 = foto.dgn_numsch
+          left join biblio on biblio.id_scheda = c.id
+          left join biblio1 on biblio1.dgn_numsch1 = biblio.dgn_numsch
+          left join biblio2 on biblio2.dgn_numsch2 = biblio.dgn_numsch
+          left join cartografia on cartografia.id_scheda = c.id
+          left join cartografia2 on cartografia2.dgn_numsch2 = cartografia.dgn_numsch
+          left join fonti_orali on fonti_orali.id_scheda = c.id
+          left join fonti_orali1 on fonti_orali1.dgn_numsch1 = fonti_orali.dgn_numsch
+          left join fonti_orali2 on fonti_orali2.dgn_numsch2 = fonti_orali.dgn_numsch
+          left join fonti_orali3 on fonti_orali3.dgn_numsch3 = fonti_orali.dgn_numsch
          )
 select distinct fts.id, fts.cro_spec, fts.dgn_numsch, fts.dgn_dnogg, file.path 
 from fts
@@ -58,6 +72,7 @@ $row = pg_num_rows($e);
   <?php 
    if($row == 0){
     echo "<header>La ricerca non ha prodotto risultati</header>";
+    echo "<div style='display:none'>".$query."</div>";
    }else{?>
  <header>La ricerca ha restituito <?php echo $row; ?> record</header>
  <table class="zebra footable toggle-arrow" data-filter="#filtro" data-filter-text-only="true">

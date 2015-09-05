@@ -1,0 +1,46 @@
+header#head {
+ position:fixed;
+ top:0;
+ width:100%;
+ height:15%;
+ color:#fff !important;
+ background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.2) 100%); 
+ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,0.2))); 
+ background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0.2) 100%); 
+ background: -o-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0.2) 100%);
+ background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0.2) 100%);
+ background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(0,0,0,0.2) 100%);
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); 
+ /*background: -webkit-linear-gradient(#000, #AFB5B9); 
+ background: -o-linear-gradient(#000, #AFB5B9); 
+ background: -moz-linear-gradient(#000, #AFB5B9);
+ background: linear-gradient(#000, #AFB5B9);*/
+ z-index: 100;
+}
+.wrap{width:95%;margin:0px auto;}
+.headDiv{display:inline-block;vertical-align:top;}
+.headWrap{height: 80%; padding:2% 0px;}
+#headLogo{width:5.5%;height:70%;background-image:url('../img/loghi/logoComunita.png'); background-repeat: no-repeat; background-size:contain; background-position:center; cursor:pointer;}
+#headTitle{width:40%;cursor:pointer;}
+#headTitle h1{font-size: 1.1em;margin-bottom: 0;font-weight: 300; font-weight:bold;}
+#headTitle h2{font-size: 0.9em;margin:3px 0px 0px 0px !important;font-weight:bold;line-height:1.2em;}
+
+#headNav {width:53%;margin-top:0.5%;}
+#headNav #record{font-size:1em;width:100%;text-align:right;margin-bottom:2%;}
+#headNav nav {width:100%;text-align:right;}
+#headNav nav li{display:inline-block;font-size: 1em;font-weight:bold;}
+#headNav nav li:not(:last-child){padding:0px 1%;}
+#headNav a{color:#dfdfdf;transition: color 0.5s ease;}
+#headNav a:hover{color:#fff; text-decoration:none !important;}
+
+div#utente{width:100%;text-align:center;color: #fff; position: absolute; top: 0; right: 0;background-color:rgba(255,255,255,0.4)}
+a.sessionLink{color:rgba(255,255,255,0.7);text-decoration: none; padding:0px 5px;display: inline-block;width:80px;}
+a.sessionLink:hover{color:rgb(255,255,255)}
+#sessionMenu li{display: inline-block;font-size:0.7em; position:relative;padding:0px 1px;margin:0px 8px;text-align: center;}
+#sessionMenu li ul{position:absolute; z-index: 10000;left:-7px}
+.submenu li{position:relative;display: inline-block;padding:3px 5px !important;width:80px;background-color: #66686A;
+border-bottom: 1px dashed ghostwhite;font-size:1em !important;}
+.submenu li:hover{background-color: rgba(248,248,246,1);}
+.submenu li a{text-decoration: none;color:ghostwhite;display: block;width:80px;}
+.submenu li a:hover{color:rgb(150,134,118);}
+h2.titoletto{ width: 500px; font-size: 1.4em; font-weight: bold; color: #FF8952; margin: 20px 0px 10px; border-bottom:1px solid #ff8952;}

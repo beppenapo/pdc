@@ -4,7 +4,7 @@
   <div id="licenzeTesto">
    <h1>Codice sorgente</h1> 
    <p>Il codice sorgente del presente sito è una rielaborazione del software <a href="http://www.lefontiperlastoria.it" target="_blank" title="[Link esterno] Home page del progetto">lefontiperlastoria.it</a> distribuito dalla <a href="http://www.cooptesto.it" target="_blank" title="[Link esterno] Sito ufficiale della Cooperativa di ricerca TeSto">Cooperativa di ricerca TeSto</a> con licenza <a href="http://www.gnu.org/licenses/agpl.html" target="_blank" title="[Link esterno] Testo originale della licenza AGPL">Affero GPL</a>.</p>
-   <p>Pertanto anche il codice sorgente dell'Archivio Iconografico dei Paesaggi di Comunità è distribuito con la stessa licenza.<br/>Il codice sorgente sarà presto disponibile su GitHub.</p>
+   <p>Pertanto anche il codice sorgente dell'Archivio Iconografico dei Paesaggi di Comunità è distribuito con la stessa licenza.<br/>Il codice è disponibile su <a href="https://github.com/beppenapo/pdc" target="_blank" title="[Link esterno] pagina del progetto su GitHUb"><i class="fa fa-github"></i> GitHub</a>.</p>
    <hr>
    <h1>Database</h1>
    <p>Il Database "Archivio Iconografico dei Paesaggi di Comunità" è reso disponibile con licenza <a href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank" title="[Link esterno] Testo originale della licenza ODBL">Open Data Commons Open Database</a>.

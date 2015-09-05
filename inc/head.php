@@ -24,6 +24,8 @@ $tot = pg_num_rows($exec);
     <li><a href="../webgis.php?hub=2" target="_blank" title="Vai alla pagina del webgis">WEBGIS</a></li>
     <li><a href="#" id="catalogo" class="mainLink prevent" title="Vai alla pagina del catalogo">CATALOGO</a></li>
     <li><a href="#" id="collezioni" class="mainLink prevent" title="Vai alla pagina delle collezioni">COLLEZIONI</a></li>
+    <li><a href="#" id="contatti" class="mainLink prevent" title="Vai alla pagina dei contatti">CONTATTI</a></li>
+    <li><a href="#" id="istruzioni" class="mainLink prevent" title="Vai alla pagina delle istruzioni">ISTRUZIONI</a></li>
     <li><a href="#" id="credits" class="mainLink prevent" title="Vai alla pagina dei credits">CREDITS</a></li>
    </ul>
   </nav>

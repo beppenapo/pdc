@@ -23,6 +23,8 @@ $(document).ready(function() {
 
  $('.prevent').click(function(e){ e.preventDefault(); });
  
+ $("#headLogo, #headTitle").on("click",function(){ window.open('index.php', '_self'); });
+ 
  //menù sessione
  $('.submenu').hide();
  $('#nuova_scheda')

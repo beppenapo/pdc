@@ -157,23 +157,19 @@ $extent = str_replace(' ', ',', $extent);
 $extent2 = $g4['extent2'];
 $extent2 = substr($extent2, 4, -1);
 $extent2 = str_replace(' ', ',', $extent2);
-
-
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//IT"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="IT" >
+<!DOCTYPE html>
+<html lang="it">
  <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+ <meta charset="utf-8" />
+ <meta name="generator" content="gedit" >
+ <meta name="author" content="Arc-Team" >
+ <meta name="robots" content="INDEX,FOLLOW" />
+ <meta name="copyright" content="&copy;2015 Comunità Alta Valsugana e Bersntol" />
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta name="author" content="Giuseppe Naponiello" />
-  <meta name="keywords" content="gfoss, archaeology, anthropology, openlayer, jquery, grass, postgresql, postgis, qgis, webgis, informatic" />
-  <meta name="description" content="Le fonti per la storia. Per un archivio delle fonti sulle valli di Primiero e Vanoi" />
-  <meta name="robots" content="INDEX,FOLLOW" />
-  <meta name="copyright" content="&copy;2011 Museo Provinciale" />
-
-  <title>Le fonti per la storia. Per un archivio delle fonti sulle valli di Primiero e Vanoi</title>
+  <title>Archivio iconografico dei Paesaggi di Comunità</title>
   <link href="lib/jquery_friuli/css/start/jquery-ui-1.8.10.custom.css" type="text/css" rel="stylesheet" media="all" />
   <link href="css/scheda.css" type="text/css" rel="stylesheet" media="all" />
   <link href="css/ico-font/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="all" />
@@ -184,15 +180,21 @@ $extent2 = str_replace(' ', ',', $extent2);
   <style>
    #mapImgWrap{position:relative;}
    #imgDiv{position: absolute;top: 0;left: 0;background-color: #fff;z-index: 9000;}
+   #licenzeWrap{display:none; position:fixed;top:0;left:0;bottom:0;right:0;background:rgba(0,0,0,0.7);z-index:10000 !important;}
+#licenzeDiv{position:absolute;top:15%;left:15%;bottom:15%;right:15%;background:rgb(255,255,255);border:1px solid #868686;border-radius:5px;}
+#licenzeTesto { overflow: auto; padding: 2%; height: 84%; width: 95.8%;font-size:1em;}
+        #chiudiLicenze{background-color: rgb(243, 245, 220); border-radius: 5px 5px 0 0; padding: 1%; height: 4%;text-align:right;}
   </style>
 
 </head>
 <body onload="init();">
+<?php require("inc/licenze.php"); ?>
+<header id="head"><?php require_once('inc/head.php')?></header>
  <div id="container">
   <input type="hidden" id="numPoly" value="<?php echo($numPoly);?>" />
   <input type="hidden" id="numLine" value="<?php echo($numLine);?>" />
   <div id="wrap">
-   <?php if ($_SESSION['username']!='guest'){require("inc/sessione.php"); }?>
+   <!--<?php if ($_SESSION['username']!='guest'){require("inc/sessione.php"); }?>-->
    <div id="content" class="<?php echo $borderContent; ?>">
     <div id="logoSchedaSx"></div>
 
@@ -219,7 +221,7 @@ $extent2 = str_replace(' ', ',', $extent2);
            <td>
              
              <label>TIPO SCHEDA</label>
-             <div class="valori"><?php echo($a['tipo_scheda']); ?></div>
+             <div class="valori"><?php echo($tipologiaScheda); ?></div>
            </td>
           </tr>
           <tr>
@@ -256,7 +258,7 @@ $extent2 = str_replace(' ', ',', $extent2);
          </div>
        </div>
        
-       <?php if(($tpsch==7)||($pag==92)||($pag==63)||($pag==23))  {?>
+       <?php if(($tpsch==7)||($pag==92)||($pag==63)||($pag==23)||($pag==102))  {?>
         <div id="switchImgMap">
           <label class="switchLabel" for="switchMappa">Mappa</label>
           <label class="switchLabel" for="switchImg"> Foto</label>
@@ -282,7 +284,7 @@ $extent2 = str_replace(' ', ',', $extent2);
        <?php } ?>
          
        <?php 
-          if(($tpsch==7)||($pag==92)||($pag==63)||($pag==23)) {
+          if(($tpsch==7)||($pag==92)||($pag==63)||($pag==23)||($pag==102)) {
              $imgq = ("select path from file where id_scheda = $id;");
              $imgexec = pg_query($connection, $imgq);
              $imgrow = pg_num_rows($imgexec);
@@ -657,8 +659,6 @@ order by id_scheda asc;
        <div class="toggle check bassa">
         <div class="sezioni <?php echo $bgSez; ?>"><h2>ANAGRAFICA</h2></div>
         <div class="slide">
-
-
          <table class="mainData" style="width:98% !important;">
             <tr>
              <td width="50%;">
@@ -754,7 +754,7 @@ order by id_scheda asc;
                             1=>array('ORALI','orale'),
                             7=>array('FOTOGRAFICHE','fotografica'),
                             5=>array('BIBLIOGRAFICHE','bibliografica'),
-                            5=>array('CARTOGRAFICHE','cartografica')
+                            10=>array('CARTOGRAFICHE','cartografica')
                             ) 
                as $idforeach=>$nomeforeach){
                  $qrif6 = ("select * from altrif where scheda = $id and tpsch_altrif = $idforeach");
@@ -822,6 +822,65 @@ order by id_scheda asc;
       </div>
      <?php } ?>
    </div>
+   
+<div class="inner">
+ <div class="toggle check bassa">
+  <div class="sezioni <?php echo $bgSez; ?>" style="border-top:none !important;">
+  <?php
+  $qtag = "
+   SELECT tag.id_scheda, tag.tag1 as t1id, tag1.definizione as tag1, tag.tag2 as t2id, tag2.definizione as tag2, tag.tag3 as t3id, tag3.definizione as tag3, tag.tag4 as t4id, tag4.definizione as tag4, tag.tag5 as t5id, tag5.definizione as tag5
+   FROM tag
+   left join tag1 on tag.tag1 = tag1.id
+   left join tag2 on tag.tag2 = tag2.id 
+   left join tag3 on tag.tag3 = tag3.id 
+   left join tag4 on tag.tag4 = tag4.id 
+   left join tag5 on tag.tag5 = tag5.id
+   WHERE tag.id_scheda = $id
+  ";
+  $resTag = pg_query($connection, $qtag);
+  $arrTag = pg_fetch_array($resTag);
+  ?>
+   <h2>PAROLE CHIAVE</h2>
+  </div>
+  <div class="slide" style="">
+   <table style="width:98% !important;">
+    <tr>
+     <td>
+      <label>PAROLA CHIAVE 1</label>
+      <div class="valori" id="tag1Div" data-tag1="<?php echo $arrTag['t1id']; ?>"><?php echo nl2br($arrTag['tag1']); ?></div>
+     </td>
+     <td>
+      <label>PAROLA CHIAVE 2</label>
+      <div class="valori" id="tag2Div" data-tag2="<?php echo $arrTag['t2id']; ?>"><?php echo nl2br($arrTag['tag2']); ?></div>
+     </td>
+     <td>
+      <label>PAROLA CHIAVE 3</label>
+      <div class="valori" id="tag3Div" data-tag3="<?php echo $arrTag['t3id']; ?>"><?php echo nl2br($arrTag['tag3']); ?></div>
+     </td>
+     <td>
+      <label>PAROLA CHIAVE 4</label>
+      <div class="valori" id="tag4Div" data-tag4="<?php echo $arrTag['t41id']; ?>"><?php echo nl2br($arrTag['tag4']); ?></div>
+     </td>
+     <td>
+      <label>PAROLA CHIAVE 5</label>
+      <div class="valori" id="tag5Div" data-tag5="<?php echo $arrTag['t5id']; ?>"><?php echo nl2br($arrTag['tag5']); ?></div>
+     </td>
+    </tr>
+    <?php if($_SESSION['username']!='guest') {?>
+    <tr>
+     <td colspan="2">
+      <label class="update" id="cartoTag">modifica sezione</label>
+     </td>
+    </tr>
+    <?php } ?>
+   </table>
+   <div class="updateContent" style="display:none">
+    <?php require("inc/form_update/tag.php"); ?>
+   </div>
+  </div>
+ </div>
+</div>
+
 <?php require("inc/".$tab.".php"); ?>
 
  <div class="inner">
@@ -831,9 +890,9 @@ order by id_scheda asc;
      <table class="mainData" style="width:98% !important;">
       <tr>
        <td width="50%;">
-        <label>DENOMINAZIONE RICERCA</label>
+        <!--<label>DENOMINAZIONE RICERCA</label>
         <div class="valori"><?php echo($denric); ?></div>
-        <br/>
+        <br/>-->
         <label>COMPILATORE</label>
         <div class="valori"><?php echo($compilatore); ?></div>
         <br/>
@@ -841,12 +900,12 @@ order by id_scheda asc;
         <div class="valori"><?php echo($datacmp); ?></div>
        </td>
        <td>
-        <label>ENTE RESPONSABILE</label>
+        <!--<label>ENTE RESPONSABILE</label>
         <div class="valori"><?php echo($enresp); ?></div>
         <br/>
         <label>RESPONSABILE RICERCA</label>
         <div class="valori"><?php echo($respric); ?></div>
-        <br/>
+        <br/>-->
         <label>NOTE</label>
         <div class="valori"><?php echo($notecmp); ?></div>
        </td>
@@ -944,20 +1003,23 @@ order by id_scheda asc;
         </div>
       </div>
     <?php } ?>
-          
-    <?php if ($_SESSION['username']!='guest'){  ?>
-      <div id="fine">
-       <label style="display:block;text-align:center;">La scheda risulta <?php echo($statoScheda); ?>. 
-       <?php if($tipoUsr != 3) {?>Utilizza il pulsante in basso per cambiare lo stato della scheda.</label>
-       <br/>
-       <label style="display:block;text-align:center;" class="update" id="upStatoScheda" <?php echo($upStatoScheda);?>>modifica stato</label>
-      </div>
-     <?php }} ?>
    </div>
+
+ <?php if ($_SESSION['username']!='guest'){  ?>
+  <div class="inner">
+   <div id="fine">
+    <label style="display:block;text-align:center;">La scheda risulta <?php echo($statoScheda); ?>. 
+     <?php if($tipoUsr != 3) {?>Utilizza il pulsante in basso per cambiare lo stato della scheda.
+    </label>
+    <br/>
+    <label style="display:block;text-align:center;" class="update" id="upStatoScheda" <?php echo($upStatoScheda);?>>modifica stato</label>
+   </div>
+  </div>
+ <?php }} ?>
    
  </div><!--skArcheoContent-->
  </div><!--content-->
- <div id="footer"><?php require_once ("inc/footer.inc"); ?></div><!--footer-->
+ <div id="footer"><?php require_once ("inc/footer.php"); ?></div><!--footer-->
  </div><!-- wrap-->
  </div><!--container-->
 
@@ -1007,6 +1069,9 @@ $(document).ready(function() {
   });//ajax1
  });
 
+ $("#apriLicenze").click(function(){ console.log('ciao');$("#licenzeWrap").fadeIn('fast'); });
+ $("#chiudiLicenze").click(function(){ $("#licenzeWrap").fadeOut('fast'); });
+
  //menù sessione
  $('.submenu').hide();
  $('#nuova_scheda')
@@ -1025,7 +1090,7 @@ $(document).ready(function() {
  .click(function() { $(this).next().slideToggle();})
  .toggle(function() {$('#catalogoToggle').text('-');}, function() {$('#catalogoToggle').text('+');});
 
-
+$(".link").remove();
 ////////////// SHOW/HIDE modifica sezione /////////////////
 if ( (tipoUsr == 1)||((tipoUsr==2)&&(schede.indexOf(scheda)!=-1))||(idUsr==compilatore)) {$('.update').show();}
 else {$('.update').hide();}
@@ -1064,7 +1129,7 @@ $( "#termfiga2" ).autocomplete({
    $('.slide').hide();
    $('.toggle').click(function(){$(this).children('.slide').slideToggle(); $(this).children('.sezioni').toggleClass(bgSezAperto); });
 
-   if((tiposch==7)||(pag==92)||(pag==63)||(pag==23)) {
+   if((tiposch==7)||(pag==92)||(pag==63)||(pag==23)||(pag==102)) {
     if(hub==1){
      $("#imgDiv").hide();
      $("#switchMappa").attr("checked", true);
@@ -1180,6 +1245,11 @@ $('.update').each(function(){
 
 $('.chiudiForm').click(function(){ $(this).closest('.ui-dialog-content').dialog('close'); });
 
+//tag
+var tag1 = $("#tag1Div").data('tag1');
+$("#tag1Sel option[value="+tag1+"]").attr("selected", true);
+
+
 //var ratio, height, width;
 var imgThumb = $('#imgOrig');
 //var imgThumb = document.getElementById("imgOrig");
@@ -1235,70 +1305,49 @@ stile='<?php echo($stile);?>';
 var cql = param.slice(0, -4);
 
 if ((numPoly > 0 && numLine >= 0)){
-	coo = '<?php echo($extent);?>';
-   bound = coo.split(',');
-   console.log(bound, '\n'+cql);
+ coo = '<?php echo($extent);?>';
+ bound = coo.split(',');
+ console.log(bound, '\n'+cql);
 }
 
 if ((numPoly == 0 && numLine > 0)){
-	coo = '<?php echo($extent2);?>';
-   bound = coo.split(',');
-   console.log(bound, '\n'+cql);
+ coo = '<?php echo($extent2);?>';
+ bound = coo.split(',');
+ console.log(bound, '\n'+cql);
 }
 
 function init() {
-//extent = new OpenLayers.Bounds(1279972.812, 5782339.838, 1331677.275, 5838213.399);
-extent = new OpenLayers.Bounds(bound[0], bound[1], bound[2], bound[3]);
-var options = {
+ extent = new OpenLayers.Bounds(bound[0], bound[1], bound[2], bound[3]);
+ var options = {
   controls: [
-    new OpenLayers.Control.Navigation(),
-    new OpenLayers.Control.Zoom(),
-    //new OpenLayers.Control.MousePosition(),
-    //new OpenLayers.Control.LayerSwitcher()
-  ],//controls
+   new OpenLayers.Control.Navigation(),
+   new OpenLayers.Control.Zoom(),
+  ],
   resolutions: [156543.03390625, 78271.516953125, 39135.7584765625, 19567.87923828125, 9783.939619140625, 4891.9698095703125, 2445.9849047851562, 1222.9924523925781, 611.4962261962891, 305.74811309814453, 152.87405654907226, 76.43702827453613, 38.218514137268066, 19.109257068634033, 9.554628534317017, 4.777314267158508, 2.388657133579254, 1.194328566789627, 0.5971642833948135, 0.29858214169740677, 0.14929107084870338, 0.07464553542435169, 0.037322767712175846, 0.018661383856087923, 0.009330691928043961, 0.004665345964021981, 0.0023326729820109904, 0.0011663364910054952, 5.831682455027476E-4, 2.915841227513738E-4, 1.457920613756869E-4],
   maxExtent:new OpenLayers.Bounds (-20037508.34,-20037508.34,20037508.34,20037508.34),
   units: 'm',
   projection: new OpenLayers.Projection("EPSG:900913"),
   displayProjection: new OpenLayers.Projection("EPSG:4326")
-};//options
+ };
 mappa = new OpenLayers.Map('smallMap', options);
 
 gsat = new OpenLayers.Layer.Bing({name: "Aerial",key: bingKey,type: "Aerial"});
 mappa.addLayer(gsat);
 
-arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile2.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg"];
+arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile2.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg"];
 
 osm = new OpenLayers.Layer.OSM(" MapQuest", arrayOSM, {
-                attribution: "Data, imagery and map information provided by <a href='http://www.mapquest.com/'  target='_blank'>MapQuest</a>, <a href='http://www.openstreetmap.org/' target='_blank'>Open Street Map</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/' target='_blank'>CC-BY-SA</a>  <img src='http://developer.mapquest.com/content/osm/mq_logo.png' border='0'>",
-                transitionEffect: "resize"
-            });
+ attribution: "Data, imagery and map information provided by <a href='http://www.mapquest.com/'  target='_blank'>MapQuest</a>, <a href='http://www.openstreetmap.org/' target='_blank'>Open Street Map</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/' target='_blank'>CC-BY-SA</a>  <img src='http://developer.mapquest.com/content/osm/mq_logo.png' border='0'>",
+ transitionEffect: "resize"
+});
 mappa.addLayer(osm);
-/*
-stile = new OpenLayers.StyleMap({
-                "default": new OpenLayers.Style({
-                    fillColor: "#ffcc66",
-                    fillOpacity: 0.5,
-                    strokeColor: "#ff9933",
-                    strokeWidth: 2,
-                    graphicZIndex: 1
-                }),
-                "select": new OpenLayers.Style({
-                    fillColor: "#66ccff",
-                    strokeColor: "#3399ff",
-                    graphicZIndex: 2
-                })
-            });
-*/
- var report = function(e) { OpenLayers.Console.log(e.type, e.feature.id); };
+
+var report = function(e) { OpenLayers.Console.log(e.type, e.feature.id); };
 
 if (numPoly != 0) {
  aree = new OpenLayers.Layer.WMS("Aree","http://www.lefontiperlastoria.it:80/geoserver/fonti/wms",{
-	layers: 'fonti:area_int_poly', 
-	styles: stile,
+        	layers: 'fonti:area_int_poly', 
+	//styles: stile,
 	srs: 'EPSG:3857',
 	format: 'image/png',
 	transparent: true,
@@ -1314,7 +1363,7 @@ if (numPoly != 0) {
 if(numLine != 0){
  linee = new OpenLayers.Layer.WMS("Tracciati","http://www.lefontiperlastoria.it:80/geoserver/fonti/wms",{
 	layers: 'fonti:area_int_line', 
-	styles: stile+'_linea',
+	//styles: stile+'_linea',
 	srs: 'EPSG:3857',
 	format: 'image/png',
 	transparent: true,

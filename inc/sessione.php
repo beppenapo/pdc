@@ -8,7 +8,7 @@
   $link="";
   foreach($schede as $scheda){ 
    $scheda = ltrim($scheda);
-   $a = ("select * from lista_dgn_tpsch where definizione = '$scheda';");
+   $a = ("select * from lista_dgn_tpsch where definizione = '$scheda' and hub = 2;");
    $b = pg_query($connection, $a); 
    $c = pg_fetch_array($b);
    $link .= "<li class='link".$c["id"]."'><a href='../scheda_nuova.php?tpsch=".$c["id"]."&def=".$c["definizione"]."'>".$c["definizione"]."</a></li>";

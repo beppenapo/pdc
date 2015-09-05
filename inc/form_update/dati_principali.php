@@ -6,9 +6,9 @@
      
       <label>TIPO SCHEDA</label>
       <select id="tpsch_update" name="tpsch_update" class="form">
-       <option value="<?php echo($tpsch); ?>"><?php echo($a['tipo_scheda']); ?></option>
+       <option value="<?php echo($tpsch); ?>"><?php echo($tipologiaScheda); ?></option>
        <?php
-         $query =  ("SELECT * FROM public.lista_dgn_tpsch where id != $tpsch order by definizione asc; ");
+         $query =  ("SELECT * FROM public.lista_dgn_tpsch where id != $tpsch and hub = 2 order by definizione asc; ");
          $result = pg_query($connection, $query);
          $righe = pg_num_rows($result);
          $i=0;

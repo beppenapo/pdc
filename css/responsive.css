@@ -29,15 +29,8 @@ header#head {
 
 .headDiv{display:inline-block;vertical-align:top;}
 .headWrap{height: 80%; padding:2% 0px;}
-#headLogo{
- width:15%;
- height:70%;
- background-image:url('../img/loghi/logoComunita.png');
- background-repeat: no-repeat;
- background-size:contain;
- background-position:center; 
-}
-#headTitle{width:82%;}
+#headLogo{ width:15%; height:70%; background-image:url('../img/loghi/logoComunita.png'); background-repeat: no-repeat; background-size:contain; background-position:center; cursor:pointer;}
+#headTitle{width:82%;cursor:pointer;}
 #headTitle h1{font-size: 0.7em;margin-bottom: 2%;font-weight: 300; font-weight:bold;}
 #headTitle h2{font-size: 0.6em;font-weight: 300;}
 
@@ -108,11 +101,11 @@ footer .wrap{width:85% !important;}
 @media screen and (min-width: 1025px){
 .wrap{width:95%;}
 #headLogo{width:5.5%;/*height:62%;*/}
-#headTitle{width:50%;}
+#headTitle{width:40%;}
 #headTitle h1{font-size: 1.1em;margin-bottom: 0;}
 #headTitle h2{font-size: 0.9em;margin-top:3px;font-weight:bold;line-height:1.2em;}
 
-#headNav {width:43%;}
+#headNav {width:53%;}
 #headNav #record{font-size:1em;width:100%;text-align:right;margin-bottom:2%;}
 #headNav nav {width:100%;text-align:right;}
 #headNav nav li{display:inline-block;font-size: 1em;}

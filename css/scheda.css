@@ -1,5 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:500,600,400,300);
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+@import url("reset.css");
 @import url("default.css");
-
+@import url("../../css/ico-font/css/font-awesome.css");
+@import url("head.css");
 /***SCHEDA ARCHEO*/
 /***bordo del div content*/
 .borderFoto{border: 1px solid rgb(97,108,209) !important;}
@@ -9,7 +13,7 @@
 
 /*** titolo sezione */
 .bgSezFotoAperto, .bgSezFoto:hover{background:rgb(188,195,242) !important;}
-.bgSezBiblioAperto, .bgSezBiblio:hover{background:rgb(241,210,190) !important;}
+.bgSezBiblioAperto, .bgSezBiblio:hover{background:rgb(230,150,97) !important;}
 .bgSezOraleAperto, .bgSezOrale:hover{background:rgb(182,205,158) !important;}
 .bgSezCartoAperto, .bgSezCarto:hover{background:rgb(245,193,198) !important;}
 
@@ -176,7 +180,7 @@ div.inner label{color:#96867B;}
 div.sezioni h2.sottosez{color: #D1D1D1;}
 div.inner h1.archeologica, a.archeologica{color:#71FF40 !important;}
 div.inner h1.archivistica, a.archivistica{color:#FF00FF !important;}
-div.inner h1.bibliografica, a.bibliografica{color:#FFCA01 !important;}
+div.inner h1.bibliografica, a.bibliografica{color:rgb(222,109,31) !important;}
 div.inner h1.fotografica, a.fotografica{color:#616ce5 !important;}
 div.inner h1.orale, a.orale{color:#578509 !important;}
 div.inner h1.materiale, a.materiale{color:#008000 !important;}
@@ -291,7 +295,7 @@ a.baseButton{
 a#sat{border-radius: 4px 0px 0px 4px;}
 a#osm{border-radius: 0px 4px 4px 0px;}
 
-div#content{margin-top:50px;}
+div#content{margin-top:17%;}
 table.mainData{width:100% !important;}
 table.mainData td{vertical-align: top !important;}
 .fa{cursor:pointer;}

@@ -10,52 +10,9 @@
  $cartoArr = pg_fetch_array($cartoExec, 0, PGSQL_ASSOC);
 
 ?>
-
 <div class="inner">
  <div class="toggle check bassa">
-  <div class="sezioni" style="border-top:none !important;">
-   <h2>PAROLE CHIAVE</h2>
-  </div>
-  <div class="slide" style="">
-   <table style="width:98% !important;">
-    <tr>
-     <td>
-      <label>PAROLA CHIAVE 1</label>
-      <div class="valori"><?php echo $cartoArr['tag1']; ?></div>
-     </td>
-     <td>
-      <label>PAROLA CHIAVE 2</label>
-      <div class="valori"><?php echo $cartoArr['tag2']; ?></div>
-     </td>
-     <td>
-      <label>PAROLA CHIAVE 3</label>
-      <div class="valori"><?php echo $cartoArr['tag3']; ?></div>
-     </td>
-     <td>
-      <label>PAROLA CHIAVE 4</label>
-      <div class="valori"><?php echo $cartoArr['tag4']; ?></div>
-     </td>
-     <td>
-      <label>PAROLA CHIAVE 5</label>
-      <div class="valori"><?php echo $cartoArr['tag5']; ?></div>
-     </td>
-    </tr>
-    <?php if($_SESSION['username']!='guest') {?>
-    <tr>
-     <td colspan="2">
-      <label class="update" id="cartoTag">modifica sezione</label>
-     </td>
-    </tr>
-    <?php } ?>
-   </table>
-   <div class="updateContent" style="display:none">
-    <?php require("inc/form_update/tag.php"); ?>
-   </div>
-  </div>
- </div>
- 
- <div class="toggle check bassa">
-  <div class="sezioni">
+  <div class="sezioni <?php echo $bgSez; ?>" style="border-top:none !important;">
    <h2>SEGNATURA/COLLOCAZIONE</h2>
   </div>
   <div class="slide" style="">
@@ -79,12 +36,9 @@
   </div>
  </div>
  
- <div class="toggle check bassa">
-  <div class="sezioni">
-   <h2>DESCRIZIONE CARTOGRAFIA</h2>
-  </div>
-  <div class="slide" style="">
-   <table style="width:98% !important;">
+ <div class="check bassa" style="border-top: 1px solid #96867B !important;">
+  <h2 class="h2aperto">DESCRIZIONE CARTOGRAFIA</h2>
+  <table style="width:98% !important;">
     <tr>
      <td>
       <label>TITOLO</label>
@@ -126,11 +80,10 @@
    <div class="updateContent" style="display:none">
     <?php require("inc/form_update/cartoDescriz.php"); ?>
    </div>
-  </div>
  </div>
  
  <div class="toggle check bassa">
-  <div class="sezioni">
+  <div class="sezioni <?php echo $bgSez; ?>">
    <h2>DATI TENICI</h2>
   </div>
   <div class="slide" style="">

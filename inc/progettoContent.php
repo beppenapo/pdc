@@ -1,7 +1,7 @@
 <div id="progetto">
  <header>PROGETTO <i class="fa fa-times-circle-o pointer removeContent"></i></header>
  <article>
-  <p>Il progetto per la costruzione collettiva di un "Archivio iconografico del paesaggio della Comunità Alta Valsugana e Bersntol" è un'iniziativa promossa dalla Comunità Alta Valsugana e Bersntol, in collaborazione con tsm-step Trentino School of Management – Scuola per il governo del territorio e del paesaggio della Provincia autonoma di Trento – Incarico speciale Studio, ricerca e documentazione sul territorio.</p>
+  <p>Il progetto per la costruzione collettiva di un "Archivio iconografico dei paesaggi della Comunità Alta Valsugana e Bersntol" è un'iniziativa promossa dalla Comunità Alta Valsugana e Bersntol, in collaborazione con tsm-step Trentino School of Management – Scuola per il governo del territorio e del paesaggio della Provincia autonoma di Trento – Incarico speciale Studio, ricerca e documentazione sul territorio.</p>
   <br/>
   <p>Il progetto si propone di raccogliere fotografie e cartoline con immagini di paesaggi, nonché cartografie e altre forme di rappresentazione iconografica del territorio, presso gli enti locali, le biblioteche e i musei, le associazioni, i collezionisti e le famiglie.<br/>Il materiale raccolto viene duplicato in formato digitale e subito restituito ai proprietari. Le copie digitali, ordinate e catalogate sono rese liberamente disponibili, per la consultazione e per attività di studio e di ricerca, grazie a questo sito web dedicato.<br/>I materiali originali restano nella piena proprietà dei prestatori, il cui nominativo, previa autorizzazione, viene indicato nelle scheda correlata a ogni immagine nell'archivio on-line, affinché ci si possa rivolgere direttamente a loro per eventuali richieste di utilizzo delle immagini.</p>
   <br/>
@@ -14,7 +14,7 @@
 <div id="credits">
  <header>CREDITS <i class="fa fa-times-circle-o pointer removeContent"></i></header>
   <article>
-   <p>L'"Archivio Iconografico dei Paesaggi della Comunità Alta Valsugana e Bersntol" è stato ideato da Vittorio Curzel (direttore con incarico speciale per lo studio, la ricerca e la documentazione presso tsm|step Trentino School of Management – Scuola per il governo del territorio e del paesaggio), che ha curato la progettazione nonché il coordinamento scientifico e organizzativo delle attività per la realizzazione, incluso il sito web.</p>
+   <p>L'"Archivio Iconografico dei Paesaggi della Comunità Alta Valsugana e Bersntol" è stato ideato da Vittorio Curzel (direttore con incarico speciale per lo studio, la ricerca e la documentazione sul territorio, presso tsm|step Trentino School of Management – Scuola per il governo del territorio e del paesaggio), che ha curato la progettazione nonché il coordinamento scientifico e organizzativo delle attività per la realizzazione, incluso il sito web.</p>
    <br/>
    <p>La Comunità Alta Valsugana e Bersntol ha collaborato alla progettazione e alla realizzazione dell'iniziativa, nelle persone di Anita Briani, già Assessore all'Urbanistica, e Paola Ricchi, Dirigente del Servizio Urbanistica. La Comunità Alta Valsugana e Bersntol, nell'ambito delle attività per la Pianificazione territoriale di Comunità, ha affidato un incarico di collaborazione, a seguito di procedura selettiva, a Katia Lenzi, che ha seguito le attività di raccolta e di schedatura dei materiali. Per la Comunità di Valle ha inoltre collaborato Serena Tonezzer.<br/>
 Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha collaborato Steven Chiusole di tsm, Trentino School of Management.</p>
@@ -207,16 +207,16 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
   <input class="selKeyWord term ui-autocomplete-input" id="fts1" type="text" placeholder="Inserisci termine">
   <select class="selKeyWord" id="op1">
    <option>--</option>
-   <option>AND</option>
-   <option>OR</option>
-   <option>NOT</option>
+   <option value="&">AND</option>
+   <option value="|">OR</option>
+   <option value="&!">NOT</option>
   </select>
   <input class="selKeyWord term ui-autocomplete-input" id="fts2" type="text" placeholder="Inserisci termine">
   <select class="selKeyWord" id="op2">
    <option>--</option>
-   <option>AND</option>
-   <option>OR</option>
-   <option>NOT</option>
+   <option value="&">AND</option>
+   <option value="|">OR</option>
+   <option value="&!">NOT</option>
   </select>
   <input class="selKeyWord term ui-autocomplete-input" id="fts3" type="text" placeholder="Inserisci termine">
   <span id="ftsError" class="error"></span>
@@ -232,4 +232,12 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
    <i class="fa fa-search fa-5x"></i>
   </div>
  </div>
+</div>
+
+<div id="contatti">
+
+</div>
+
+<div id="istruzioni">
+
 </div>

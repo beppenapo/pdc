@@ -65,50 +65,6 @@ if($note3 == '') {$note3=$nd;}
 
 <div class="inner">
  <div class="toggle check bassa">
-  <div class="sezioni <?php echo $bgSez; ?>" style="border-top:none !important;">
-   <h2>PAROLE CHIAVE</h2>
-  </div>
-  <div class="slide" style="">
-   <table style="width:98% !important;">
-    <tr>
-     <td>
-      <label>PAROLA CHIAVE 1</label>
-      <div class="valori"></div>
-     </td>
-     <td>
-      <label>PAROLA CHIAVE 2</label>
-      <div class="valori"></div>
-     </td>
-     <td>
-      <label>PAROLA CHIAVE 3</label>
-      <div class="valori"></div>
-     </td>
-     <td>
-      <label>PAROLA CHIAVE 4</label>
-      <div class="valori"></div>
-     </td>
-     <td>
-      <label>PAROLA CHIAVE 5</label>
-      <div class="valori"></div>
-     </td>
-    </tr>
-    <?php if($_SESSION['username']!='guest') {?>
-    <tr>
-     <td colspan="2">
-      <label class="update" id="cartoTag">modifica sezione</label>
-     </td>
-    </tr>
-    <?php } ?>
-   </table>
-   <div class="updateContent" style="display:none">
-    <?php require("inc/form_update/tag.php"); ?>
-   </div>
-  </div>
- </div>
-</div>
-
-<div class="inner">
- <div class="toggle check bassa">
   <div class="sezioni <?php echo $bgSez; ?>" style="border-top:none !important; border-bottom:1px solid #96867B">
    <h2>SEGNATURA/COLLOCAZIONE</h2>
   </div>

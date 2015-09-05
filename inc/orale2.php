@@ -79,7 +79,7 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
    <div class="inner">
 
    <div class="toggle">
-    <div class="sezioni" style="border-top:none !important; border-bottom:1px solid #96867B">
+    <div class="sezioni <?php echo $bgSez; ?>" style="border-top:none !important; border-bottom:1px solid #96867B">
      <h2>SEGNATURA/COLLOCAZIONE</h2>
     </div>
     <div class="slide" style="border-bottom:1px solid #96867B">
@@ -109,16 +109,16 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
       <table class="mainData" style="width:98% !important;">
        <tr>
         <td width="50%;">
-         <label>TIPOLOGIA INTERVISTA</label>
+         <label>TIPOLOGIA FONTE AUDIO-VIDEO</label>
          <div class="valori"><?php echo($dsc_denom); ?></div>
          <br/>
-         <label>SPECIFICI ELEMENTI DI INTERESSE</label>
+         <label>CONTENUTO</label>
          <div class="valori"><?php echo(nl2br($dsc_conten)); ?></div>
         </td>
         <td>
-         <label>CATEGORIE CONTENUTO</label>
+         <!--<label>CATEGORIE CONTENUTO</label>
          <div class="valori"><?php echo($dsc_categ); ?></div>
-         <br/>
+         <br/>-->
          <label>OCCASIONE O MOMENTO DI RACCOLTA</label>
          <div class="valori"><?php echo($dsc_occas); ?></div>
          <br/>
@@ -136,18 +136,18 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
       </table>
 
       <div class="toggle">
-        <div class="sezioni"><h2>DATI ANALITICI</h2></div>
+        <div class="sezioni <?php echo $bgSez; ?>"><h2>DATI ANALITICI</h2></div>
         <div class="slide">
            <table class="mainData" style="width:98% !important;">
             <tr>
              <td width="50%;">
-               <label>ELEMENTI STRUTTURALI</label>
+               <label>INDICE DEI DATI</label>
                <div class="valori" style="height:250px; overflow:auto;"><?php echo(nl2br($dan_elstrutt)); ?></div>
              </td>
              <td>
-              <label>INCIPIT VERBALE</label>
+              <!--<label>INCIPIT VERBALE</label>
               <div class="valori"><?php echo($dan_incverb); ?></div>
-              <br/>
+              <br/>-->
               <label>TRASCRIZIONE</label>
               <div class="valori"><?php echo($dan_trascr); ?></div>
               <br/>
@@ -166,8 +166,8 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
        <?php } ?>
         </div>
       </div>
-      <div class="toggle">
-        <div class="sezioni"><h2>COMUNICAZIONE</h2></div>
+      <!--<div class="toggle">
+        <div class="sezioni <?php echo $bgSez; ?>"><h2>COMUNICAZIONE</h2></div>
         <div class="slide">
            <table class="mainData" style="width:98% !important;">
             <tr>
@@ -189,9 +189,9 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
           </tr>
        <?php } ?>
         </div>
-      </div>
+      </div>-->
       <div class="toggle">
-        <div class="sezioni"><h2>INTERVISTATO</h2></div>
+        <div class="sezioni <?php echo $bgSez; ?>"><h2>INTERVISTATO</h2></div>
         <div class="slide">
            <table class="mainData" style="width:98% !important;">
             <tr>
@@ -224,7 +224,7 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
         </div>
       </div>
       <div class="toggle">
-        <div class="sezioni"><h2>GRUPPO INTERVISTATI</h2></div>
+        <div class="sezioni <?php echo $bgSez; ?>"><h2>GRUPPO INTERVISTATI</h2></div>
         <div class="slide">
            <table class="mainData" style="width:98% !important;">
             <tr>
@@ -248,7 +248,7 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
         </div>
       </div>
       <div class="toggle">
-        <div class="sezioni"><h2>CONTESTO</h2></div>
+        <div class="sezioni <?php echo $bgSez; ?>"><h2>CONTESTO</h2></div>
         <div class="slide">
            <table class="mainData" style="width:98% !important;">
             <tr>
@@ -272,7 +272,7 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
         </div>
       </div>
       <div class="toggle">
-        <div class="sezioni"><h2>SUPPORTO</h2></div>
+        <div class="sezioni <?php echo $bgSez; ?>"><h2>SUPPORTO</h2></div>
         <div class="slide">
            <table class="mainData" style="width:98% !important;">
             <tr>
@@ -282,9 +282,9 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
                <br/>
                <label>FORMATO</label>
                <div class="valori"><?php echo($sup_formato); ?></div>
-               <br/>
+               <!--<br/>
                <label>FREQUENZA VELOCITA'</label>
-               <div class="valori"><?php echo($sup_freqvel); ?></div>
+               <div class="valori"><?php echo($sup_freqvel); ?></div>-->
              </td>
              <td>
               <label>ATTREZZATURE TECNICHE</label>
@@ -305,7 +305,7 @@ $riv_descform   = stripslashes($a2['riv_descform']); if($riv_descform    == '') 
         </div>
       </div>
       <div class="toggle">
-        <div class="sezioni"><h2>RIVERSAMENTO</h2></div>
+        <div class="sezioni <?php echo $bgSez; ?>"><h2>RIVERSAMENTO</h2></div>
         <div class="slide">
            <table class="mainData" style="width:98% !important;">
             <tr>
