@@ -2,8 +2,9 @@
 session_start();
 if (!isset($_SESSION['username'])){$_SESSION['username']='guest';}
 ini_set( "display_errors", 0);
-$hub = $_SESSION['hub'];
 require("inc/db.php");
+
+$hub = $_SESSION['hub'];
 $id = $_GET["id"];
 $tipoUsr = $_SESSION['tipo'];
 $idUsr = $_SESSION['id_user'];
@@ -65,24 +66,28 @@ if($stile == 'fonte orale') {
  $borderContent='borderOrale';
  $bgSez = 'bgSezOrale';
  $bgSezAperto = 'bgSezOraleAperto';
+  $styleGeom = 'audio';
 }
 if($stile == 'bibliografica') {
  $logo = 'logoSkBiblio';
  $borderContent='borderBiblio';
  $bgSez = 'bgSezBiblio';
  $bgSezAperto = 'bgSezBiblioAperto';
+ $styleGeom = 'biblioAvs';
 }
 if($stile == 'fotografica') {
  $logo = 'logoSkFoto';
  $borderContent='borderFoto';
  $bgSez = 'bgSezFoto';
  $bgSezAperto = 'bgSezFotoAperto';
+  $styleGeom = 'fotoAvs';
 }
 if($stile == 'cartografica') { 
  $logo = 'logoSkCarto';
  $borderContent='borderCarto';
  $bgSez = 'bgSezCarto';
  $bgSezAperto = 'bgSezCartoAperto';
+  $styleGeom = 'cartoAvs';
 }
 
 $numSch = $a['numsch'];
@@ -169,48 +174,43 @@ $extent2 = str_replace(' ', ',', $extent2);
  <meta name="copyright" content="&copy;2015 Comunità Alta Valsugana e Bersntol" />
  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <title>Archivio iconografico dei Paesaggi di Comunità</title>
-  <link href="lib/jquery_friuli/css/start/jquery-ui-1.8.10.custom.css" type="text/css" rel="stylesheet" media="all" />
-  <link href="css/scheda.css" type="text/css" rel="stylesheet" media="all" />
-  <link href="css/ico-font/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="all" />
-  <link rel="shortcut icon" href="img/icone/favicon.ico" />
-  <script type="text/javascript" src="lib/jquery-core/jquery-1.4.4.min.js"></script>
-  <script type="text/javascript" src="lib/jquery_friuli/js/jquery-ui-1.8.10.custom.min.js"></script>
+ <title>Archivio iconografico dei Paesaggi di Comunità</title>
+ <link href="lib/jquery_friuli/css/start/jquery-ui-1.8.10.custom.css" type="text/css" rel="stylesheet" media="all" />
+ <link href="css/scheda.css" type="text/css" rel="stylesheet" media="all" />
+ <link href="css/ico-font/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="all" />
+ <link rel="shortcut icon" href="img/icone/favicon.ico" />
+ <script type="text/javascript" src="lib/jquery-core/jquery-1.4.4.min.js"></script>
+ <script type="text/javascript" src="lib/jquery_friuli/js/jquery-ui-1.8.10.custom.min.js"></script>
 
-  <style>
-   #mapImgWrap{position:relative;}
-   #imgDiv{position: absolute;top: 0;left: 0;background-color: #fff;z-index: 9000;}
-   #licenzeWrap{display:none; position:fixed;top:0;left:0;bottom:0;right:0;background:rgba(0,0,0,0.7);z-index:10000 !important;}
-#licenzeDiv{position:absolute;top:15%;left:15%;bottom:15%;right:15%;background:rgb(255,255,255);border:1px solid #868686;border-radius:5px;}
-#licenzeTesto { overflow: auto; padding: 2%; height: 84%; width: 95.8%;font-size:1em;}
-        #chiudiLicenze{background-color: rgb(243, 245, 220); border-radius: 5px 5px 0 0; padding: 1%; height: 4%;text-align:right;}
-  </style>
+ <style>
+  #mapImgWrap{position:relative;}
+  #imgDiv{position: absolute;top: 0;left: 0;background-color: #fff;z-index: 9000;}
+  #licenzeWrap{display:none; position:fixed;top:0;left:0;bottom:0;right:0;background:rgba(0,0,0,0.7);z-index:30000 !important;}
+  #licenzeDiv{position:absolute;top:15%;left:15%;bottom:15%;right:15%;background:rgb(255,255,255);border:1px solid #868686;border-radius:5px;}
+  #licenzeTesto { overflow: auto; padding: 2%; height: 84%; width: 95.8%;font-size:1em;}
+  #chiudiLicenze{background-color: rgb(243, 245, 220); border-radius: 5px 5px 0 0; padding: 1%; height: 4%;text-align:right;}
+  #backDiv{position:absolute; top:16%;width:100%; text-align:center;background-color:#d6d6d6;z-index:20000;}
+ </style>
 
 </head>
 <body onload="init();">
 <?php require("inc/licenze.php"); ?>
 <header id="head"><?php require_once('inc/head.php')?></header>
+<?php if(isset($_GET['p'])){ ?>
+ <div id="backDiv">
+  <a href="index.php?r=si" class="prevent" id="backUrl"><i class="fa fa-arrow-left"></i> torna ai risultati della ricerca</a>
+ </div>
+<?php } ?>
  <div id="container">
   <input type="hidden" id="numPoly" value="<?php echo($numPoly);?>" />
   <input type="hidden" id="numLine" value="<?php echo($numLine);?>" />
   <div id="wrap">
-   <!--<?php if ($_SESSION['username']!='guest'){require("inc/sessione.php"); }?>-->
    <div id="content" class="<?php echo $borderContent; ?>">
-    <div id="logoSchedaSx"></div>
-
-    <div id="livelloScheda" class="hidden">
-     <ul>
-      <li id="liv1">PRIMO LIVELLO</li>
-      <li id="liv2">SECONDO LIVELLO</li>
-      <li id="liv3">TERZO LIVELLO</li>
-     </ul>
-    </div>
-    
     <div id="logoSchedaDx"><img src="img/layout/loghiSchede/<?php echo($logo);?>.png" alt="logo scheda" /></div>
 
  <div id="skArcheoContent">
   <div class="inner primo">
-   <div style="width:450px; float:left; margin-left:-70px;" class="check bassa">
+   <div style="width:450px; float:left;" class="check bassa">
         <table class="mainData">
           <tr>
            <td>
@@ -630,32 +630,27 @@ WHERE
   scheda.id = $id
 order by id_scheda asc;
 ");
-         $rana = pg_query($connection, $qana);
-         $aana = pg_fetch_array($rana, 0, PGSQL_ASSOC);
-         $rowana = pg_num_rows($rana);
-
-         $id_comune_ana=$aana['id_comune'];
-         $comune_ana=$aana['comune'];
-         $id_localita_ana=$aana['id_localita'];
-         $id_indirizzo_ana=$aana['id_indirizzo'];
-         $localita_ana=$aana['localita'];
-         $indirizzo_ana=$aana['indirizzo'];
-         //if($id_localita_ana != 6) {$localita_ana=$aana['localita'];}
-         //if($id_indirizzo_ana != 42) {$indirizzo_ana=$aana['indirizzo'];}
-
-
-         $idana = $aana['ana_id'];
-         $nomeana= $aana['nome']; if($nomeana == '') {$nomeana=$nd;}
-         //$indirizzoana= $comune_ana." ".$indirizzo_ana." ".$localita_ana;
-         $telana= $aana['tel']; if($telana == '') {$telana=$nd;}
-         $mailana= $aana['mail']; if($mailana == '') {$mailana=$nd;}
-         $webana= $aana['web'];
-         if($webana == '') {$webana=$nd;}
-         else {$linkana='<a href="http://'.$webana.'" target="_blank" class="generico" title="[link esterno]">'.$webana.'</a>';}
-         $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
-
-
-        ?>
+$rana = pg_query($connection, $qana);
+$aana = pg_fetch_array($rana, 0, PGSQL_ASSOC);
+$rowana = pg_num_rows($rana);
+$id_comune_ana=$aana['id_comune'];
+$comune_ana=$aana['comune'];
+$id_localita_ana=$aana['id_localita'];
+$id_indirizzo_ana=$aana['id_indirizzo'];
+$localita_ana=$aana['localita'];
+$indirizzo_ana=$aana['indirizzo'];
+//if($id_localita_ana != 6) {$localita_ana=$aana['localita'];}
+//if($id_indirizzo_ana != 42) {$indirizzo_ana=$aana['indirizzo'];}
+$idana = $aana['ana_id'];
+$nomeana= $aana['nome']; if($nomeana == '') {$nomeana=$nd;}
+//$indirizzoana= $comune_ana." ".$indirizzo_ana." ".$localita_ana;
+$telana= $aana['tel']; if($telana == '') {$telana=$nd;}
+$mailana= $aana['mail']; if($mailana == '') {$mailana=$nd;}
+$webana= $aana['web'];
+if($webana == '') {$webana=$nd;}
+else {$linkana='<a href="http://'.$webana.'" target="_blank" class="generico" title="[link esterno]">'.$webana.'</a>';}
+$noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
+?>
        <div class="toggle check bassa">
         <div class="sezioni <?php echo $bgSez; ?>"><h2>ANAGRAFICA</h2></div>
         <div class="slide">
@@ -685,7 +680,7 @@ order by id_scheda asc;
                <div class="valori"><?php echo($linkana); ?></div>
                <br/>
                <label>NOTE</label>
-               <div class="valori" style="height:240px;overflow:auto;"><?php echo(nl2br($noteana)); ?></div>
+               <div class="valori" style="height:240px;overflow:auto;"><?php echo(nl2br($a['ana_note'])); ?></div>
              </td>
            </tr>
            <?php if($_SESSION['username']!='guest') {?>
@@ -890,9 +885,9 @@ order by id_scheda asc;
      <table class="mainData" style="width:98% !important;">
       <tr>
        <td width="50%;">
-        <!--<label>DENOMINAZIONE RICERCA</label>
+        <label>DENOMINAZIONE RICERCA</label>
         <div class="valori"><?php echo($denric); ?></div>
-        <br/>-->
+        <br/>
         <label>COMPILATORE</label>
         <div class="valori"><?php echo($compilatore); ?></div>
         <br/>
@@ -900,12 +895,12 @@ order by id_scheda asc;
         <div class="valori"><?php echo($datacmp); ?></div>
        </td>
        <td>
-        <!--<label>ENTE RESPONSABILE</label>
+        <label>ENTE RESPONSABILE</label>
         <div class="valori"><?php echo($enresp); ?></div>
         <br/>
         <label>RESPONSABILE RICERCA</label>
         <div class="valori"><?php echo($respric); ?></div>
-        <br/>-->
+        <br/>
         <label>NOTE</label>
         <div class="valori"><?php echo($notecmp); ?></div>
        </td>
@@ -1068,9 +1063,9 @@ $(document).ready(function() {
     cache: false
   });//ajax1
  });
-
- $("#apriLicenze").click(function(){ console.log('ciao');$("#licenzeWrap").fadeIn('fast'); });
- $("#chiudiLicenze").click(function(){ $("#licenzeWrap").fadeOut('fast'); });
+ $("#headLogo, #headTitle").click(function(){ window.open('index.php', '_self'); });
+ $("#apriLicenze").click(function(){$("#licenzeWrap").fadeIn('fast'); });
+ $("#chiudiLicenze").click(function(){console.log('ciao'); $("#licenzeWrap").fadeOut('fast'); });
 
  //menù sessione
  $('.submenu').hide();
@@ -1283,6 +1278,11 @@ if(height > width){
 
 });
 
+$(".mainLink").click(function(e) {
+ var div = $(this).attr('id')
+ $("body").append('<form action="index.php" method="post" id="poster"><input type="hidden" name="div" value="' + div + '" /></form>');
+ $("#poster").submit();
+});
 
 $(".arrow_box").hide();
 $("i").hover(function(){
@@ -1301,7 +1301,7 @@ format = 'image/png';
 numPoly = '<?php echo($numPoly); ?>';
 numLine = '<?php echo($numLine); ?>';
 param = '<?php echo($param);?>';
-stile='<?php echo($stile);?>';
+stile='<?php echo($styleGeom);?>';
 var cql = param.slice(0, -4);
 
 if ((numPoly > 0 && numLine >= 0)){
@@ -1346,16 +1346,13 @@ var report = function(e) { OpenLayers.Console.log(e.type, e.feature.id); };
 
 if (numPoly != 0) {
  aree = new OpenLayers.Layer.WMS("Aree","http://www.lefontiperlastoria.it:80/geoserver/fonti/wms",{
-        	layers: 'fonti:area_int_poly', 
-	//styles: stile,
-	srs: 'EPSG:3857',
-	format: 'image/png',
-	transparent: true,
-	CQL_FILTER: cql
-	
-},{
-	isBaseLayer: false, 
-	tileSize: new OpenLayers.Size(256,256)
+  layers: 'fonti:area_int_poly', 
+  styles: stile,
+  srs: 'EPSG:3857',
+  format: 'image/png',
+  transparent: true,
+  CQL_FILTER: cql
+},{isBaseLayer: false, tileSize: new OpenLayers.Size(256,256)
 });
  mappa.addLayer(aree);
 }

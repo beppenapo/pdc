@@ -40,7 +40,7 @@
   <h2 class="h2aperto">DESCRIZIONE CARTOGRAFIA</h2>
   <table style="width:98% !important;">
     <tr>
-     <td>
+     <td style="width:50% !important;">
       <label>TITOLO</label>
       <div class="valori"><?php echo stripslashes($cartoArr['titolo']); ?></div>
      </td>
@@ -84,7 +84,7 @@
  
  <div class="toggle check bassa">
   <div class="sezioni <?php echo $bgSez; ?>">
-   <h2>DATI TENICI</h2>
+   <h2>DATI TECNICI</h2>
   </div>
   <div class="slide" style="">
    <table style="width:50% !important;">

@@ -73,7 +73,7 @@ textarea.noteform{height: 100px}
 .primo{margin-top:32px !important;}
 .h2aperto{padding:0px !important; margin:5px 0px 0px 5px !important;font-size: 16px;}
 .disabilitata {background-color: #d2d2d2; color:#9D9898;}
-
+.pointer{cursor: pointer;}
 a.archeologica{background-color: rgba(113,255,64,0.1) !important;}
 a.archivistica{background-color: rgba(255,0,255,0.1) !important;}
 a.bibliografica{background-color: rgba(255,255,0,0.1) !important;}

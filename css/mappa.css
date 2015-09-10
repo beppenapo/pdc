@@ -1,0 +1,146 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:500,600,400,300);
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+@import url("reset.css");
+@import url("default.css");
+@import url("../../css/ico-font/css/font-awesome.css");
+@import url("head.css");
+
+html,body{overflow:hidden;}
+
+/***************** generici ***************************/
+a{text-decoration: none;}
+/****************  stili mappa full screen *****************/
+#map { margin: 0px; padding:0px; width: 100%; height: 100%;}
+
+div#text, div#result { position: absolute; font-family: "Lucida Grande", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif; font-size: 100%; color: #222; height: auto; margin: 0px auto; overflow:hidden; z-index: 20000; background-color: rgba(255,255,255,0.8);}
+div#text{top: 16%;right: 60px;width: 125px;padding: 15px 10px;}
+div#text h1{text-align:center;}
+div#text h1.switcher{text-align:left !important;margin-bottom:5px;}
+div#text h1{font-size:11px; color:#43321C; text-align:center;}
+div#text h2{font-size:10px; color:#43321C;}
+div#ricerca{ margin:20px 1px 5px 1px; padding:0px; border-top:1px solid #67573F; overflow:hidden;}
+div#ricercaToggle{cursor:default;}
+div.sezioni{border:1px solid #67573F;margin:-1px 2px; padding:0px 1px;}
+div.sezioni:hover{background-color:#CFC4B1; cursor:pointer;}
+div.sezioni h2{padding:1px 0px !important; margin:0px !important;}
+div#switcher{font-size:7px;}
+div#nord{position:absolute;top:85%;right:1px;width:60px;height:60px;z-index:1005;background: url(../img/icone/nord.png) no-repeat center center;}
+img.infoImg{vertical-align: bottom; cursor: pointer;}
+input.checkLiv{width: 10px; height: 10px;padding: 0px; margin:0px; vertical-align: bottom; position: relative; top: 0px; *overflow: hidden;
+}
+.olControlPanZoom { width: 45px; height: 143px; margin-top: 75%; margin-left:10px; background-color: rgba(255,255,255,0.4) !important; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; transition: background 0.5s linear; -moz-transition: background 0.5s linear; -webkit-transition: background 0.5s linear; -o-transition: background 0.5s linear; }
+.olControlPanZoom:hover {background: rgba(255,255,255,0.5);}
+#coord, #scalebar{ position: absolute; bottom: 1px; font-family: "Lucida Grande", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+ font-size: 70%; text-align:center; color: #67573F; margin: 0px auto; z-index: 20000; background-color: rgba(255,255,255,0.5); padding: 0px 0.5em 0.5em 0.5em;-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}
+#coord { left: 60%; width: 150px; height: auto; padding: 6px;}
+#scalebar{ left: 40%; width: 180px; height: auto;}
+
+div.livelli{position: relative; display: block;width: 125px; margin:5px 0px;font-size:10px;}
+.legende{float:right; width: 20px; height:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
+.legendeAreeBiblio{background-color: rgba(231,149,91,1);}
+.legendeAreeFoto{background-color: rgba(97,108,229,1);}
+.legendeAreeOrale{background-color: rgba(110,152,52,1);}
+.legendeAreeCarto{background-color: rgba(255,92,118,1);}
+
+#sliderWrap{ position:absolute; top:20px; right:10px; height:237px; width:40px; margin:0px auto !important; padding: 0px; background-color: rgba(255,255,255,0.8); z-index: 20000;}
+#slider{float:right;height:185px;width:5px;margin:20px 5px 0px 0px;}
+.sliderLivelli{height:auto !important; display: block;margin-top:5px;}
+.sliderOpacity{width:100px !important; height:5px !important; margin:0px;}
+.amount{float:right; font-size: 8px; margin-top: -8px;}
+.ui-slider .ui-slider-handle{width:1em !important;height:1em !important; cursor:move !important;}
+
+#sliderLabel{ font-family: "Lucida Grande", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif; font-size: 60%; font-weight:bold; color: #222; padding:5px 0px 5px 4px;}
+.sliderTip{ position: absolute; width: 20px; height: 10px; background: none; color: #000; font-size: 8px; border-bottom:1px dotted #000;
+ z-index: 20000; text-align: center; margin-left:-25px; margin-top:0px;}
+
+/**** Barra di scala ******/
+.olControlScaleBarBar { height: 1px; top: 14px; background: #67573F;}
+.olControlScaleBarBarAlt { height: 1px; top: 14px; background:#67573F;}
+.olControlScaleBarMarkerMajor { height: 7px; width: 1px; top: 11px; background: #67573F;}
+.olControlScaleBarMarkerMinor { height: 5px; width: 1px; top: 12px; background: #67573F;}
+.olControlScaleBarNumbersBox { width: 40px; height: 13px; top: 21px; font-size: 0.8em;}
+.olControlScaleBarLabelBox { top: -2px; height: 15px; font-weight: bold; letter-spacing: 0.1em; font-size: 0.8em; font-variant: small-caps;}
+.olControlScaleBarLabelBoxSingleLine { height: 15px; width: 35px; top: 5px; left: 10px; font-size: 0.8em; font-variant: small-caps;}
+/*********  Google attribution   *****************/
+.olLayerGooglePoweredBy.olLayerGoogleV3.gmnoprint{display:none !important;}
+/********** sfondo pannello comandi ****************/
+div#pannello{ position:absolute; top:70%; left:6px; padding: 5px; width:40px; height:180px; background-color: rgba(255,255,255,0.5); z-index: 1000;}
+/*********  Comando zoom area *************/
+div#zoomArea{position:absolute; left:18px; top:70%;z-index: 1005; width:27px; height:27px; cursor:pointer;background: url(../img/icone/zoomArea.png) no-repeat center center;background-color: none !important;margin-top: 150px;}
+#zoomIn, #pan{width:27px !important;height:27px !important;}
+/*********  Comando drag *************/
+div#drag{position:absolute; left:18px; top:70%;z-index: 1005; width:27px; height:27px; cursor:pointer;background: url(../img/icone/drag.png) no-repeat center center;background-color: none !important;margin-top: 110px;}
+/*********  Comando di zoom max extent  *************/
+div#zoomMax{position:absolute; left:18px; top:70%;z-index: 1005; width:27px; height:27px; cursor:pointer;background: url(../img/icone/zoom_world.png) no-repeat center center;background-color: none !important;margin-top: 20px;}
+div.olControlZoom{top:70% !important;left:18px !important; background: none !important;}
+div.olControlZoom a {background: rgba(45,36,3,0.2) !important;width:18px !important;height: 17px !important;}
+div.olControlZoom a:hover{background: rgba(45,36,3,0.7) !important;}
+a.olControlZoomIn{margin-bottom:25px !important; border-top: 1px solid #2D2403;border-radius: 10px 10px 0px 0px !important;}
+a.olControlZoomOut{border-bottom: 1px solid #2D2403;border-radius: 0px 0px 10px 10px !important;}
+a.olControlZoomIn, a.olControlZoomOut{border-left: 1px solid #2D2403;border-right: 1px solid #2D2403;}
+/**********  history *************/
+div#history{ position:absolute; top: 70%; left:9px; z-index: 1005; width: 50px; height: auto !important; margin-top: 80px; background: rgba(45,36,3,0) !important;}
+.olControlNavigationHistory  {background-image:none !important;background-repeat:no-repeat;height:25px !important;width:25px !important;float:left;cursor:pointer;}
+.olControlNavigationHistoryPreviousItemActive { background-image:url(../img/icone/zoomPrev.png) !important;background-position: -1px 0px !important;}
+.olControlNavigationHistoryPreviousItemInactive { background-image:url(../img/icone/zoomPrev.png) !important;background-position: -1px 0px !important;}
+.olControlNavigationHistoryNextItemActive { background-image:url(../img/icone/zoomNext.png) !important; background-position: -1px 0px !important;}
+.olControlNavigationHistoryNextItemInactive { background-image:url(../img/icone/zoomNext.png) !important; background-position: -1px 0px !important;}
+/**************** popup wmsfeatureinfo *************************************/
+.ulContent{position: relative;width: 250px;height: 110px;overflow: auto;}
+ul.ulpopup{margin: 0px 0px 10px 4px !important; padding:0px !important;}
+ul.ulpopup li{font-size: 0.5em;list-style: none; width: 220px;margin-left:10px;padding:2px 0px;}
+.h1popupBiblio,.h1popupCarto,.h1popupFoto,.h1popupOrale{font-size: 13px; margin:5px 0px 0px 0px}
+.h2popupBiblio,.h2popupCarto,.h2popupFoto,.h2popupOrale{font-size:12px;margin:2px 0px 3px 0px;padding:0px;width:100%;border-bottom: 1px solid;}
+
+.h1popupBiblio, a.popupBiblio{color:#FF9F36;}
+.h2popupBiblio{border-bottom-color:#FF9F36;}
+
+.h1popupCarto, a.popupCarto{color:#28C2E5;}
+.h2popupCarto{border-bottom-color:#28C2E5;}
+
+.h1popupFoto, a.popupFoto{color:#28C2E5;}
+.h2popupFoto{border-bottom-color:#28C2E5;}
+
+.h1popupOrale, a.popupOrale{color:#52C734;}
+.h2popupOrale{border-bottom-color:#52C734;}
+
+/**********************  Risultato ricerca ************************/
+div#result{ top: 90px; left: -325px; width: 300px; height:50%; padding:0px; margin:0px;-webkit-border-top-right-radius: 10px;-webkit-border-bottom-right-radius: 10px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
+div#resultHeader{width:100%; /*background-color: #ac5a00;*/ float:left;}
+div#resHeadImg, .olPopupCloseBox{ width:25px !important; height:25px !important; float:right; cursor: pointer !important; text-transform:uppercase !important; color:#fff !important; background:rgba(203, 132, 46, 1) !important; font-family:"Tahoma", Helvetica, sans-serif !important; text-align:center !important; border-radius:50% !important; -moz-border-radius:50% !important; -webkit-border-radius:50% !important; box-shadow:0px 0px 2px 0px #666 !important; -moz-box-shadow:0px 0px 2px 0px #666 !important; -webkit-box-shadow:0px 0px 2px 0px #666 !important; font-weight:bold !important;}
+div#resHeadImg{font-size:1.3em !important;line-height:1.3em !important;}
+.olPopupCloseBox{font-size:1.125em !important;line-height:1.7em !important;}
+.olPopupCloseBox:before{content:attr(data-icon);}
+div#resultContent{padding:10px;height:100%}
+div#resultContent ul {margin:0px; padding:0px;}
+div#result h1{font-size: 0.7em;color:#43321C; text-transform:uppercase;text-align:center; margin-top:20px;}
+div#resContentData{margin-bottom: 10px;}
+div#resContentData, div#resContentSchede{ width:100%; overflow:auto;}
+div#resContentData{ height:auto;max-height: 40% !important;}
+div#resContentSchede{min-height: 38%; height: auto;max-height: 45%;}
+
+div#resContentData li{ list-style-type: none; margin-left: 10px; font-weight:bold; cursor: pointer;width:235px; padding:2px 0px; font-size:0.7em; transition-property: margin-left; transition-duration: 0.5s; -webkit-transition-property: margin-left; -webkit-transition-duration: 0.5s; -o-transition-property: margin-left; -o-transition-duration: 0.5s; -moz-transition-property: margin-left; -moz-transition-duration: 0.5s;}
+div#resContentData li:hover { margin-left:20px;}
+div#resContentSchede h2{padding:0px; margin:0px; font-size: 0.7em;}
+.ulpopup li h2{font-size: 1.10em !important;}
+div#resContentSchede p {font-size: 0.687em;padding:0px; margin:0px;}
+div#resContentSchede li{margin: 0px 0px 5px 10px;}
+
+/****************  TOOLTIP ***************************************************************/
+.ui-tooltip, .qtip{z-index: 21000 !important;}
+.ui-tooltip-rounded,.ui-tooltip-rounded .ui-tooltip-content,.ui-tooltip-tipsy,.ui-tooltip-tipsy .ui-tooltip-content,.ui-tooltip-youtube,
+.ui-tooltip-youtube .ui-tooltip-content{-moz-border-radius: 6px;-webkit-border-radius: 6px;border-radius: 6px;}
+
+/***************** CLASSI GENERICHE ***************************/
+.hover{cursor:pointer;}
+.active{color: #B10404;}
+
+/**************** AVS *********************/
+#wrapLogoAvs{ position:absolute; top:20px; left:10px; padding: 5px; width:560px; height:50px; background-color: rgba(255,255,255,0.2);
+ color:#fff; z-index: 20000;-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; transition: background 0.5s linear, color 0.5s linear; -moz-transition: background 0.5s linear, color 0.5s linear; -webkit-transition: background 0.5s linear, color 0.5s linear; -o-transition: background 0.5s linear, color 0.5s linear; cursor:pointer; font-family: 'Raleway', sans-serif;}
+div#wrapLogoAvs:hover{ background-color: rgba(255,255,255,0.7);color:#000;}
+#wrapLogoAvs #headLogo{ background-image: url(../img/loghi/logoComunita.png); background-repeat: no-repeat; background-size:contain;
+width: 60px; height: 100%; display: inline-block; }
+#wrapLogoAvs #headTitle{ width: 490px; height: 100%; display: inline-block; vertical-align:top;}
+#wrapLogoAvs #headTitle h1{font-size:1em;padding: 0px !important; margin: 0px !important;}
+#wrapLogoAvs #headTitle h2{font-size:.8em;padding: 0px !important; margin: 0px !important;}

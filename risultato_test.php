@@ -1,13 +1,21 @@
 <?php
 session_start();
 require("inc/db.php");
-$tipi = $_POST['t'];
-$com = ($_POST['com'] == 0)?'c.id > 0':'c.id='.$_POST['com'];
-$loc = ($_POST['loc'] == 0)?'l.id > 0':'l.id='.$_POST['loc'];
-$ind = ($_POST['ind'] == 0)?'i.id > 0':'i.id='.$_POST['ind'];
-$fts = ($_POST['fts'] == 'no')?"":"where fts.v @@ to_tsquery('".$_POST['fts']."')";
+$t = $_POST['t'];
+if(is_array($t)){ $tipi = $t;}else{ $tipi = explode(",",$t);}
+
+$comune = $_POST['com'];
+$localita = $_POST['loc'];
+$indirizzo = $_POST['ind'];
+$vector = $_POST['fts'];
 $ci = $_POST['ci'];
 $cf = $_POST['cf'];
+
+$com = ($comune == 0)?'c.id > 0':'c.id='.$comune;
+$loc = ($localita == 0)?'l.id > 0':'l.id='.$localita;
+$ind = ($indirizzo == 0)?'i.id > 0':'i.id='.$indirizzo;
+$fts = ($vector == 'no')?"":"where fts.v @@ to_tsquery('".$vector."')";
+
 
 $coalesce='';
 if($tipi[0] != 0){
@@ -74,6 +82,14 @@ $row = pg_num_rows($e);
     echo "<header>La ricerca non ha prodotto risultati</header>";
     echo "<div style='display:none'>".$query."</div>";
    }else{?>
+ <input type="hidden" id="filtriStored" value="si" />
+ <input type="hidden" id="tipoStored" value="<?php echo json_encode($t); ?>" />
+ <input type="hidden" id="comStored" value="<?php echo $comune; ?>" />
+ <input type="hidden" id="locStored" value="<?php echo $localita; ?>" />
+ <input type="hidden" id="indStored" value="<?php echo $indirizzo; ?>" />
+ <input type="hidden" id="ftsStored" value="<?php echo $vector; ?>" />
+ <input type="hidden" id="ciStored" value="<?php echo $ci; ?>" />
+ <input type="hidden" id="cfStored" value="<?php echo $cf; ?>" />
  <header>La ricerca ha restituito <?php echo $row; ?> record</header>
  <table class="zebra footable toggle-arrow" data-filter="#filtro" data-filter-text-only="true">
   <thead>
@@ -100,7 +116,7 @@ $row = pg_num_rows($e);
             </div>";
      }
      echo "</td>";
-     echo "<td><a href='scheda_archeo.php?id=".$r['id']."' target='_blank'><i class='fa fa-external-link-square'></i></a></td>";
+     echo "<td><a href='scheda_archeo.php?id=".$r['id']."&p=c'><i class='fa fa-external-link-square'></i></a></td>";
      echo "</tr>";
     }
    
@@ -110,8 +126,20 @@ $row = pg_num_rows($e);
   </table>
 
 <script type="text/javascript">
-$(document).ready(function() {
- 
-
-});
+ var stored = document.getElementById("filtriStored").value;
+ var comStored = document.getElementById("comStored").value;
+ var locStored = document.getElementById("locStored").value;
+ var indStored = document.getElementById("indStored").value;
+ var ftsStored = document.getElementById("ftsStored").value;
+ var ciStored = document.getElementById("ciStored").value;
+ var cfStored = document.getElementById("cfStored").value;
+ var tipiStored= <?php echo json_encode($tipi); ?>;
+ sessionStorage.setItem("stored",stored);
+ sessionStorage.setItem("comStored",comStored);
+ sessionStorage.setItem("locStored",locStored);
+ sessionStorage.setItem("indStored",indStored);
+ sessionStorage.setItem("ftsStored",ftsStored);
+ sessionStorage.setItem("ciStored",ciStored);
+ sessionStorage.setItem("cfStored",cfStored);
+ sessionStorage.setItem("tipiStored",tipiStored);
 </script>

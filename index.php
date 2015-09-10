@@ -6,6 +6,7 @@ if (isset($_GET['site'])) {
  $go = $_GET['site'];
  header('Location: '.$go);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -45,7 +46,19 @@ if (isset($_GET['site'])) {
 var idUsr = "<?php echo($_SESSION['id_user']); ?>";
 var tipoUsr = "<?php echo($_SESSION['tipo']); ?>";
 var hub = "<?php echo($_SESSION['hub']); ?>";
-console.log(hub);
+var div = "<?php echo($_POST['div']); ?>";
+var r = "<?php echo($_GET['r']); ?>";
+
+if(r){
+ var comStored = sessionStorage.getItem("comStored");
+ var locStored = sessionStorage.getItem("locStored");
+ var indStored = sessionStorage.getItem("indStored");
+ var ftsStored = sessionStorage.getItem("ftsStored");
+ var ciStored = sessionStorage.getItem("ciStored");
+ var cfStored = sessionStorage.getItem("cfStored");
+ var tipiStored = sessionStorage.getItem("tipiStored");
+ cerca(tipiStored,comStored,locStored,indStored,ftsStored,ciStored,cfStored);
+}
 $(document).ready(function() {
  /*var c = new Image();
  c.onload = function(){ $("section#image").css({"background-image":"url('img/layout/indexBg.png')","background-size":"cover"});}

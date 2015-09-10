@@ -17,11 +17,11 @@ $tot = pg_num_rows($exec);
   <h2>Comunità Alta Valsugana e Bersntol<br/>Tolgamoa'schòft Hoa Valzegu' ont Bersntol</h2>
  </div>
  <div id="headNav" class="headDiv"> 
-  <div id="record" class="bianco">Al <?php echo utf8_encode($data); ?> l'archivio contiene <?php echo $tot; ?> record</div>
+  <div id="record" class="bianco">Ad oggi l'archivio contiene <?php echo $tot; ?> record</div>
   <nav class="headDiv">
    <ul>
     <li><a href="#" id="progetto" class="mainLink prevent" title="Vai alla pagina del progetto">PROGETTO</a></li>
-    <li><a href="../webgis.php?hub=2" target="_blank" title="Vai alla pagina del webgis">WEBGIS</a></li>
+    <li><a href="webgis.php?hub=2" title="Vai alla pagina del webgis">WEBGIS</a></li>
     <li><a href="#" id="catalogo" class="mainLink prevent" title="Vai alla pagina del catalogo">CATALOGO</a></li>
     <li><a href="#" id="collezioni" class="mainLink prevent" title="Vai alla pagina delle collezioni">COLLEZIONI</a></li>
     <li><a href="#" id="contatti" class="mainLink prevent" title="Vai alla pagina dei contatti">CONTATTI</a></li>

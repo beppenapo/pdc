@@ -25,7 +25,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
        require("db.php");
        $up=("insert into file(id_scheda, path)values($id, '$file');");
        $exec = pg_query($connection, $up);
-       if($exec) {move_uploaded_file($_FILES["file"]["tmp_name"], "../foto/" . $_FILES["file"]["name"]);}
+       if($exec) {move_uploaded_file($_FILES["file"]["tmp_name"], "../foto/" . $_FILES["file"]["name"]);        }
        echo "Immagina caricata!<br/>";
        echo "Entro 5 secondi verrai reindirizzato nella pagina della fonte...<br/>";
        echo "Se la pagina impiega troppo tempo <a href='../scheda_archeo.php?id=".$id."'>clicca qui</a> per tornare alla pagina della fonte";

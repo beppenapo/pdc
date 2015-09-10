@@ -1,6 +1,6 @@
 <div id="licenzeWrap">
  <div id="licenzeDiv">
-  <div id="chiudiLicenze"><i class="fa fa-times"></i></div>
+  <div id="chiudiLicenze"><i class="fa fa-times pointer"></i></div>
   <div id="licenzeTesto">
    <h1>Codice sorgente</h1> 
    <p>Il codice sorgente del presente sito è una rielaborazione del software <a href="http://www.lefontiperlastoria.it" target="_blank" title="[Link esterno] Home page del progetto">lefontiperlastoria.it</a> distribuito dalla <a href="http://www.cooptesto.it" target="_blank" title="[Link esterno] Sito ufficiale della Cooperativa di ricerca TeSto">Cooperativa di ricerca TeSto</a> con licenza <a href="http://www.gnu.org/licenses/agpl.html" target="_blank" title="[Link esterno] Testo originale della licenza AGPL">Affero GPL</a>.</p>
