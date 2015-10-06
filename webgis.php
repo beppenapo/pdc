@@ -21,8 +21,8 @@ if($_SESSION['hub']){
 <link rel="stylesheet" href="css/head.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="css/google.css" type="text/css">
 <link rel="stylesheet" href="lib/OpenLayers-2.12/theme/default/style.css" type="text/css">
-<link rel="stylesheet" href="../lib/jquery-ui-lampi/css/humanity/jquery-ui-1.8.18.custom.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../css/jquery.qtip.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/jquery-ui-lampi/css/humanity/jquery-ui-1.8.18.custom.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" />
 
 </head>
  <body onload="init()"> 
@@ -58,25 +58,25 @@ if($_SESSION['hub']){
      
     <div id="areaToggle" class="hover tip" tip="Mostra/nascondi le aree di interesse"><h1 class="switcher">AREA DI INTERESSE</h1></div>
     <div id='areaSwitch' class="chiuso">
-     <div class="livelli">
-      <input type="checkbox" name="overlays" id="aree_biblio" value="aree_biblio" data-tipo="5" class='checkLiv ai' />
-      <label for="aree_biblio" id="areeBiblioLabel"  class="info" tip="Il livello mostra le aree di interesse bibliografico...">EDITORIA</label>
-      <div class="legende legendeAree legendeAreeBiblio"></div>
-     </div>
      <div class="livelli">       
       <input type="checkbox" name="overlays" id="aree_foto" value="aree_foto" data-tipo="7" class='checkLiv ai' />
       <label for="aree_foto" id="areeFotoLabel"  class="info" tip="Il livello mostra le aree di interesse fotografico...">FOTOGRAFIA </label>
       <div class="legende legendeAree legendeAreeFoto"></div>
      </div>
      <div class="livelli">        
+      <input type="checkbox" name="overlays" id="aree_carto" value="aree_carto" data-tipo="10" class='checkLiv ai' /> 
+      <label for="aree_carto" id="areeCartoLabel" class="info" tip="Il livello mostra le aree di interesse per le fonti cartografiche...">CARTOGRAFIA</label>
+      <div class="legende legendeAree legendeAreeCarto"></div>
+     </div>
+     <div class="livelli">        
       <input type="checkbox" name="overlays" id="aree_orale" value="aree_orale" data-tipo="1" class='checkLiv ai' /> 
       <label for="aree_orale" id="areeOraleLabel" class="info" tip="Il livello mostra le aree di interesse per le fonti orali...">AUDIO/VIDEO</label>
       <div class="legende legendeAree legendeAreeOrale"></div>
      </div>
-     <div class="livelli">        
-      <input type="checkbox" name="overlays" id="aree_carto" value="aree_carto" data-tipo="10" class='checkLiv ai' /> 
-      <label for="aree_carto" id="areeCartoLabel" class="info" tip="Il livello mostra le aree di interesse per le fonti cartografiche...">CARTOGRAFIA</label>
-      <div class="legende legendeAree legendeAreeCarto"></div>
+     <div class="livelli">
+      <input type="checkbox" name="overlays" id="aree_biblio" value="aree_biblio" data-tipo="5" class='checkLiv ai' />
+      <label for="aree_biblio" id="areeBiblioLabel"  class="info" tip="Il livello mostra le aree di interesse bibliografico...">PUBBLICAZIONI</label>
+      <div class="legende legendeAree legendeAreeBiblio"></div>
      </div>
 
      <div class="livelli bassa">
@@ -123,17 +123,12 @@ if($_SESSION['hub']){
     <div id="resultContent"></div>
   </div>
  </div>
-  <script type="text/javascript" src="../lib/jquery-ui-lampi/js/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript" src="../lib/jquery-ui-lampi/js/jquery-ui-1.8.18.custom.min.js"></script>
+  <script type="text/javascript" src="lib/jquery-ui-lampi/js/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="lib/jquery-ui-lampi/js/jquery-ui-1.8.18.custom.min.js"></script>
   <script type="text/javascript" src="lib/OpenLayers-2.12/OpenLayers.js"></script>
-  <script type="text/javascript" src="../lib/OpenLayers-2.10/ScaleBar.js"></script>
+  <script type="text/javascript" src="lib/OpenLayers-2.12/ScaleBar.js"></script>
   <script src="http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false"></script>
-  <script type="text/javascript" src="../lib/jquery.qtip.min-2.0.1.js"></script>
+  <script type="text/javascript" src="lib/jquery.qtip.min-2.0.1.js"></script>
   <script src="script/webgis.js"></script>
-  <script type="text/javascript">
-  var hub = '<?php echo($hub); ?>';
-  console.log('hub: '+hub);
-   
- </script>
-    </body> 
+ </body> 
 </html> 

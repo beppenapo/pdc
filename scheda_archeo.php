@@ -4,8 +4,8 @@ if (!isset($_SESSION['username'])){$_SESSION['username']='guest';}
 ini_set( "display_errors", 0);
 require("inc/db.php");
 
-$hub = $_SESSION['hub'];
-$id = $_GET["id"];
+$hub = 2;
+$id = $_POST["id"];
 $tipoUsr = $_SESSION['tipo'];
 $idUsr = $_SESSION['id_user'];
 $schedeUsr = $_SESSION['schede'];
@@ -66,7 +66,7 @@ if($stile == 'fonte orale') {
  $borderContent='borderOrale';
  $bgSez = 'bgSezOrale';
  $bgSezAperto = 'bgSezOraleAperto';
-  $styleGeom = 'audio';
+ $styleGeom = 'audio';
 }
 if($stile == 'bibliografica') {
  $logo = 'logoSkBiblio';
@@ -87,7 +87,7 @@ if($stile == 'cartografica') {
  $borderContent='borderCarto';
  $bgSez = 'bgSezCarto';
  $bgSezAperto = 'bgSezCartoAperto';
-  $styleGeom = 'cartoAvs';
+ $styleGeom = 'cartoAvs';
 }
 
 $numSch = $a['numsch'];
@@ -189,14 +189,15 @@ $extent2 = str_replace(' ', ',', $extent2);
   #licenzeDiv{position:absolute;top:15%;left:15%;bottom:15%;right:15%;background:rgb(255,255,255);border:1px solid #868686;border-radius:5px;}
   #licenzeTesto { overflow: auto; padding: 2%; height: 84%; width: 95.8%;font-size:1em;}
   #chiudiLicenze{background-color: rgb(243, 245, 220); border-radius: 5px 5px 0 0; padding: 1%; height: 4%;text-align:right;}
-  #backDiv{position:absolute; top:16%;width:100%; text-align:center;background-color:#d6d6d6;z-index:20000;}
+  #backDiv{position:fixed; top:16%;width:100%; text-align:center;background-color:#d6d6d6;padding:5px 0px;z-index:19999;}
+  #backDiv a{color:#555753;}
  </style>
 
 </head>
 <body onload="init();">
 <?php require("inc/licenze.php"); ?>
 <header id="head"><?php require_once('inc/head.php')?></header>
-<?php if(isset($_GET['p'])){ ?>
+<?php if(isset($_POST['p'])){ ?>
  <div id="backDiv">
   <a href="index.php?r=si" class="prevent" id="backUrl"><i class="fa fa-arrow-left"></i> torna ai risultati della ricerca</a>
  </div>
@@ -257,16 +258,13 @@ $extent2 = str_replace(' ', ',', $extent2);
           <?php require("inc/form_update/dati_principali.php"); ?>
          </div>
        </div>
-       
-       <?php if(($tpsch==7)||($pag==92)||($pag==63)||($pag==23)||($pag==102))  {?>
-        <div id="switchImgMap">
-          <label class="switchLabel" for="switchMappa">Mappa</label>
+       <div id="switchImgMap">
           <label class="switchLabel" for="switchImg"> Foto</label>
+          <label class="switchLabel" for="switchMappa">Mappa</label>
           <input type="radio" id="switchMappa" class="switchImgMapButton" name="switchImgMapButton" /> 
           <input type="radio" id="switchImg" class="switchImgMapButton" name="switchImgMapButton" />
         </div>
-       <?php }  ?>
-       
+
        <div id="mapImgWrap">
        <?php if($numPoly == 0 && $numLine == 0){?>
          <div id="noMap"> 
@@ -284,12 +282,11 @@ $extent2 = str_replace(' ', ',', $extent2);
        <?php } ?>
          
        <?php 
-          if(($tpsch==7)||($pag==92)||($pag==63)||($pag==23)||($pag==102)) {
-             $imgq = ("select path from file where id_scheda = $id;");
-             $imgexec = pg_query($connection, $imgq);
-             $imgrow = pg_num_rows($imgexec);
-             $imgres = pg_fetch_array($imgexec, 0, PGSQL_ASSOC);
-             $img=$imgres['path'];
+         $imgq = ("select path from file where id_scheda = $id;");
+         $imgexec = pg_query($connection, $imgq);
+         $imgrow = pg_num_rows($imgexec);
+         $imgres = pg_fetch_array($imgexec, 0, PGSQL_ASSOC);
+         $img=$imgres['path'];
        ?>
         <img id="imgOrig" src="../foto/<?php echo($img);?>" style="position:absolute; left:-1000%;">
         <div id="imgDiv">
@@ -312,7 +309,6 @@ $extent2 = str_replace(' ', ',', $extent2);
          <?php }}//else ?>
           </div>
          </div>
-         <?php }//primo if ?>
        </div>
        <div style="clear:both"></div>
 
@@ -1039,7 +1035,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
   <script src="http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false"></script>
   <script type="text/javascript" src="lib/menu.js"></script>
   <script type="text/javascript" src="lib/select.js"></script>
-  <script type="text/javascript" src="lib/update.js"></script>
+  <script type="text/javascript" src="script/update.js"></script>
 
 <script type="text/javascript" >
 var hub = '<?php echo($hub); ?>'
@@ -1124,18 +1120,11 @@ $( "#termfiga2" ).autocomplete({
    $('.slide').hide();
    $('.toggle').click(function(){$(this).children('.slide').slideToggle(); $(this).children('.sezioni').toggleClass(bgSezAperto); });
 
-   if((tiposch==7)||(pag==92)||(pag==63)||(pag==23)||(pag==102)) {
-    if(hub==1){
-     $("#imgDiv").hide();
-     $("#switchMappa").attr("checked", true);
-    }else{
-     $("#switchImg").attr("checked", true); 
-    }
-    $(".switchImgMapButton").change(function(){
+   $("#switchImg").attr("checked", true);
+   $(".switchImgMapButton").change(function(){
      $("#imgDiv").slideToggle("fast"); 
      $("label.switchlabel").toggleClass("switchLabelChecked");
-    });
-   }
+   });
 
 //////////  AGGIORNA STATO SCHEDA ///////////////
 $('#upStatoScheda').click(function(){

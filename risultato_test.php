@@ -116,7 +116,7 @@ $row = pg_num_rows($e);
             </div>";
      }
      echo "</td>";
-     echo "<td><a href='scheda_archeo.php?id=".$r['id']."&p=c'><i class='fa fa-external-link-square'></i></a></td>";
+     echo "<td><a href='#' data-id=".$r['id']." data-p='c' class='linkScheda'><i class='fa fa-external-link-square'></i></a></td>";
      echo "</tr>";
     }
    
@@ -124,7 +124,10 @@ $row = pg_num_rows($e);
    ?>
   </tbody>
   </table>
-
+<form action="scheda_archeo.php" method="post" id="schedaFom">
+ <input type="hidden" name="id" value="" />
+ <input type="hidden" name="p" value="" />
+</form>
 <script type="text/javascript">
  var stored = document.getElementById("filtriStored").value;
  var comStored = document.getElementById("comStored").value;
@@ -142,4 +145,12 @@ $row = pg_num_rows($e);
  sessionStorage.setItem("ciStored",ciStored);
  sessionStorage.setItem("cfStored",cfStored);
  sessionStorage.setItem("tipiStored",tipiStored);
+ 
+ $(".linkScheda").click(function(e) {
+  var id = $(this).data('id');
+  var p = $(this).data('p');
+  $("input[name='id']").val(id);
+  $("input[name='p']").val(p);  
+  $("#schedaFom").submit();
+ });
 </script>

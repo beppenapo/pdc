@@ -60,6 +60,7 @@
   
   <label>LINGUA</label>
   <input type="hidden" value="<?php echo($lingua);?>" id="arrBiblio2Lingua"/>
+  <div class="wrapButton">
   <?php
     $query =  ("SELECT * FROM lista_lingua order by definizione asc; ");
     $result = pg_query($connection, $query);
@@ -70,9 +71,8 @@
       $defLingua = pg_result($result, $i, "definizione");
       echo "<label for='lingua$defLingua' style='display:block;cursor:pointer;margin-bottom:3px; padding-right:3px;'><input type='checkbox' name='biblio2_lingua_update' id='lingua$defLingua' value='$defLingua' />$defLingua</label>";
     }
-
   ?>
-  
+</div>  
   <label>NOTE STORICHE</label>
   <textarea id="biblio2_note_update" class="form noteform"><?php echo($note); ?></textarea>
 

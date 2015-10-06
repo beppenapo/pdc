@@ -15,7 +15,7 @@ header#head {
  background: -o-linear-gradient(#000, #AFB5B9); 
  background: -moz-linear-gradient(#000, #AFB5B9);
  background: linear-gradient(#000, #AFB5B9);*/
- z-index: 20000;
+ z-index: 19998;
 }
 .wrap{width:95%;margin:0px auto;}
 .headDiv{display:inline-block;vertical-align:top;}

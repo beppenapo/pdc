@@ -24,7 +24,7 @@ FROM
   public.foto2, 
   public.scheda
 WHERE 
-  foto2.dgn_numsch2 = scheda.dgn_numsch AND
+  foto2.id_scheda = scheda.id AND
   scheda.id = $id;");
 $r2 = pg_query($connection, $q2);
 $a2 = pg_fetch_array($r2, 0, PGSQL_ASSOC);
@@ -130,7 +130,7 @@ if($note3 == '') {$note3=$nd;}
    <div class="updateContent" style="display:none">
     <?php require("inc/form_update/foto2_descr.php"); ?>
    </div>
-  </div>
+ </div>
    
    <div class="toggle check bassa">
         <div class="sezioni <?php echo $bgSez; ?>"><h2>DATI TECNICI</h2></div>

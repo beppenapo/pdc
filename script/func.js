@@ -90,9 +90,9 @@ $(document).ready(function() {
     };
     $( "#slider" ).slider({
      range: true,
-     min: 1800,
+     min: 1500,
      max: currentYear,
-     values: [ 1800, currentYear ],
+     values: [ 1500, currentYear ],
      step: 1,
      slide: function( e, ui ){tooltip($(this),ui);},              
      create:function(e,ui){tooltip($(this),ui);}
@@ -166,9 +166,32 @@ $(document).ready(function() {
       $.getJSON( "inc/ftsSearchAutocomplete.php", request, function( data, status, xhr ) { cache[ term ] = data; response( data ); });
     }
    });
-   
+   /*-------------------------------*/
+   $(".viewRec").click(function(){
+    var ana = $(this).data('ana');
+    var nome = $(this).data('nome');
+    var rec = $(this).data('rec');
+    $("#nomeCollezione").text(rec+' record presenti nella collezione: '+nome);
+    $("#viewRecDiv").fadeIn('fast');
+    $.ajax({
+     url: 'inc/collezioniRec.php',
+     type: 'POST',
+     data: {ana:ana},
+     success: function(data){ 
+      $('#viewRecTab > tbody').html(data); 
+      $(".viewScheda").click(function(e) {
+       var id = $(this).data('id');
+       $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
+       $("#viewScheda").submit();
+      });
+     }
+    });
+    $("#viewRecDivHead i").click(function(){
+     $("#viewRecDiv").fadeOut('fast');
+    });
+   });
+   /*-------------------------------*/
   }); 
-
  });//mainLink function
  
  $("#apriLicenze").click(function(){ $("#licenzeWrap").fadeIn('fast'); });
@@ -252,9 +275,9 @@ function mainLink(i){
     };
     $( "#slider" ).slider({
      range: true,
-     min: 1800,
+     min: 1500,
      max: currentYear,
-     values: [ 1800, currentYear ],
+     values: [ 1500, currentYear ],
      step: 1,
      slide: function( e, ui ){tooltip($(this),ui);},              
      create:function(e,ui){tooltip($(this),ui);}
@@ -329,7 +352,31 @@ function mainLink(i){
       $.getJSON( "inc/ftsSearchAutocomplete.php", request, function( data, status, xhr ) { cache[ term ] = data; response( data ); });
     }
    });
-   
+   /*-------------------------------*/
+   $(".viewRec").click(function(){
+    var ana = $(this).data('ana');
+    var nome = $(this).data('nome');
+    var rec = $(this).data('rec');
+    $("#nomeCollezione").text(rec+' record presenti nella collezione: '+nome);
+    $("#viewRecDiv").fadeIn('fast');
+    $.ajax({
+     url: 'inc/collezioniRec.php',
+     type: 'POST',
+     data: {ana:ana},
+     success: function(data){ 
+      $('#viewRecTab > tbody').html(data); 
+      $(".viewScheda").click(function(e) {
+       var id = $(this).data('id');
+       $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
+       $("#viewScheda").submit();
+      });
+     }
+    });
+    $("#viewRecDivHead i").click(function(){
+     $("#viewRecDiv").fadeOut('fast');
+    });
+   });
+   /*-------------------------------*/
   }); 
 }
 

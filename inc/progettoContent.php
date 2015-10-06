@@ -52,7 +52,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
  <?php
   require("../../inc/db.php");
   $arch = ("
-     select a.id, l.definizione as tipo, a.nome as titolare, a.web, i.indirizzo ||', '||c.cap||' '||c.comune as indirizzo, a.mail, a.tel, a.fax, count(s.id) as record
+     select a.id, l.definizione as tipo, nullif(a.nome, '-') as titolare, a.web, i.indirizzo ||', '||c.cap||' '||c.comune as indirizzo, nullif(a.mail,'-') as mail, a.tel||'/'||a.fax as tel, count(s.id) as record
      from ricerca r
      left join scheda s on s.cmp_id = r.id
      left join anagrafica a on s.ana_id = a.id
@@ -75,7 +75,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
     <th data-hide="phone">indirizzo</th>
     <th data-hide="phone">email</th>
     <th data-hide="phone">tel/fax</th>
-    <th data-hide="phone">numero record raccolti</th>
+    <th data-hide="phone">record raccolti</th>
     <th data-hide="phone">sito web</th>
    </tr>
   </thead>
@@ -86,16 +86,32 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
      echo "<tr>";
      echo "<td>".$record['tipo']."</td>";
      echo "<td>".$record['titolare']."</td>";
-     echo "<td>".$record['indirizzo']."</td>";
+     echo "<td>".str_replace('-, 0 -','',$record['indirizzo'])."</td>";
      echo "<td>".$record['mail']."</td>";
-     echo "<td>".$record['tel']."/".$record['fax']."</td>";
-     echo "<td style='text-align:center;'>".$record['record']."</td>";
+     echo "<td>".str_replace('-/-','',$record['tel'])."</td>";
+     echo "<td style='text-align:center;cursor:pointer;' class='viewRec' data-rec='".$record['record']."' data-nome='".$record['titolare']."' data-ana='".$record['id']."'>".$record['record']."</td>";
      echo "<td style='text-align:center;'>".$web."</td>";
      echo "</tr>";
     }
    ?>
   </tbody>
  </table>
+ <div id="viewRecDiv">
+  <div id="viewRecDivHead"><span id="nomeCollezione"></span><i class="fa fa-times-circle-o pointer closeDiv"></i></div>
+  <div class='wrapTable'>
+   <table id="viewRecTab" class="zebra footable toggle-arrow" data-filter="#filtro" data-filter-text-only="true">
+    <thead>
+     <tr class='csv'>
+      <th data-sort-initial="true">RECORD N.</th>
+      <th data-hide="phone">DENOMINAZIONE OGGETTO</th>
+      <th data-hide="phone">CRONOLOGIA</th>
+      <th data-hide="phone"></th>
+     </tr>
+    </thead>
+    <tbody></tbody>
+   </table>
+  </div>
+ </div>
 </div>
 
 <div id="catalogo">
@@ -235,9 +251,59 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
 </div>
 
 <div id="contatti">
-
+<header>CONTATTI<i class="fa fa-times-circle-o pointer removeContent"></i></header>
+ <article>
+  <p><b>SEZIONE IN AGGIORNAMENTO</b></p>
+  <br/>
+ </article>
 </div>
 
 <div id="istruzioni">
-
+<header>ISTRUZIONI <i class="fa fa-times-circle-o pointer removeContent"></i></header>
+ <article>
+  <p><b><font size="+2">Il WebGIS</font></b></p>
+  <br/>
+  	<p><b>Come navigare nella mappa</b></p>
+  	<p>Il pannello degli strumenti pan (spostamento) e zoom (ingrandimento) è in basso a sinistra. Contiene, partendo dall’alto:</p>
+  	<p>• l’icona con segni + e – indica lo zoom avanti e indietro nella mappa (lo zoom si ottiene anche con il doppio click), il pulsante “mondo” tra i segni + e – consente di tornare alla scala di partenza;</p>
+  	<p>• le icone frecce a sinistra e a destra permettono di muoversi all’interno della cronologia degli zoom;</p>
+  	<p>• il pulsante rotondo con le quattro frecce (pan) consente di tornare, dopo lo zoom, ad usare il mouse come puntatore per spostare ed interrogare la mappa;</p>
+  	<p>• l’icona “lente di ingrandimento” permette di selezionare l’area da ingrandire, cliccando e trascinando il puntatore.</p>
+  <br/>
+  <p><b>Cartografia di base</b></p>
+  	<p>La parte superiore del pannello principale, in alto a destra, è dedicata alla cartografia di base.</p>
+  	<p>È possibile scegliere tra due tipi di visualizzazioni: la prima (già impostata e denominata “satellite”) è quella aerofotografica Bing Maps Aerial (Data by <a target = '_blank' href="http://www.microsoft.com/maps/">Microsoft® Bing™ Maps</a>), basata su fotografie scattate nel settembre 2012.</p>
+  	<p>Selezionando openstreetmap viene invece visualizzata la mappa OpenStreetMap (Data CC-By-SA by <a target = '_blank' href="http://www.openstreetmap.org/">OpenStreetMap</a>).</p>
+  	<p>Sono inoltre già impostate le opzioni comuni e toponomastica: la prima evidenzia i confini amministrativi dei territori comunali; la seconda permette di visualizzare – una volta ingrandita sufficientemente la mappa – i principali toponimi.</p>
+  	<p>Per annullare queste opzioni, è sufficiente spuntare i box di selezione corrispondenti.</p>
+  <br/>
+  <p><b>Aree di interesse</b></p>
+  	<p>Le aree di interesse relative alle fonti schedate sono distinte in base alla tipologia di fonte a cui si riferiscono (fotografia, cartografia, audio/video, pubblicazioni) ciascuna delle quali è associata a un colore diverso (fotografia: blu; cartografia: rosso; audio/video: verde; pubblicazioni: arancione). 
+	<p>Spuntando una o più categorie si visualizzano le aree di interesse corrispondenti.</p>
+	<p>Cliccando sulla scritta “area di interesse” si attivano contemporaneamente le aree di tutte le categorie di fonti.</p>
+	<p>La barra scorrevole sottostante l’elenco delle fonti permette di aumentare o diminuire la trasparenza delle aree di interesse.</p> 
+	<p>Utilizzando il pulsante pan (il puntatore con le quattro frecce nel pannello in basso a sinistra) è possibile interrogare le aree di interesse visualizzate.</p>
+	<p>Cliccando sulla mappa all’interno di un’area colorata, si apre un box in cui vengono elencate le geometrie – dalla più piccola alla più grande – che contengono il punto selezionato. Ad esempio: se si clicca sulla geometria relativa a un edificio del centro storico di Pergine, nel box verranno elencate le seguenti geometrie: l’edificio stesso, il centro storico, l’area urbana, il territorio comunale del Comune di Pergine, la Comunità Alta Valsugana e Bersntol.</p>
+	<p>Scorrendo il puntatore sull’elenco, senza cliccare, tali aree vengono evidenziate in blu sulla mappa: ciò permette di individuare in modo immediato la geometria che interessa interrogare.</p>
+	<p>Cliccando sulla geometria prescelta la mappa viene automaticamente ingrandita entro i limiti di quella geometria ed appare l’elenco delle schede associate ad essa.</p>
+	<p>Ogni scheda è individuata da un codice alfanumerico colorato (es: f3176): cliccando su quest’ultimo è possibile aprire direttamente la scheda.</p>
+	<p>Si badi che i risultati dell’elenco sono relativi esclusivamente alle categorie di fonti selezionate nel pannello a destra (ad esempio, se si sceglie di visualizzare le aree di interesse delle fonti fotografiche, nel box compariranno solo schede fotografiche, anche se la stessa geometria è condivisa da fonti di altro tipo).</p>
+  <br/>
+  <br/>
+  <p><b><font size="+2">Il CATALOGO</font></b></p>
+  <br/>
+  	<p><b>La struttura e le modalità di ricerca</b></p>
+  	<p>Il Catalogo contiene schede appartenenti a quattro tipologie di documentazione (fotografia, cartografia, audio/video, pubblicazioni).</p>
+	<p>È possibile eseguire una ricerca per Tipo di documentazione, per Parole chiave (ICONCLASS Sistema 2; N.B. questa possibilità non è attualmente attiva), per Area geografica (comune e località), Full Text, per Cronologia.</p>
+	<p>Nei risultati della ricerca per ogni record sono indicati i seguenti dati: il numero della scheda, la denominazione dell’oggetto schedato, la cronologia specifica della fonte. Dai risultati della ricerca è possibile accedere direttamente a una preview in formato ridotto del materiale contenuto nella scheda (per es. fotografia) e alla scheda.</p>
+	<br/>
+	<p>La ricerca Full Text si basa su un thesaurus chiuso costantemente aggiornato di frammenti di vocaboli (i lexems utilizzati nella <a target = '_blank' href="http://www.postgresql.org/docs/8.3/static/textsearch-intro.html">Full Text Search</a> di PostgreSQL) terminanti con asterisco: ad es. mas*, masc*, mascher*…</p>
+	<p>Per facilitare la ricerca, non appena si digitano delle lettere nell’apposita stringa di immissione, compare una lista di suggerimenti dalla quale selezionare il vocabolo. </p>
+	<p>Scelto il vocabolo da ricercare, si clicca sul pulsante “lente di ingrandimento”.</p>
+	<p>La ricerca Full Text permette l’utilizzo incrociato di più vocaboli, legati da diverse combinazioni logiche:</p>
+	<p>• AND consente di visualizzare i record in cui sono presenti tutte le parole digitate;</p>
+	<p>• OR seleziona i record in cui compare almeno una delle parole ricercate;</p>
+	<p>• NOT, infine, serve per individuare i record che contengono una parola e che contemporaneamente ne escludono un’altra. </p>
+  <br/>
+ </article>
 </div>

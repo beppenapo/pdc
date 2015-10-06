@@ -21,7 +21,7 @@ $tot = pg_num_rows($exec);
   <nav class="headDiv">
    <ul>
     <li><a href="#" id="progetto" class="mainLink prevent" title="Vai alla pagina del progetto">PROGETTO</a></li>
-    <li><a href="webgis.php?hub=2" title="Vai alla pagina del webgis">WEBGIS</a></li>
+    <li><a href="webgis.php" title="Vai alla pagina del webgis">WEBGIS</a></li>
     <li><a href="#" id="catalogo" class="mainLink prevent" title="Vai alla pagina del catalogo">CATALOGO</a></li>
     <li><a href="#" id="collezioni" class="mainLink prevent" title="Vai alla pagina delle collezioni">COLLEZIONI</a></li>
     <li><a href="#" id="contatti" class="mainLink prevent" title="Vai alla pagina dei contatti">CONTATTI</a></li>
