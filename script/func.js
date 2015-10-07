@@ -171,6 +171,8 @@ $(document).ready(function() {
     var ana = $(this).data('ana');
     var nome = $(this).data('nome');
     var rec = $(this).data('rec');
+    $('.zebra tr').removeClass('highLight');
+    $(this).parent('tr').addClass('highLight');
     $("#nomeCollezione").text(rec+' record presenti nella collezione: '+nome);
     $("#viewRecDiv").fadeIn('fast');
     $.ajax({
@@ -357,6 +359,8 @@ function mainLink(i){
     var ana = $(this).data('ana');
     var nome = $(this).data('nome');
     var rec = $(this).data('rec');
+    $('.zebra tr').removeClass('highLight');
+    $(this).parent('tr').addClass('highLight');
     $("#nomeCollezione").text(rec+' record presenti nella collezione: '+nome);
     $("#viewRecDiv").fadeIn('fast');
     $.ajax({
@@ -365,6 +369,31 @@ function mainLink(i){
      data: {ana:ana},
      success: function(data){ 
       $('#viewRecTab > tbody').html(data); 
+         $('.imgLink').click(function(e){
+    e.preventDefault();
+    $(".imgContent").hide();
+    $('.zebra tr').removeClass('highLight');
+    $(this).parent('td').parent('tr').addClass('highLight');
+    var id = $(this).data('id');
+    var y = $(this).position().top;
+    var src = '../foto/'+$(this).data('src');
+    var img = new Image();
+    var w, h;
+    img.src = src;
+    img.onload = function(){
+     w = this.width/2;
+     h = this.height/2;
+     $("#imgContent"+id)
+     .css({"top":y,"width":w,"height":h, "background-image":"url("+src+")"})
+     .fadeIn('fast')
+     //.click(function(){window.open('scheda_archeo.php?id='+id, '_blank');})
+     ;
+     $('.chiudiThumb').click(function(){
+       $(this).parent('div').fadeOut('fast');
+       $('.zebra tr').removeClass('highLight');
+     });
+    };
+   });
       $(".viewScheda").click(function(e) {
        var id = $(this).data('id');
        $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
@@ -386,11 +415,15 @@ function cerca(tipo,comSel,locSel,indSel,vect,ci,cf){
   url: 'risultato_test.php',
   type: 'POST',
   data: {t:tipo,com:comSel,loc:locSel,ind:indSel,fts:vect,ci:ci,cf:cf},
-  beforeSend: function() {
-   $("#filtroButt i").removeClass('fa-search').addClass('fa-spinner fa-spin');
-  },
+  beforeSend: function() { $("#filtroButt i").removeClass('fa-search').addClass('fa-spinner fa-spin'); },
   success: function(data){ 
    $('section#main').html(data); 
+   if(r){
+    $('html, body').stop().animate({scrollTop: $("#main").offset().top-headH-100}, 800);
+    $('.imgLink').each(function(){
+     if($(this).data('id')== s){$(this).parent('td').parent('tr').addClass('highLight');}
+    });
+   }
    $('.imgLink').click(function(e){
     e.preventDefault();
     $(".imgContent").hide();
@@ -415,8 +448,6 @@ function cerca(tipo,comSel,locSel,indSel,vect,ci,cf){
        $('.zebra tr').removeClass('highLight');
      });
     };
-
-    
    });
   }
   //, complete: function() { $("#filtroButt i").addClass('fa-search'); },

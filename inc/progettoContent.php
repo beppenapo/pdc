@@ -106,6 +106,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
       <th data-hide="phone">DENOMINAZIONE OGGETTO</th>
       <th data-hide="phone">CRONOLOGIA</th>
       <th data-hide="phone"></th>
+      <th data-hide="phone"></th>
      </tr>
     </thead>
     <tbody></tbody>
@@ -253,7 +254,17 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
 <div id="contatti">
 <header>CONTATTI<i class="fa fa-times-circle-o pointer removeContent"></i></header>
  <article>
-  <p><b>SEZIONE IN AGGIORNAMENTO</b></p>
+  <p><b>Comunità Alta Valsugana e Bersntol</b></p>
+  	<p>Servizio Urbanistica</p>
+	<p>P.zza Gavazzi, 4</p>
+	<p>38057 - PERGINE VALSUGANA (TN)</p>
+	<p>Tel. 0461 519530</p>
+	<p>Fax. 0461 531620</p>
+	<p>e-mail: <a href="mailto:servizio.urbanistica@comunita.altavalsugana.tn.it">servizio.urbanistica@comunita.altavalsugana.tn.it</a></p>
+	<br/>
+	<p>Ideazione e coordinamento scientifico e organizzativo dell’Archivio Iconografico dei Paesaggi di Comunità e del correlato sito web: Vittorio Curzel, e-mail: <a href="mailto:vittorio.curzel@tsm.tn.it">vittorio.curzel@tsm.tn.it</a></p>
+	<br/>
+	<p>Progettazione di database e webgis e implementazione del sito web: Cooperativa di ricerca TeSto - territorio, storia e società, e-mail: <a href="mailto:cooperativa.testo@gmail.com">cooperativa.testo@gmail.com</a></p>
   <br/>
  </article>
 </div>
@@ -294,7 +305,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
   <br/>
   	<p><b>La struttura e le modalità di ricerca</b></p>
   	<p>Il Catalogo contiene schede appartenenti a quattro tipologie di documentazione (fotografia, cartografia, audio/video, pubblicazioni).</p>
-	<p>È possibile eseguire una ricerca per Tipo di documentazione, per Parole chiave (ICONCLASS Sistema 2; N.B. questa possibilità non è attualmente attiva), per Area geografica (comune e località), Full Text, per Cronologia.</p>
+	<p>È possibile eseguire una ricerca per Tipo di documentazione, per Parole chiave (ICONCLASS Sistema 2; N.B. questa possibilità non è attualmente attiva), per Area geografica (comune e località), per contenuto (ricerca Full Text), per Cronologia. Queste modalità di ricerca possono essere anche combinate fra loro.</p>
 	<p>Nei risultati della ricerca per ogni record sono indicati i seguenti dati: il numero della scheda, la denominazione dell’oggetto schedato, la cronologia specifica della fonte. Dai risultati della ricerca è possibile accedere direttamente a una preview in formato ridotto del materiale contenuto nella scheda (per es. fotografia) e alla scheda.</p>
 	<br/>
 	<p>La ricerca Full Text si basa su un thesaurus chiuso costantemente aggiornato di frammenti di vocaboli (i lexems utilizzati nella <a target = '_blank' href="http://www.postgresql.org/docs/8.3/static/textsearch-intro.html">Full Text Search</a> di PostgreSQL) terminanti con asterisco: ad es. mas*, masc*, mascher*…</p>

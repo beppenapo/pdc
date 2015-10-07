@@ -88,7 +88,7 @@ if($_SESSION['hub']){
     </div><!--areaSwitch-->
    </div><!--switcher-->
    <?php if($hub!=2){?>
-   <div id="ricerca">     
+   <!--<div id="ricerca">     
     <div id="ricercaToggle"  class="tip" tip="Mostra/nascondi i form per la ricerca avanzata"><h1>RICERCA</h1></div>
     <div id="formRicerca" class="chiuso">
      <div class="sezioni" id="datiGenerali"><h2>DATI GENERALI</h2></div>
@@ -102,8 +102,8 @@ if($_SESSION['hub']){
      <div class="sezioni" id="bibliografica"><h2>BIBLIOGRAFICA</h2></div>
      <div class="sezioni" id="fotografica"><h2>FOTOGRAFICA</h2></div>
      <div class="sezioni" id="orale"><h2>ORALE</h2></div>
-    </div><!--div formRicerca --> 
-   </div><!-- div ricerca --> 
+    </div>
+   </div>--> 
    <?php } ?>
   </div><!--div text -->
   

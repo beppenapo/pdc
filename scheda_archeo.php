@@ -199,7 +199,7 @@ $extent2 = str_replace(' ', ',', $extent2);
 <header id="head"><?php require_once('inc/head.php')?></header>
 <?php if(isset($_POST['p'])){ ?>
  <div id="backDiv">
-  <a href="index.php?r=si" class="prevent" id="backUrl"><i class="fa fa-arrow-left"></i> torna ai risultati della ricerca</a>
+  <a href="index.php?r=si&s=<?php echo $id; ?>" class="prevent" id="backUrl"><i class="fa fa-arrow-left"></i> torna ai risultati della ricerca</a>
  </div>
 <?php } ?>
  <div id="container">

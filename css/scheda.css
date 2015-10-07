@@ -76,87 +76,26 @@ table.tableInfo{width:100%; margin-left:-10px !important; font-size:1em;}
 .avviso{color:red !important;}
 .errore{background-color: #d86a6a;}
 label.input{cursor: pointer;}
-a.altrif{
-	text-decoration: none;
- 	padding:0px 5px;
- 	margin-left: 5px;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px; 
-}
-input:focus, textarea:focus {
-outline: none !important;
-border:1px solid orange;;
-box-shadow: 0 0 10px #719ECE;
-}
+a.altrif{text-decoration: none;padding:0px 5px;margin-left: 5px;border-radius: 10px;-moz-border-radius: 10px;-webkit-border-radius: 10px;}
+input:focus, textarea:focus {outline: none !important;border:1px solid orange;box-shadow: 0 0 10px #719ECE;}
 input.submit{padding:3px 5px;cursor: pointer;border:1px solid grey;}
 input.submit:hover{background-color: grey;}
-
 div.checkboxDiv{background-color:white;width:93%;padding:10px; border:1px solid #cacaca;}
-
 .switchLabel{width:50px; padding:3px 6px;background-color: #dddddd;color:#3b3b3b;border:1px solid #cacaca;cursor:pointer;}
 .switchLabel:hover{background-color: #cacaca;}
 .switchLabelChecked{background-color: #cacaca;}
 .switchImgMapButton{visibility: hidden; }
-
-
-div#logoSchedaSx{
-	position:relative;
-	float: left;
-	margin:10px 0px 0px -35px;
-   width:145px;
-   height:50px;
-   z-index: 5;
-}
+div#logoSchedaSx{position:relative;float: left;margin:10px 0px 0px -35px;width:145px;height:50px;z-index: 5;}
 div#logoSchedaSx img{opacity:0.4; filter:alpha(opacity=40); /* IE8 */}
-
-div#livelloScheda{
- position:relative;
- float:left;
- margin:-10px auto 0px;
- width: 800px;
- /*z-index:1000;*/
-}
-div#livelloScheda ul{
- width:400px;
- margin:0px auto !important;
- padding:0px !important;
-}
-
-div#livelloScheda li,li#catalogoTitle{
- float:left;	
- text-align: center;
- padding:3px 0px !important;
- border:1px solid #FFBF96;
- background-color: rgb(255,255,255);
- color:#DAD6D1;
- margin:0px !important;
-}
+div#livelloScheda{position:relative;float:left;margin:-10px auto 0px;width: 800px;}
+div#livelloScheda ul{width:400px;margin:0px auto !important;padding:0px !important;}
+div#livelloScheda li,li#catalogoTitle{float:left;text-align: center;padding:3px 0px !important;border:1px solid #FFBF96;background-color: rgb(255,255,255);color:#DAD6D1;
+margin:0px !important;}
 div#livelloScheda li{width: 130px;}
 li#catalogoTitle {width: 390px !important;}
-div#logoSchedaDx{
- position:relative;
- float:right;
- margin: -35px -60px 0px 0px;
- width:170px;
- height:170px;
- z-index: 1000;
-}	
-
-div#skArcheoContent{
-	width: 950px;
-	height:100%;
-	margin:0px auto !important;
-}
-
-div.inner, div.halfInner{
-  position:relative;
-  z-index: 10;
-  border:1px solid #96867B;
-  background-color: #ffffff;
-  margin-bottom:10px;
-}
-
+div#logoSchedaDx{position:relative;float:right;margin: -35px -60px 0px 0px;width:170px;height:170px;z-index: 1000;}
+div#skArcheoContent{width: 950px;height:100%;margin:0px auto !important;}
+div.inner, div.halfInner{position:relative;z-index: 10;border:1px solid #96867B;background-color: #ffffff;margin-bottom:10px;}
 div.inner{width:950px;}
 div.inner h1{font-size: 22px !important; width: 200px !important;margin:0px !important;padding:0px !important;}
 div.inner label {font-size: 13px;}
@@ -212,7 +151,7 @@ div#fine{border-top:1px solid #96867B; border-bottom:1px solid #96867B; backgrou
 .ui-widget-header {border:none; background: #ECECEC; color: #907F73; font-weight: bold;font-size:1em;}
 .ui-autocomplete { max-height: 200px; overflow-y: auto; overflow-x: hidden; }
 * html .ui-autocomplete {height: 200px;}
-
+.ui-widget-header .ui-icon {background-image: url(../lib/jquery_friuli/css/start/images/ui-icons_056b93_256x240.png) !important;}
 /********** mappa piccola *****/
 div.olControlZoom a, a.baseButton {background: #F8F8F6 !important; background: rgba(248, 248, 246, 0.5) !important;}
 div.olControlZoom a:hover, a.baseButton:hover {background: #A5A56B !important;}
