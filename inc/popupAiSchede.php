@@ -7,35 +7,35 @@ $dir = 'scheda_archeo.php?id=';
 
 $query = ("
 SELECT 
-  aree.id AS id_area, 
+  area.id AS id_area, 
   scheda.id AS id_scheda, 
   scheda.dgn_numsch, 
   cronologia.cro_spec, 
   scheda.dgn_dnogg, 
   lista_dgn_tpsch.css
 FROM 
-  public.aree, 
-  public.aree_scheda, 
-  public.scheda, 
-  public.cronologia, 
-  public.lista_dgn_tpsch
+  area, 
+  aree_scheda, 
+  scheda, 
+  cronologia, 
+  lista_dgn_tpsch
 WHERE 
-  aree_scheda.id_area = aree.id AND
+  aree_scheda.id_area = area.id AND
   aree_scheda.id_scheda = scheda.id AND
   scheda.dgn_tpsch = lista_dgn_tpsch.id AND
   cronologia.id_scheda = scheda.id AND
-  aree.tipo = 1 AND 
+  area.tipo <> 2 AND 
   scheda.fine = 2 AND
-  aree.id = $idArea AND
-  ($tpsch)
+  area.id = $idArea AND ($tpsch)
 ORDER BY dgn_numsch ASC;
 
 ");
 
 $result = @pg_query($connection, $query);
 $righe = @pg_num_rows($result);
-if(!$result){echo "<div id='resContentHeader'><h1>$h1</h1></div>";}
-else {
+if(!$result){
+    echo "<div id='resContentHeader'><h1>$h1</h1></div>";
+}else {
    echo "<ul id='listaSchede'>";
    if($righe > 0) {
     for ($x = 0; $x < $righe; $x++){

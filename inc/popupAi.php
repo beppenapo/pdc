@@ -17,7 +17,7 @@ for($x=0; $x<$i; $x++ ) { $id .= 'area_int_poly.id = '.$array[$x].' OR '; }
 $items = substr($id, 0, -4);
 $items2 = str_replace("area_int_poly.id","area_int_line.id",$items);
 
-for($z=0; $z<$y; $z++ ) { $tipo .= 'dgn_tpsch = '.$arrayActive[$z].' OR '; }
+for($z=0; $z<$y; $z++ ) { $tipo .= 'scheda.dgn_tpsch = '.$arrayActive[$z].' OR '; }
 $tpsch = substr($tipo, 0, -4);
 
 for($h=0; $h<$w; $h++ ) { $idarea .= 'id_area = '.$arrayArea[$h].' OR '; }
@@ -28,22 +28,24 @@ SELECT
   area_int_poly.id, 
   comune.comune, 
   localita.localita,
-  aree.id as id_area,
+  area.id as id_area,
   st_area(area_int_poly.the_geom) as misura,
   st_xmin(area_int_poly.the_geom) as xmin, 
   st_xmax(area_int_poly.the_geom) as xmax, 
   st_ymin(area_int_poly.the_geom) as ymin, 
   st_ymax(area_int_poly.the_geom) as ymax
 FROM 
-  public.area_int_poly, 
-  public.aree, 
-  public.localita, 
-  public.comune
+  area_int_poly, 
+  area,
+  aree, 
+  localita, 
+  comune
 WHERE 
-  area_int_poly.id_area = aree.id AND
+  area_int_poly.id_area = area.id AND
+  aree.nome_area = area.id and
   aree.id_localita = localita.id AND
   aree.id_comune = comune.id AND
-  aree.tipo = 1 and
+  area.tipo <> 2 and
   ($items) AND
   ($area)
 
@@ -53,19 +55,21 @@ SELECT
   area_int_line.id, 
   comune.comune, 
   localita.localita,
-  aree.id as id_area,
+  area.id as id_area,
   st_length(area_int_line.the_geom) as misura,
   st_xmin(area_int_line.the_geom) as xmin, 
   st_xmax(area_int_line.the_geom) as xmax, 
   st_ymin(area_int_line.the_geom) as ymin, 
   st_ymax(area_int_line.the_geom) as ymax
 FROM 
-  public.area_int_line, 
-  public.aree, 
-  public.localita, 
-  public.comune
+  area_int_line, 
+  area,
+  aree, 
+  localita, 
+  comune
 WHERE 
   area_int_line.id_area = aree.id AND
+  aree.nome_area = area.id and
   aree.id_localita = localita.id AND
   aree.id_comune = comune.id AND
   aree.tipo = 1 and
@@ -104,12 +108,12 @@ else {
 <script type="text/javascript">
 var tpsch = "<?php echo($tpsch); ?>";
 function openSchede(idArea){
-   //console.log('area: '+idArea+'\ntipo: '+tpsch+'\nhub: '+hub);
+   //console.log('area: '+idArea+'\ntipo: '+tpsch);
    $.ajax({
     url: 'inc/popupAiSchede.php',
     type: 'POST',
     data: {idArea:idArea, tpsch:tpsch, hub:2},
-    success: function(data){$("#resContentSchede").html(data);}
+    success: function(data){console.log(data);$("#resContentSchede").html(data);}
    });//ajax*/
 }
 

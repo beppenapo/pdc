@@ -130,11 +130,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
   </label>
   <label for="tipoStampa" class="labelRadio pointer">
    PUBBLICAZIONI <input type="checkbox" id="tipoStampa" name="tipoButt" value="5">
-  </label>
-  
-  
-  
-  
+  </label>  
  </div>
  <div class="filtro">
   <h1>PAROLA CHIAVE</h1>
@@ -163,7 +159,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
      SELECT comune.id AS idcomune, comune.comune
      FROM aree, aree_scheda, scheda, ricerca, comune
      WHERE aree.id_comune = comune.id 
-       AND aree_scheda.id_area = aree.id 
+       AND aree_scheda.id_area = aree.nome_area
        AND aree_scheda.id_scheda = scheda.id 
        AND scheda.cmp_id = ricerca.id 
        AND ricerca.hub = 2
@@ -184,7 +180,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
      SELECT localita.id as idlocalita,localita.localita
      FROM aree, aree_scheda, scheda, ricerca, localita
      WHERE aree.id_localita = localita.id
-       AND aree_scheda.id_area = aree.id 
+       AND aree_scheda.id_area = aree.nome_area 
        AND aree_scheda.id_scheda = scheda.id 
        AND scheda.cmp_id = ricerca.id 
        AND ricerca.hub = 2
@@ -205,7 +201,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
      SELECT distinct i.id as idindirizzo, i.cap||' - '||i.indirizzo as indirizzo
      FROM aree, aree_scheda, scheda, ricerca, indirizzo i
      WHERE aree.id_indirizzo= i.id
-       AND aree_scheda.id_area = aree.id 
+       AND aree_scheda.id_area = aree.nome_area 
        AND aree_scheda.id_scheda = scheda.id
        AND scheda.cmp_id = ricerca.id
        AND ricerca.hub = 2

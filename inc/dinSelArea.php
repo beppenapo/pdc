@@ -9,7 +9,7 @@ if($com == 0){
   SELECT localita.id as idlocalita,localita.localita
   FROM aree, aree_scheda, scheda, ricerca, localita
   WHERE aree.id_localita = localita.id
-    AND aree_scheda.id_area = aree.id 
+    AND aree_scheda.id_area = aree.nome_area 
     AND aree_scheda.id_scheda = scheda.id 
     AND scheda.cmp_id = ricerca.id 
     AND ricerca.hub = 2
@@ -22,7 +22,7 @@ if($com == 0){
   SELECT distinct i.id as idindirizzo, i.cap||' - '||i.indirizzo as indirizzo
   FROM aree, aree_scheda, scheda, ricerca, indirizzo i
   WHERE aree.id_indirizzo= i.id
-    AND aree_scheda.id_area = aree.id 
+    AND aree_scheda.id_area = aree.nome_area 
     AND aree_scheda.id_scheda = scheda.id
     AND scheda.cmp_id = ricerca.id
     AND ricerca.hub = 2
@@ -35,7 +35,7 @@ if($com == 0){
   FROM aree, aree_scheda, scheda, ricerca, comune c, localita l
   WHERE aree.id_localita = l.id
     AND l.comune = c.id
-    AND aree_scheda.id_area = aree.id 
+    AND aree_scheda.id_area = aree.nome_area 
     AND aree_scheda.id_scheda = scheda.id 
     AND scheda.cmp_id = ricerca.id 
     AND ricerca.hub = 2
@@ -47,7 +47,7 @@ if($com == 0){
   FROM aree, aree_scheda, scheda, ricerca, comune c, indirizzo i
   WHERE aree.id_indirizzo = i.id
     AND i.comune = c.id
-    AND aree_scheda.id_area = aree.id 
+    AND aree_scheda.id_area = aree.nome_area
     AND aree_scheda.id_scheda = scheda.id 
     AND scheda.cmp_id = ricerca.id 
     AND ricerca.hub = 2

@@ -35,16 +35,16 @@ with
  tipo as (select s.id, s.dgn_numsch, s.dgn_dnogg
           from scheda s, ricerca r 
           where s.cmp_id = r.id and r.hub = 2 and s.fine = 2 and ($tipo))
-,area as (select t.id, t.dgn_numsch, t.dgn_dnogg
+,a as (select t.id, t.dgn_numsch, t.dgn_dnogg
           from tipo t
           left join aree_scheda a on a.id_scheda = t.id
-          left join aree on a.id_area = aree.id
+          left join aree on a.id_area = aree.nome_area
           left join comune c on aree.id_comune = c.id
           left join localita l on aree.id_localita = l.id
           left join indirizzo i on aree.id_indirizzo = i.id
           where $com and $loc and $ind)
 ,crono as (select a.id, a.dgn_numsch, a.dgn_dnogg, c.cro_spec
-           from area a, cronologia c 
+           from a, cronologia c 
            where a.id = c.id_scheda and ((c.cro_iniz between $ci and $cf) or (c.cro_fin between $ci and $cf)))
 , fts as (select c.id
         , c.cro_spec

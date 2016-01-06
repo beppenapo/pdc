@@ -11,36 +11,7 @@ $idUsr = $_SESSION['id_user'];
 $schedeUsr = $_SESSION['schede'];
 $idMappa = $id;
 $nd = 'Dato non presente';
-
-$q1 =  ("
- SELECT
-  scheda.id,
-  scheda.livello,
-  scheda.dgn_numsch as numsch,
-  scheda.dgn_dnogg,
-  scheda.dgn_tpsch,
-  lista_dgn_tpsch.definizione AS tipo_scheda,
-  scheda.dgn_livind,
-  lista_dgn_livind.definizione AS individuazione,
-  scheda.dgn_note,
-  scheda.scn_note,
-  scheda.note,
-  scheda.ana_note,
-  scheda.noteai,
-  scheda.noteubi,
-  cronologia.cro_spec,
-  scheda.fine
- FROM
-  public.scheda,
-  public.lista_dgn_tpsch,
-  public.lista_dgn_livind,
-  public.cronologia
- WHERE
-  scheda.dgn_tpsch = lista_dgn_tpsch.id AND
-  scheda.dgn_livind = lista_dgn_livind.id AND
-  cronologia.id_scheda = scheda.id AND
-  scheda.id = $id;
-");
+$q1 =  ("SELECT scheda.id, scheda.livello,scheda.dgn_numsch as numsch, scheda.dgn_dnogg, scheda.dgn_tpsch, lista_dgn_tpsch.definizione AS tipo_scheda, scheda.dgn_livind, lista_dgn_livind.definizione AS individuazione, scheda.dgn_note, scheda.scn_note, scheda.note, scheda.ana_note, scheda.noteai, scheda.noteubi, cronologia.cro_spec, scheda.fine FROM scheda, lista_dgn_tpsch, lista_dgn_livind, cronologia WHERE scheda.dgn_tpsch = lista_dgn_tpsch.id AND scheda.dgn_livind = lista_dgn_livind.id AND cronologia.id_scheda = scheda.id AND scheda.id = $id;");
 $r = pg_query($connection, $q1);
 $a = pg_fetch_array($r, 0, PGSQL_ASSOC);
 $rC = pg_num_rows($r);
@@ -50,15 +21,30 @@ $tpsch = $a['dgn_tpsch'];
 $tipologiaScheda = $a['tipo_scheda'];
 $livind = $a['dgn_livind'];
 $fine = $a['fine'];
+
+if($tpsch==1){
+    $upload = "uploaded_audio.php";
+    $submitLabel = "Carica audio";
+    $noFile="<h2>Non sono presenti file audio</h2>";
+    $tipoFile = 2;
+    $folder = "audio/";
+    $mapSwitch="multimedia";
+}else{
+    $upload = "uploaded_file.php";
+    $submitLabel = "Carica foto";
+    $noFile = "<h2>Non sono presenti foto</h2>";
+    $tipoFile = 1;
+    $folder = "../foto/";
+    $mapSwitch="foto";
+}
+
+
 $statoScheda=($fine == 1)?'APERTA':'CHIUSA';
-
 $upStatoScheda=($fine == 1)?'upVal=2':'upVal=1';
-
 $cro_spec = stripslashes($a['cro_spec']);
 if($cro_spec == '0') {$cro_spec = 'Cronologia assente';}
 $dgn_ogg=stripslashes($a['dgn_dnogg']);
 $pag = $tpsch.$livello;
-
 $stile = $a['tipo_scheda'];
 if($stile == 'fonte orale') {
  $stile = 'orale'; 
@@ -162,6 +148,12 @@ $extent = str_replace(' ', ',', $extent);
 $extent2 = $g4['extent2'];
 $extent2 = substr($extent2, 4, -1);
 $extent2 = str_replace(' ', ',', $extent2);
+
+$imgq = ("select path from file where id_scheda = $id and tipo = $tipoFile;");
+$imgexec = pg_query($connection, $imgq);
+$imgrow = pg_num_rows($imgexec);
+$imgres = pg_fetch_array($imgexec, 0, PGSQL_ASSOC);
+$img=$imgres['path'];
 ?>
 
 <!DOCTYPE html>
@@ -191,6 +183,7 @@ $extent2 = str_replace(' ', ',', $extent2);
   #chiudiLicenze{background-color: rgb(243, 245, 220); border-radius: 5px 5px 0 0; padding: 1%; height: 4%;text-align:right;}
   #backDiv{position:fixed; top:16%;width:100%; text-align:center;background-color:#d6d6d6;padding:5px 0px;z-index:19999;}
   #backDiv a{color:#555753;}
+  #uploadForm input{margin-top:10px;width:60%;}
  </style>
 
 </head>
@@ -259,7 +252,7 @@ $extent2 = str_replace(' ', ',', $extent2);
          </div>
        </div>
        <div id="switchImgMap">
-          <label class="switchLabel" for="switchImg"> Foto</label>
+          <label class="switchLabel" for="switchImg"><?php echo $mapSwitch; ?></label>
           <label class="switchLabel" for="switchMappa">Mappa</label>
           <input type="radio" id="switchMappa" class="switchImgMapButton" name="switchImgMapButton" /> 
           <input type="radio" id="switchImg" class="switchImgMapButton" name="switchImgMapButton" />
@@ -279,34 +272,39 @@ $extent2 = str_replace(' ', ',', $extent2);
            <a href="#" class="baseButton" id="osm" onclick="mappa.setBaseLayer(osm)">OSM</a>
           </div>
          </div>
-       <?php } ?>
-         
        <?php 
-         $imgq = ("select path from file where id_scheda = $id;");
-         $imgexec = pg_query($connection, $imgq);
-         $imgrow = pg_num_rows($imgexec);
-         $imgres = pg_fetch_array($imgexec, 0, PGSQL_ASSOC);
-         $img=$imgres['path'];
+        }
+        if($tpsch==1){
+        
+        }else{ 
        ?>
-        <img id="imgOrig" src="../foto/<?php echo($img);?>" style="position:absolute; left:-1000%;">
+        <img id="imgOrig" src="<?php echo($folder.$img);?>" style="position:absolute; left:-1000%;">
+       <?php } ?>
         <div id="imgDiv">
          <div id="noImgAlert">
          <?php
           if($imgrow > 0) {
-             echo "<img id=\"imgSmall\" src='../foto/".$img."' />";
-             echo "<div id='panelFoto'><label id='ingrFoto' scheda='$id'>ingrandisci</label>&nbsp;&nbsp;";
-             if($idUsr) {echo"<label id='delFoto' scheda='$id' img='$img'>elimina</label>";}
-             echo"</div>";
+             if($tpsch!=1){
+                echo "<img id='imgSmall' src='".$folder.$img."' />";
+                echo "<div id='panelFoto'><label id='ingrFoto' scheda='$id'>ingrandisci</label>&nbsp;&nbsp;";
+                if($idUsr) {echo"<label id='delFoto' scheda='$id' img='$img'>elimina</label>";}
+            }else{
+                echo "<audio preload='none' controls>";
+                echo "<source src='".$folder.$img."' type='audio/mp3'>";
+                echo "Il tuo browser non supporta l'elemento audio";
+                echo "</audio>";
+            }
+            echo"</div>";
           }else{
-             echo "<h2>Non sono presenti foto</h2>";
+             echo $noFile;
              if($idUsr) {
          ?>          
-           <form action="inc/uploaded_file.php" method="post" enctype="multipart/form-data">
+           <form action="inc/<?php echo $upload; ?>" method="post" id="uploadForm" enctype="multipart/form-data">
              <input type="hidden" name="schedaFoto" value="<?php echo($id);?>" />
              <input type="file" name="file" id="file"><br>
-             <input type="submit" name="submit" value="Carica foto">
+             <input type="submit" name="submit" value="<?php echo $submitLabel; ?>">
            </form>
-         <?php }}//else ?>
+         <?php }} ?>
           </div>
          </div>
        </div>
@@ -1029,7 +1027,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
  <div id="siFoto" class="login2">SI, procedi con l'eliminazione</div>
 </div>
 
-<div id="fotoOrig" style="display:none;"><img src="../foto/<?php echo($img); ?>" /></div>
+<?php if($tpsch!=1){?><div id="fotoOrig" style="display:none;"><img src="<?php echo($folder.$img); ?>" /></div><?php } ?>
 
   <script type="text/javascript" src="lib/OpenLayers-2.12/OpenLayers.js"></script>
   <script src="http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false"></script>
@@ -1188,6 +1186,7 @@ $('#delFoto').click(function(){
 });
 
 //////////// ingrandisci foto  //////////////////
+if(tiposch!=1){
 $('#ingrFoto').click(function () {
 	$('#fotoOrig').dialog({
       //autoOpen: false,
@@ -1199,7 +1198,7 @@ $('#ingrFoto').click(function () {
       //buttons: {'Chiudi form': function() {$(this).dialog('close');}}//buttons
    });//dialog
 });
-
+}
 
 
 ///////// FORM UPDATE /////////////////
@@ -1233,7 +1232,7 @@ $('.chiudiForm').click(function(){ $(this).closest('.ui-dialog-content').dialog(
 var tag1 = $("#tag1Div").data('tag1');
 $("#tag1Sel option[value="+tag1+"]").attr("selected", true);
 
-
+if(tiposch!=1){
 //var ratio, height, width;
 var imgThumb = $('#imgOrig');
 //var imgThumb = document.getElementById("imgOrig");
@@ -1265,7 +1264,8 @@ if(height > width){
     height = height * ratio;
 }
 
-});
+}
+
 
 $(".mainLink").click(function(e) {
  var div = $(this).attr('id')
@@ -1278,7 +1278,7 @@ $("i").hover(function(){
   var tip = $(this).data('class');
   $("."+tip).toggle();
 });
-
+});
 </script>
 
 <script type="text/javascript">

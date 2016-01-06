@@ -22,3 +22,5 @@ table {border-collapse:collapse;border-spacing:0;}
 hr {display:block;height:1px;border:0;border-top:1px solid #cccccc;margin:1em 0;padding:0;}
 input, select {vertical-align:middle;}
 input, textarea, select{width:99%;box-sizing:content-box;ms-box-sizing:content-box;-moz-box-sizing:content-box;-webkit-box-sizing:content-box; }
+label[for]{cursor:pointer;}
+select{-moz-appearance: none;}

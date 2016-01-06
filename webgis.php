@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])){$_SESSION['username']='guest';}
+if (!isset($_SESSION['id_user'])){$_SESSION['id_user']=0;}
 if($_SESSION['hub']){
  $hub=$_SESSION['hub'];
 }else{
@@ -43,19 +43,35 @@ if($_SESSION['hub']){
     <div id="cartografiaToggle"><h1 class="switcher">CARTOGRAFIA DI BASE</h1></div>
     <div id='cartografiaSwitch'>
      <div class="livelli">
-      <input type="radio" name="baselayer" value="gsat" class='checkLiv' onclick="map.setBaseLayer(gsat)" checked /> SATELLITE
+      <input type="radio" name="baselayer" id="gsat" value="gsat" class='checkLiv' onclick="map.setBaseLayer(gsat)" checked />
+      <label for="gsat">SATELLITE</label>
      </div>
      <div class="livelli">
-      <input type="radio" name="baselayer" value="osm" class='checkLiv' onclick="map.setBaseLayer(osm)" />OPENSTREETMAP
+      <input type="radio" name="baselayer" id="osm" value="osm" class='checkLiv' onclick="map.setBaseLayer(osm)" />
+      <label for="osm">OPENSTREETMAP</label>
      </div>
      <div class="livelli">
-      <input type="checkbox" name="baselayer" id="comuni"class='checkLiv' value="comuni" checked/><label id="comuniLabel">COMUNI</label>
+      <input type="checkbox" name="baselayer" id="comuni"class='checkLiv' value="comuni" checked/>
+      <label for="comuni" id="comuniLabel">COMUNI</label>
      </div>
      <div class="livelli">
-      <input type="checkbox" name="baselayer" id="toponomastica"class='checkLiv' value="toponomastica" checked/><label id="toponomasticaLabel">TOPONOMASTICA</label>
+      <input type="checkbox" name="baselayer" id="toponomastica"class='checkLiv' value="toponomastica" checked/>
+      <label for="toponomastica" id="toponomasticaLabel">TOPONOMASTICA</label>
      </div>
     </div><!--cartografiaSwitch-->
-     
+    
+    <div><h1 class="switcher">CARTOGRAFIA STORICA</h1></div>
+    <div>
+     <div class="livelli">
+      <input type="checkbox" name="baselayer" id="catasto1859"class='checkLiv' value="catasto1859" />
+      <label for="catasto1859">CATASTO 1859</label>
+     </div>
+     <div class="livelli">
+      <input type="checkbox" name="baselayer" id="catasto1980"class='checkLiv' value="catasto1980" />
+      <label for="catasto1980">PGTIS 1983</label>
+     </div>
+    </div> 
+    
     <div id="areaToggle" class="hover tip" tip="Mostra/nascondi le aree di interesse"><h1 class="switcher">AREA DI INTERESSE</h1></div>
     <div id='areaSwitch' class="chiuso">
      <div class="livelli">       
@@ -130,5 +146,8 @@ if($_SESSION['hub']){
   <script src="http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false"></script>
   <script type="text/javascript" src="lib/jquery.qtip.min-2.0.1.js"></script>
   <script src="script/webgis.js"></script>
+  <script type="text/javascript">
+   var u = <?php echo $_SESSION["id_user"]; ?>;
+  </script>
  </body> 
 </html> 

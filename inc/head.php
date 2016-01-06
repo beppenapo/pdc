@@ -32,4 +32,4 @@ $tot = pg_num_rows($exec);
  </div>
 </div>
 
- <?php if (isset($_SESSION['id_user'])){require("inc/sessione.php"); }?>
+ <?php if (isset($_SESSION['id_user'])&&$_SESSION['id_user']>0){require("inc/sessione.php"); }?>

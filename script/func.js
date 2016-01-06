@@ -181,6 +181,33 @@ $(document).ready(function() {
      data: {ana:ana},
      success: function(data){ 
       $('#viewRecTab > tbody').html(data); 
+      
+      $('.imgLink').click(function(e){
+        e.preventDefault();
+        $(".imgContent").hide();
+        $('.zebra tr').removeClass('highLight');
+        $(this).parent('td').parent('tr').addClass('highLight');
+        var id = $(this).data('id');console.log("idImg:"+id);
+        var y = $(this).position().top;
+        var src = '../foto/'+$(this).data('src');
+        var img = new Image();
+        var w, h;
+        img.src = src;
+        img.onload = function(){
+                w = this.width/2;
+                h = this.height/2;
+                $("#imgContent"+id)
+                .css({"top":y,"width":w,"height":h, "background-image":"url("+src+")"})
+                .fadeIn('fast')
+                //.click(function(){window.open('scheda_archeo.php?id='+id, '_blank');})
+                ;
+                $('.chiudiThumb').click(function(){
+                        $(this).parent('div').fadeOut('fast');
+                        $('.zebra tr').removeClass('highLight');
+                });
+        };
+      });
+      
       $(".viewScheda").click(function(e) {
        var id = $(this).data('id');
        $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
@@ -216,26 +243,24 @@ $(document).ready(function() {
 });
 
 function dinSel(com){
- $.getJSON( "inc/dinSelArea.php", {com:com}, function( data ) { 
-  var u = eval(data);
-  var localita = u.localita;
-  var indirizzi = u.indirizzi;
-  $('#locSel, #indSel').html('');
-  if(localita.length < 1){
-   $('#locSel').append($('<option>', { value: 0, text : 'nessuna località per il Comune selezionato'}));
-  }else{
-   $.each(localita, function (key, value) { 
-    $('#locSel').append($('<option>', { value: value.idlocalita, text : value.localita })); 
-   });
-  }
-  if(indirizzi.length < 1){
-   $('#indSel').append($('<option>', { value: 0, text : 'nessun indirizzo per il Comune selezionato'}));
-  }else{
-   $.each(indirizzi, function (key, value) { $('#indSel').append($('<option>', { value: value.idind, text : value.indirizzo })); });
-  }
-  $('#indSel').prepend($('<option>', { value: 0, text : 'scegli indirizzo'}));
-  $('#locSel').prepend($('<option>', { value: 0, text : 'scegli località'}));
- });
+    $.getJSON( "inc/dinSelArea.php", {com:com}, function( data ) { 
+        var u = eval(data);
+        var localita = u.localita;
+        var indirizzi = u.indirizzi;
+        $('#locSel, #indSel').html('');
+        if(localita.length < 1){
+            $('#locSel').append($('<option>', { value: 0, text : 'nessuna località per il Comune selezionato'}));
+        }else{
+            $('#locSel').append($('<option>', { value: 0, text : 'scegli località'}).attr("selected", "selected"));
+            $.each(localita, function (key, value) {$('#locSel').append($('<option>', { value: value.idlocalita, text : value.localita })); });
+        }
+        if(indirizzi.length < 1){
+            $('#indSel').append($('<option>', { value: 0, text : 'nessun indirizzo per il Comune selezionato'}));
+        }else{
+            $('#indSel').append($('<option>', { value: 0, text : 'scegli indirizzo'}).attr("selected", "selected"));
+            $.each(indirizzi, function (key, value) { $('#indSel').append($('<option>', { value: value.idind, text : value.indirizzo })); });
+        }
+    });
 }
 
 function mainLink(i){
@@ -369,31 +394,32 @@ function mainLink(i){
      data: {ana:ana},
      success: function(data){ 
       $('#viewRecTab > tbody').html(data); 
-         $('.imgLink').click(function(e){
-    e.preventDefault();
-    $(".imgContent").hide();
-    $('.zebra tr').removeClass('highLight');
-    $(this).parent('td').parent('tr').addClass('highLight');
-    var id = $(this).data('id');
-    var y = $(this).position().top;
-    var src = '../foto/'+$(this).data('src');
-    var img = new Image();
-    var w, h;
-    img.src = src;
-    img.onload = function(){
-     w = this.width/2;
-     h = this.height/2;
-     $("#imgContent"+id)
-     .css({"top":y,"width":w,"height":h, "background-image":"url("+src+")"})
-     .fadeIn('fast')
-     //.click(function(){window.open('scheda_archeo.php?id='+id, '_blank');})
-     ;
-     $('.chiudiThumb').click(function(){
-       $(this).parent('div').fadeOut('fast');
-       $('.zebra tr').removeClass('highLight');
-     });
-    };
-   });
+      $('.imgLink').click(function(e){
+        e.preventDefault();
+        $(".imgContent").hide();
+        $('.zebra tr').removeClass('highLight');
+        $(this).parent('td').parent('tr').addClass('highLight');
+        var id = $(this).data('id');console.log("idImg:"+id);
+        var y = $(this).position().top;
+        var src = '../foto/'+$(this).data('src');
+        var img = new Image();
+        var w, h;
+        img.src = src;
+        img.onload = function(){
+                w = this.width/2;
+                h = this.height/2;
+                $("#imgContent"+id)
+                .css({"top":y,"width":w,"height":h, "background-image":"url("+src+")"})
+                .fadeIn('fast')
+                //.click(function(){window.open('scheda_archeo.php?id='+id, '_blank');})
+                ;
+                $('.chiudiThumb').click(function(){
+                        $(this).parent('div').fadeOut('fast');
+                        $('.zebra tr').removeClass('highLight');
+                });
+        };
+      });
+      
       $(".viewScheda").click(function(e) {
        var id = $(this).data('id');
        $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');

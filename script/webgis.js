@@ -1,7 +1,7 @@
 /******************************************************************************/
 /*****************  FUNZIONI OPENLAYERS  ******************************************/
 /******************************************************************************/
-var gsat, comuni, comuniLayer,  arrayOSM, osm, toponomastica; //baselayer
+var gsat, comuni, comuniLayer,  arrayOSM, osm, toponomastica,catasto1859,catasto1980, pergine; //baselayer
 var aree_biblio, aree_foto, aree_orale, aree_carto, aree_line, aree; //overlay
 var highlightLayer, listalayer, control, hover,actLayer;
 var info, extent, highlightCtrl, selectCtrl, pan, zoomin, cqlHub; //funzioni o comandi
@@ -46,8 +46,61 @@ comuni = new OpenLayers.Layer.WMS("comuni", "http://www.lefontiperlastoria.it/ge
 },{isBaseLayer: false},{singleTile: true, ratio: 1},{ tileSize: new OpenLayers.Size(256,256)}
 );
 map.addLayer(comuni); 
-
 //comuni.setVisibility(false);
+
+catasto1859 = new OpenLayers.Layer.WMS(
+ "fonti:catasto_1859 - Tiled", "http://lefontiperlastoria.it/geoserver/fonti/wms",
+ {LAYERS: 'fonti:catasto_1859',
+  STYLES: '',
+  format: format,
+  tiled: true,
+  tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom,
+  transparent: true
+ },
+ {buffer: 0,
+  //displayOutsideMaxExtent: true,
+  isBaseLayer: false,
+  tileSize: new OpenLayers.Size(512,512)
+ } 
+);
+map.addLayer(catasto1859);
+catasto1859.setVisibility(false);
+
+catasto1980 = new OpenLayers.Layer.WMS(
+ "fonti:catasto_1980 - Tiled", "http://lefontiperlastoria.it/geoserver/fonti/wms",
+ {LAYERS: 'fonti:catasto_1980',
+  STYLES: '',
+  format: format,
+  tiled: true,
+  tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom,
+  transparent: true
+ },
+ {buffer: 0,
+  //displayOutsideMaxExtent: true,
+  isBaseLayer: false,
+  tileSize: new OpenLayers.Size(512,512)
+ } 
+);
+map.addLayer(catasto1980);
+catasto1980.setVisibility(false);
+
+pergine = new OpenLayers.Layer.WMS(
+ "fonti:pergine - Tiled", "http://lefontiperlastoria.it:80/geoserver/fonti/wms",
+ {LAYERS: 'fonti:pergine',
+  STYLES: '',
+  format: format,
+  tiled: true,
+  tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom,
+  transparent: true
+ },
+ {buffer: 0,
+  displayOutsideMaxExtent: true,
+  isBaseLayer: false,
+  tileSize: new OpenLayers.Size(256,256)
+ } 
+);
+map.addLayer(pergine);
+pergine.setVisibility(false);
 
 aree_biblio = new OpenLayers.Layer.WMS("Aree bibliografiche", "http://www.lefontiperlastoria.it/geoserver/wms",{
    srs: 'EPSG:3857',
@@ -279,6 +332,13 @@ function toggleComuni(){
 function toggleToponomastica(){
  if (toponomastica.getVisibility() == true) {toponomastica.setVisibility(false);}else{toponomastica.setVisibility(true);}
 }
+function toggle1859(){
+ if (catasto1859.getVisibility() == true) {catasto1859.setVisibility(false);}else{catasto1859.setVisibility(true);}
+ if (pergine.getVisibility() == true) {pergine.setVisibility(false);}else{pergine.setVisibility(true);}
+}
+function toggle1980(){
+ if (catasto1980.getVisibility() == true) {catasto1980.setVisibility(false);}else{catasto1980.setVisibility(true);}
+}
 function toggleAreeBiblio(){
  if (aree_biblio.getVisibility() == true) {aree_biblio.setVisibility(false);}else{aree_biblio.setVisibility(true);}
 }
@@ -294,13 +354,14 @@ function toggleAreeCarto(){
 /******************************************************************************/
 /*****************  FUNZIONI JQUERY  ******************************************/
 /**********************it********************************************************/
-
 $("#formRicerca, .legendeAreeBiblio, .legendeAreeFoto, .legendeAreeOrale, .legendeAreeCarto").hide();
 var $tooltip = $('<span class="sliderTip" id="sliderTip"></span>');
  $("#headLogo, #headTitle").click(function(){ window.open('index.php', '_self'); });
 /******************** GESTIONE ACCENSIONE LIVELLI ******************/
 $("#comuni").on("change", toggleComuni);
 $("#toponomastica").on("change", toggleToponomastica);
+$("#catasto1859").on("change", toggle1859);
+$("#catasto1980").on("change", toggle1980);
 
 $("#aree_biblio")
  .on("change", toggleAreeBiblio)
