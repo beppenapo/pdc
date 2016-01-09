@@ -100,31 +100,31 @@ switch ($pag) {
 $qgeom1=("
   SELECT count(area_int_poly.id) as num_poly
   FROM area_int_poly,aree,aree_scheda 
-  WHERE area_int_poly.id_area = aree.id AND
-        aree_scheda.id_area = aree.id AND
+  WHERE area_int_poly.id_area = aree.nome_area AND
+        aree_scheda.id_area = aree.nome_area AND
         aree_scheda.id_scheda = $id;
   ");
 
 $qgeom2=("
   SELECT count(area_int_line.id) as num_line
   FROM area_int_line,aree,aree_scheda 
-  WHERE area_int_line.id_area = aree.id AND
-        aree_scheda.id_area = aree.id AND
+  WHERE area_int_line.id_area = aree.nome_area AND
+        aree_scheda.id_area = aree.nome_area AND
         aree_scheda.id_scheda = $id;
   ");
 
 $qgeom3=("
 select st_extent(area_int_poly.the_geom) as extent 
   FROM area_int_poly, aree,aree_scheda 
-  WHERE area_int_poly.id_area = aree.id AND
-        aree_scheda.id_area = aree.id AND
+  WHERE area_int_poly.id_area = aree.nome_area AND
+        aree_scheda.id_area = aree.nome_area AND
         aree_scheda.id_scheda = $id;
 ");
 $qgeom4=("
 select st_extent(area_int_line.the_geom) as extent2 
   FROM area_int_line, aree,aree_scheda 
-  WHERE area_int_line.id_area = aree.id AND
-        aree_scheda.id_area = aree.id AND
+  WHERE area_int_line.id_area = aree.nome_area AND
+        aree_scheda.id_area = aree.nome_area AND
         aree_scheda.id_scheda = $id;
 ");
 
@@ -414,24 +414,9 @@ $img=$imgres['path'];
        <?php
 
 $qai =  ("
-SELECT
- aree_scheda.id as id_as,
- aree_scheda.id_area,
- stato.id as id_stato,
- provincia.id as id_prov,
- aree.id as filtro,
- aree.id_localita,
- aree.id_comune,
- aree.id_indirizzo,
- aree_scheda.id_motivazione as id_motiv,
- localita.localita,
- comune.comune,
- lista_ai_motiv.definizione as motiv,
- indirizzo.indirizzo,
- provincia.provincia,
- stato.stato
+SELECT aree_scheda.id as id_as, aree_scheda.id_area, stato.id as id_stato, provincia.id as id_prov, aree.id as filtro, aree.id_localita, aree.id_comune, aree.id_indirizzo, aree_scheda.id_motivazione as id_motiv, localita.localita, comune.comune, lista_ai_motiv.definizione as motiv, indirizzo.indirizzo, provincia.provincia, stato.stato
 FROM aree_scheda
-LEFT JOIN aree ON aree.id = aree_scheda.id_area
+LEFT JOIN aree ON aree.nome_area = aree_scheda.id_area
 LEFT JOIN comune ON aree.id_comune = comune.id
 LEFT JOIN provincia ON comune.provincia = provincia.id
 LEFT JOIN stato ON comune.stato = stato.id
@@ -485,7 +470,7 @@ $param = '';
              $statoai=  pg_result($rai, $x,"stato"); 
              if($statoai == '') {$statoai=$nd;}else {$statoai=stripslashes($statoai);} 
              $filtro = pg_result($rai, $x, "filtro");
-             $param .= 'id_area='.$filtro.' OR ';
+             $param .= 'id_area='.$id_area.' OR ';
              echo "
               <tr>
                <td>$statoai</td>

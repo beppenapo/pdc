@@ -251,13 +251,13 @@ function dinSel(com){
         if(localita.length < 1){
             $('#locSel').append($('<option>', { value: 0, text : 'nessuna località per il Comune selezionato'}));
         }else{
-            $('#locSel').append($('<option>', { value: 0, text : 'scegli località'}).attr("selected", "selected"));
+            $('#locSel').append($('<option>', { value: 0, text : 'scegli località'}).attr("selected", true));
             $.each(localita, function (key, value) {$('#locSel').append($('<option>', { value: value.idlocalita, text : value.localita })); });
         }
         if(indirizzi.length < 1){
             $('#indSel').append($('<option>', { value: 0, text : 'nessun indirizzo per il Comune selezionato'}));
         }else{
-            $('#indSel').append($('<option>', { value: 0, text : 'scegli indirizzo'}).attr("selected", "selected"));
+            $('#indSel').append($('<option>', { value: 0, text : 'scegli indirizzo'}).attr("selected", true));
             $.each(indirizzi, function (key, value) { $('#indSel').append($('<option>', { value: value.idind, text : value.indirizzo })); });
         }
     });

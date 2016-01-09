@@ -78,9 +78,9 @@ $row = pg_num_rows($e);
 
 ?>
   <?php 
+  echo "<div style='display:none'>".$query."</div>";
    if($row == 0){
     echo "<header>La ricerca non ha prodotto risultati</header>";
-    echo "<div style='display:none'>".$query."</div>";
    }else{?>
  <input type="hidden" id="filtriStored" value="si" />
  <input type="hidden" id="tipoStored" value="<?php echo json_encode($t); ?>" />
