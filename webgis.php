@@ -13,7 +13,7 @@ if($_SESSION['hub']){
 ////  LISTA TOPONIMI PER FUNZIONE ZOOM ////////
 $topoQ="select t.gid, upper(top_nomai) toponimo, upper(comu2) comune, st_X(st_transform((t.geom),3857))||','||st_Y(st_transform((t.geom),3857)) as lonlat from toponomastica t, comuni_bassa c where st_contains(c.geom, st_transform(t.geom,3857)) order by 3,2;";
 $topoR=pg_query($connection,$topoQ);
-$opt="<option value='0'>--zoom su toponimo--</option>";
+$opt="<option value='0'>--zoom su località--</option>";
 while($topo = pg_fetch_array($topoR)){
     $opt.="<option value='".$topo['lonlat']."'>".$topo['comune']." - ".$topo['toponimo']."</option>";
 }
