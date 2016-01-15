@@ -1,5 +1,6 @@
 <?php
 session_start();
+require("inc/db.php");
 if (!isset($_SESSION['id_user'])){$_SESSION['id_user']=0;}
 if($_SESSION['hub']){
  $hub=$_SESSION['hub'];
@@ -7,6 +8,14 @@ if($_SESSION['hub']){
  if($_GET['hub']){
   $hub=$_GET['hub'];
  }
+}
+
+////  LISTA TOPONIMI PER FUNZIONE ZOOM ////////
+$topoQ="select t.gid, upper(top_nomai) toponimo, upper(comu2) comune, st_X(st_transform((t.geom),3857))||','||st_Y(st_transform((t.geom),3857)) as lonlat from toponomastica t, comuni_bassa c where st_contains(c.geom, st_transform(t.geom,3857)) order by 3,2;";
+$topoR=pg_query($connection,$topoQ);
+$opt="<option value='0'>--zoom su toponimo--</option>";
+while($topo = pg_fetch_array($topoR)){
+    $opt.="<option value='".$topo['lonlat']."'>".$topo['comune']." - ".$topo['toponimo']."</option>";
 }
 ?>
 
@@ -37,7 +46,7 @@ if($_SESSION['hub']){
       <div id="btnNext"></div>
     </div>
   <div id="nord"></div>
-  
+    <div id="topoSearch"> <select> <?php echo $opt; ?> </select> </div>
   <div id="text"> 
    <div id="switcher">
     <div id="cartografiaToggle"><h1 class="switcher">CARTOGRAFIA DI BASE</h1></div>

@@ -34,7 +34,8 @@ input.checkLiv{width: 10px; height: 10px;padding: 0px; margin:0px; vertical-alig
  font-size: 70%; text-align:center; color: #67573F; margin: 0px auto; z-index: 20000; background-color: rgba(255,255,255,0.5); padding: 0px 0.5em 0.5em 0.5em;-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}
 #coord { left: 60%; width: 150px; height: auto; padding: 6px;}
 #scalebar{ left: 40%; width: 180px; height: auto;}
-
+#topoSearch{ position: absolute; bottom:15px; left: 60px; z-index: 1005; padding: 5px; background: rgba(255,255,255,0.5);}
+#topoSearch select{font-size: .55em; padding: 5px; background: #fff; border-radius: 6px;}
 div.livelli{position: relative; display: block;width: 125px; margin:5px 0px;font-size:10px;}
 .legende{float:right; width: 20px; height:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
 .legendeAreeBiblio{background-color: rgba(231,149,91,1);}

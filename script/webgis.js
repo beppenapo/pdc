@@ -351,6 +351,16 @@ function toggleAreeOrale(){
 function toggleAreeCarto(){
  if (aree_carto.getVisibility() == true) {aree_carto.setVisibility(false);}else{aree_carto.setVisibility(true);}
 }
+function zoomLayer(layer,ll){
+    if (toponomastica.getVisibility() == false) {
+        toponomastica.setVisibility(true);
+        $("input#"+layer).attr('checked', true);
+    }
+    var xy = new OpenLayers.LonLat(ll[0],ll[1]);
+    var testZoom = map.getZoomForExtent(extent);
+    console.log(xy);
+    map.setCenter(xy,15);
+}
 /******************************************************************************/
 /*****************  FUNZIONI JQUERY  ******************************************/
 /**********************it********************************************************/
@@ -392,7 +402,12 @@ $("#aree_carto")
 
 /*****************   COMANDI PER INTERAGIRE CON LA MAPPA ***********************/
 $("#zoomMax").click(function(){map.zoomToExtent(extent);});
-
+$("#topoSearch select").change(function(){
+    var ll = $(this).val().split(',');
+    var layer = "toponomastica";
+    zoomLayer(layer,ll);
+    //console.log("ll: "+ll);
+});
 $("#zoomArea").click(function(){
  $(this).addClass('attivo');
  $('#drag').removeClass('attivo');
