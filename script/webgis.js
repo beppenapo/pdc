@@ -352,6 +352,7 @@ function toggleAreeCarto(){
  if (aree_carto.getVisibility() == true) {aree_carto.setVisibility(false);}else{aree_carto.setVisibility(true);}
 }
 function zoomLayer(layer,ll){
+    if (comuni.getVisibility() == true) {comuni.setVisibility(false);$("input#comuni").attr('checked', false);}
     if (toponomastica.getVisibility() == false) {
         toponomastica.setVisibility(true);
         $("input#"+layer).attr('checked', true);
