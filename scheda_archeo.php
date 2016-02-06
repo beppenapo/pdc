@@ -1101,8 +1101,8 @@ $( "#termfiga2" ).autocomplete({
    $('#liv'+livello).addClass('livAttivo');
 
    $('.slide').hide();
-   $('.toggle').click(function(){$(this).children('.slide').slideToggle(); $(this).children('.sezioni').toggleClass(bgSezAperto); });
-
+    //$('.toggle').click(function(){$(this).children('.slide').slideToggle(); $(this).children('.sezioni').toggleClass(bgSezAperto); });
+    $('.toggle > div > h2').click(function(){$(this).parent().next('.slide').slideToggle(); });
    $("#switchImg").attr("checked", true);
    $(".switchImgMapButton").change(function(){
      $("#imgDiv").slideToggle("fast"); 
