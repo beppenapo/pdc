@@ -45,7 +45,7 @@ with
           where $com and $loc and $ind)
 ,crono as (select a.id, a.dgn_numsch, a.dgn_dnogg, c.cro_spec
            from a, cronologia c 
-           where a.id = c.id_scheda and ((c.cro_iniz between $ci and $cf) or (c.cro_fin between $ci and $cf)))
+           where a.id = c.id_scheda and ((c.cro_iniz between $ci and  $cf) or (c.cro_fin between $ci and $cf)))
 , fts as (select c.id
         , c.cro_spec
         , c.dgn_numsch

@@ -1,5 +1,4 @@
-<?php 
-require("inc/db.php");
+<?php require("inc/db.php");
 if ($_SESSION['username']!='guest'){
     $idUsr = $_SESSION['id_user'];
     $tipoUsr = $_SESSION['tipo'];
@@ -19,17 +18,17 @@ if ($_SESSION['username']!='guest'){
         <li>Ciao <?php echo($_SESSION['username']); ?>, </li>
         <li><a href="#" id="account" class='sessionLink' title="Gestisci la tua sessione di lavoro" >account <span id="accountToggle" class="oc">+</span></a>
             <ul class="submenu">
-                <li><a href='../account.php' title="modifica i tuoi dati personali"> dati personali</a></li> 
+                <li><a href='account.php' title="modifica i tuoi dati personali"> dati personali</a></li> 
                 <li> <a href='inc/loginScript.php?login=no' title='Chiudi la tua sessione di lavoro'>logout</a> </li>
             </ul>
         </li>
         <li> <a href='index.php' class='sessionLink' title="Torna alla home page del sito"> home</a> </li>
         <li><a href="#" class='sessionLink' title="Cataloghi" id="catalogo"> Cataloghi <span id="cataloghiToggle" class="oc">+</span></a>
             <ul class="submenu">
-                <li> <a href='../ricerca.php' title="Accedi al catalogo generale delle ricerche"> ricerche</a> </li>
-                <li> <a href='../catalogo.php' title="Accedi al catalogo generale delle schede"> schede</a> </li>
-                <li> <a href='../rubrica.php' title="Accedi alla rubrica condivisa"> rubrica</a> </li>
-                <li> <a href='../aree.php?c=0&t=0' title="Accedi alla lista delle aree di interesse e delle ubicazioni"> aree/ubicazioni</a> </li>
+                <li> <a href='ricerca.php' title="Accedi al catalogo generale delle ricerche"> ricerche</a> </li>
+                <li> <a href='catalogo.php' title="Accedi al catalogo generale delle schede"> schede</a> </li>
+                <li> <a href='rubrica.php' title="Accedi alla rubrica condivisa"> rubrica</a> </li>
+                <li> <a href='aree.php?c=0&t=0' title="Accedi alla lista delle aree di interesse e delle ubicazioni"> aree/ubicazioni</a> </li>
             </ul>
         </li>
         <li><a href="#" id="nuova_scheda" class='sessionLink' title="Inserisci una nuova scheda" > nuova scheda <span id="schedaToggle" class="oc">+</span></a>
