@@ -5,8 +5,8 @@ $allowedExts = array(".mp3", ".ogg", ".wav");
 $temp = explode(".", $_FILES["file"]["name"]);
 $extension = end($temp);
 
-echo "id: ".$id."<br/> file: ".$_FILES["file"]["name"]."<br/> ext: ".$extension."<br/> mime: ".$_FILES["file"]["type"];
-return false;
+//echo "id: ".$id."<br/> file: ".$_FILES["file"]["name"]."<br/> ext: ".$extension."<br/> mime: ".$_FILES["file"]["type"];
+//return false;
 
 if ((($_FILES["file"]["type"] == "audio/mpeg")
 || ($_FILES["file"]["type"] == "audio/ogg")

@@ -23,7 +23,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
       {
        $file = $_FILES["file"]["name"];
        require("db.php");
-       $up=("insert into file(id_scheda, path)values($id, '$file');");
+       $up=("insert into file(id_scheda, path, tipo)values($id, '$file',1);");
        $exec = pg_query($connection, $up);
        if($exec) {move_uploaded_file($_FILES["file"]["tmp_name"], "../foto/" . $_FILES["file"]["name"]);        }
        echo "Immagina caricata!<br/>";
