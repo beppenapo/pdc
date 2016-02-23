@@ -130,7 +130,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
   </label>
   <label for="tipoStampa" class="labelRadio pointer">
    PUBBLICAZIONI <input type="checkbox" id="tipoStampa" name="tipoButt" value="5">
-  </label>  
+  </label>
  </div>
  <div class="filtro">
   <h1>PAROLA CHIAVE</h1>
@@ -158,10 +158,10 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
     $qcom = ("
      SELECT comune.id AS idcomune, comune.comune
      FROM aree, aree_scheda, scheda, ricerca, comune
-     WHERE aree.id_comune = comune.id 
+     WHERE aree.id_comune = comune.id
        AND aree_scheda.id_area = aree.nome_area
-       AND aree_scheda.id_scheda = scheda.id 
-       AND scheda.cmp_id = ricerca.id 
+       AND aree_scheda.id_scheda = scheda.id
+       AND scheda.cmp_id = ricerca.id
        AND ricerca.hub = 2
        AND (comune.id <> 34 AND comune.id <> 35)
      GROUP BY idcomune, comune
@@ -180,9 +180,9 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
      SELECT localita.id as idlocalita,localita.localita
      FROM aree, aree_scheda, scheda, ricerca, localita
      WHERE aree.id_localita = localita.id
-       AND aree_scheda.id_area = aree.nome_area 
-       AND aree_scheda.id_scheda = scheda.id 
-       AND scheda.cmp_id = ricerca.id 
+       AND aree_scheda.id_area = aree.nome_area
+       AND aree_scheda.id_scheda = scheda.id
+       AND scheda.cmp_id = ricerca.id
        AND ricerca.hub = 2
        AND (localita not like '-' AND localita.id <> 873)
      GROUP BY idlocalita, localita
@@ -201,7 +201,7 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
      SELECT distinct i.id as idindirizzo, i.cap||' - '||i.indirizzo as indirizzo
      FROM aree, aree_scheda, scheda, ricerca, indirizzo i
      WHERE aree.id_indirizzo= i.id
-       AND aree_scheda.id_area = aree.nome_area 
+       AND aree_scheda.id_area = aree.nome_area
        AND aree_scheda.id_scheda = scheda.id
        AND scheda.cmp_id = ricerca.id
        AND ricerca.hub = 2
@@ -265,6 +265,15 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
  </article>
 </div>
 
+<div id="collabora">
+  <header>COLLABORA<i class="fa fa-times-circle-o pointer removeContent"></i></header>
+  <article>
+    <p><b>In costruzione</b></p>
+    <br/>
+  </article>
+</div>
+
+
 <div id="istruzioni">
 <header>ISTRUZIONI <i class="fa fa-times-circle-o pointer removeContent"></i></header>
  <article>
@@ -285,10 +294,10 @@ Per la pubblicazione dei materiali iconografici e delle schede sul sito web ha c
   	<p>Per annullare queste opzioni, è sufficiente spuntare i box di selezione corrispondenti.</p>
   <br/>
   <p><b>Aree di interesse</b></p>
-  	<p>Le aree di interesse relative alle fonti schedate sono distinte in base alla tipologia di fonte a cui si riferiscono (fotografia, cartografia, audio/video, pubblicazioni) ciascuna delle quali è associata a un colore diverso (fotografia: blu; cartografia: rosso; audio/video: verde; pubblicazioni: arancione). 
+  	<p>Le aree di interesse relative alle fonti schedate sono distinte in base alla tipologia di fonte a cui si riferiscono (fotografia, cartografia, audio/video, pubblicazioni) ciascuna delle quali è associata a un colore diverso (fotografia: blu; cartografia: rosso; audio/video: verde; pubblicazioni: arancione).
 	<p>Spuntando una o più categorie si visualizzano le aree di interesse corrispondenti.</p>
 	<p>Cliccando sulla scritta “area di interesse” si attivano contemporaneamente le aree di tutte le categorie di fonti.</p>
-	<p>La barra scorrevole sottostante l’elenco delle fonti permette di aumentare o diminuire la trasparenza delle aree di interesse.</p> 
+	<p>La barra scorrevole sottostante l’elenco delle fonti permette di aumentare o diminuire la trasparenza delle aree di interesse.</p>
 	<p>Utilizzando il pulsante pan (il puntatore con le quattro frecce nel pannello in basso a sinistra) è possibile interrogare le aree di interesse visualizzate.</p>
 	<p>Cliccando sulla mappa all’interno di un’area colorata, si apre un box in cui vengono elencate le geometrie – dalla più piccola alla più grande – che contengono il punto selezionato. Ad esempio: se si clicca sulla geometria relativa a un edificio del centro storico di Pergine, nel box verranno elencate le seguenti geometrie: l’edificio stesso, il centro storico, l’area urbana, il territorio comunale del Comune di Pergine, la Comunità Alta Valsugana e Bersntol.</p>
 	<p>Scorrendo il puntatore sull’elenco, senza cliccare, tali aree vengono evidenziate in blu sulla mappa: ciò permette di individuare in modo immediato la geometria che interessa interrogare.</p>
