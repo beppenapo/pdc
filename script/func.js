@@ -69,13 +69,13 @@ $(document).ready(function() {
     var label = $(this).attr('id');
     $("label[for='"+label+"']").toggleClass('labelRadioActive');
    });
-   
+
    //select dinamica comune
    $("#comSel").on("change", function(){
     var com = $(this).val();
     dinSel(com);
    });
-   
+
    //slider
    $(function() {
     var tooltip = function(sliderObj, ui){
@@ -85,8 +85,8 @@ $(document).ready(function() {
      cf=sliderObj.slider("values", 1);
      sliderObj.children('.ui-slider-handle').first().html(val1);
      sliderObj.children('.ui-slider-handle').last().html(val2);
-     $('#ci').val(ci);  
-     $('#cf').val(cf);                
+     $('#ci').val(ci);
+     $('#cf').val(cf);
     };
     $( "#slider" ).slider({
      range: true,
@@ -94,23 +94,23 @@ $(document).ready(function() {
      max: currentYear,
      values: [ 1500, currentYear ],
      step: 1,
-     slide: function( e, ui ){tooltip($(this),ui);},              
+     slide: function( e, ui ){tooltip($(this),ui);},
      create:function(e,ui){tooltip($(this),ui);}
     });
    });
    $('.ui-slider-handle').each(function(){
     $('.ui-slider-handle').first().removeClass('ui-state-default').addClass('ui-state-default1');
-    $('.ui-slider-handle').last().removeClass('ui-state-default').addClass('ui-state-default2');     
+    $('.ui-slider-handle').last().removeClass('ui-state-default').addClass('ui-state-default2');
    });
-   
-   
+
+
    $("#ftsError").hide();
    //attiva ricerca
    $("#filtroButt").click(function(){
     //var data = new Array();
     var tipo = new Array();
     var fts, ci, cf;
-    
+
     //valori tipo scheda
     if($("input[name=tipoButt]:checked").length < 1){
      tipo.push(0);
@@ -120,12 +120,12 @@ $(document).ready(function() {
       tipo.push(t);
      });
     }
-    
+
     //valori area geografica
     var comSel = $("#comSel").val();
     var locSel = $("#locSel").val();
     var indSel = $("#indSel").val();
-    
+
     //valori full text search
     var fts1 = $('#fts1').val();fts1=fts1.slice(0, -1);fts1=fts1+':*';
     var fts2 = $('#fts2').val();fts2=fts2.slice(0, -1);fts2=fts2+':*';
@@ -133,9 +133,9 @@ $(document).ready(function() {
     var op1 = $('#op1').val();
     var op2 = $('#op2').val();
     var ftsError;
-    
+
     if(fts1 == ':*' && fts2 == ':*' && fts3 == ':*'){vect = 'no';}
-    else if(fts2 == ':*' && fts3 == ':*'){vect=fts1;}    
+    else if(fts2 == ':*' && fts3 == ':*'){vect=fts1;}
     else if(fts2 != ':*' && fts3 == ':*'){
      if(fts1 == ':*'){ $("#ftsError").text('manca la prima parola').fadeIn('fast'); return false;}
      else if(op1=='--'){$("#ftsError").text('manca operatore').fadeIn('fast'); return false;}
@@ -153,10 +153,10 @@ $(document).ready(function() {
     //valori cronologia
     ci = $('#ci').val();
     cf = $('#cf').val();
-    
+
     cerca(tipo,comSel,locSel,indSel,vect,ci,cf);
    });
-   
+
    var cache = {};
    $( ".term" ).autocomplete({
     minLength: 2,
@@ -179,35 +179,33 @@ $(document).ready(function() {
      url: 'inc/collezioniRec.php',
      type: 'POST',
      data: {ana:ana},
-     success: function(data){ 
-      $('#viewRecTab > tbody').html(data); 
-      
+     success: function(data){
+      $('#viewRecTab > tbody').html(data);
+
       $('.imgLink').click(function(e){
         e.preventDefault();
         $(".imgContent").hide();
         $('.zebra tr').removeClass('highLight');
         $(this).parent('td').parent('tr').addClass('highLight');
-        var id = $(this).data('id');console.log("idImg:"+id);
-        var y = $(this).position().top;
+        var id = $(this).data('id');
+        //var y = $(this).position().top;
+        var y = $(this).offset();
+        console.log("pos:"+y.top+"/mouse:"+e.pageY);
         var src = '../foto/'+$(this).data('src');
         var img = new Image();
         var w, h;
         img.src = src;
         img.onload = function(){
-                w = this.width/2;
-                h = this.height/2;
-                $("#imgContent"+id)
-                .css({"top":y,"width":w,"height":h, "background-image":"url("+src+")"})
-                .fadeIn('fast')
-                //.click(function(){window.open('scheda_archeo.php?id='+id, '_blank');})
-                ;
-                $('.chiudiThumb').click(function(){
-                        $(this).parent('div').fadeOut('fast');
-                        $('.zebra tr').removeClass('highLight');
-                });
+            w = this.width/2;
+            h = this.height/2;
+            $("#imgContent"+id).css({"top":y,"width":w,"height":h, "background-image":"url("+src+")"}).fadeIn('fast');
+            $('.chiudiThumb').click(function(){
+                $(this).parent('div').fadeOut('fast');
+                $('.zebra tr').removeClass('highLight');
+            });
         };
       });
-      
+
       $(".viewScheda").click(function(e) {
        var id = $(this).data('id');
        $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
@@ -220,19 +218,19 @@ $(document).ready(function() {
     });
    });
    /*-------------------------------*/
-  }); 
+  });
  });//mainLink function
- 
+
  $("#apriLicenze").click(function(){ $("#licenzeWrap").fadeIn('fast'); });
  $("#chiudiLicenze").click(function(){ $("#licenzeWrap").fadeOut('fast'); });
- 
- 
+
+
  //$("#policy").hide();
- $('#cookie-policy').click(function () { 
+ $('#cookie-policy').click(function () {
   $("#policy").fadeIn('fast');
   $("#chiudiPolicy").click(function(){$("#policy").fadeOut('fast');});
  });
- $('#cookie-accept,#chiudiPolicy').click(function () { 
+ $('#cookie-accept,#chiudiPolicy').click(function () {
   days = 182; //giorni di validità cookie
   myDate = new Date();
   myDate.setTime(myDate.getTime()+(days*24*60*60*1000));
@@ -243,7 +241,7 @@ $(document).ready(function() {
 });
 
 function dinSel(com){
-    $.getJSON( "inc/dinSelArea.php", {com:com}, function( data ) { 
+    $.getJSON( "inc/dinSelArea.php", {com:com}, function( data ) {
         var u = eval(data);
         var localita = u.localita;
         var indirizzi = u.indirizzi;
@@ -281,13 +279,13 @@ function mainLink(i){
     var label = $(this).attr('id');
     $("label[for='"+label+"']").toggleClass('labelRadioActive');
    });
-   
+
    //select dinamica comune
    $("#comSel").on("change", function(){
     var com = $(this).val();
     dinSel(com);
    });
-   
+
    //slider
    $(function() {
     var tooltip = function(sliderObj, ui){
@@ -297,8 +295,8 @@ function mainLink(i){
      cf=sliderObj.slider("values", 1);
      sliderObj.children('.ui-slider-handle').first().html(val1);
      sliderObj.children('.ui-slider-handle').last().html(val2);
-     $('#ci').val(ci);  
-     $('#cf').val(cf);                
+     $('#ci').val(ci);
+     $('#cf').val(cf);
     };
     $( "#slider" ).slider({
      range: true,
@@ -306,23 +304,23 @@ function mainLink(i){
      max: currentYear,
      values: [ 1500, currentYear ],
      step: 1,
-     slide: function( e, ui ){tooltip($(this),ui);},              
+     slide: function( e, ui ){tooltip($(this),ui);},
      create:function(e,ui){tooltip($(this),ui);}
     });
    });
    $('.ui-slider-handle').each(function(){
     $('.ui-slider-handle').first().removeClass('ui-state-default').addClass('ui-state-default1');
-    $('.ui-slider-handle').last().removeClass('ui-state-default').addClass('ui-state-default2');     
+    $('.ui-slider-handle').last().removeClass('ui-state-default').addClass('ui-state-default2');
    });
-   
-   
+
+
    $("#ftsError").hide();
    //attiva ricerca
    $("#filtroButt").click(function(){
     //var data = new Array();
     var tipo = new Array();
     var fts, ci, cf;
-    
+
     //valori tipo scheda
     if($("input[name=tipoButt]:checked").length < 1){
      tipo.push(0);
@@ -332,12 +330,12 @@ function mainLink(i){
       tipo.push(t);
      });
     }
-    
+
     //valori area geografica
     var comSel = $("#comSel").val();
     var locSel = $("#locSel").val();
     var indSel = $("#indSel").val();
-    
+
     //valori full text search
     var fts1 = $('#fts1').val();fts1=fts1.slice(0, -1);fts1=fts1+':*';
     var fts2 = $('#fts2').val();fts2=fts2.slice(0, -1);fts2=fts2+':*';
@@ -345,9 +343,9 @@ function mainLink(i){
     var op1 = $('#op1').val();
     var op2 = $('#op2').val();
     var ftsError;
-    
+
     if(fts1 == ':*' && fts2 == ':*' && fts3 == ':*'){vect = 'no';}
-    else if(fts2 == ':*' && fts3 == ':*'){vect=fts1;}    
+    else if(fts2 == ':*' && fts3 == ':*'){vect=fts1;}
     else if(fts2 != ':*' && fts3 == ':*'){
      if(fts1 == ':*'){ $("#ftsError").text('manca la prima parola').fadeIn('fast'); return false;}
      else if(op1=='--'){$("#ftsError").text('manca operatore').fadeIn('fast'); return false;}
@@ -365,11 +363,11 @@ function mainLink(i){
     //valori cronologia
     ci = $('#ci').val();
     cf = $('#cf').val();
-    
+
     clearStorage();
     cerca(tipo,comSel,locSel,indSel,vect,ci,cf);
    });
-   
+
    var cache = {};
    $( ".term" ).autocomplete({
     minLength: 2,
@@ -392,8 +390,8 @@ function mainLink(i){
      url: 'inc/collezioniRec.php',
      type: 'POST',
      data: {ana:ana},
-     success: function(data){ 
-      $('#viewRecTab > tbody').html(data); 
+     success: function(data){
+      $('#viewRecTab > tbody').html(data);
       $('.imgLink').click(function(e){
         e.preventDefault();
         $(".imgContent").hide();
@@ -419,7 +417,7 @@ function mainLink(i){
                 });
         };
       });
-      
+
       $(".viewScheda").click(function(e) {
        var id = $(this).data('id');
        $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
@@ -432,7 +430,7 @@ function mainLink(i){
     });
    });
    /*-------------------------------*/
-  }); 
+  });
 }
 
 function clearStorage(){ sessionStorage.clear(); }
@@ -442,8 +440,8 @@ function cerca(tipo,comSel,locSel,indSel,vect,ci,cf){
         type: 'POST',
         data: {t:tipo,com:comSel,loc:locSel,ind:indSel,fts:vect,ci:ci,cf:cf},
         beforeSend: function() { $("#filtroButt i").removeClass('fa-search').addClass('fa-spinner fa-spin'); },
-        success: function(data){ 
-            $('section#main').html(data); 
+        success: function(data){
+            $('section#main').html(data);
             if(r){
                 $('html, body').stop().animate({scrollTop: $("#main").offset().top-headH-100}, 800);
                 $('.imgLink').each(function(){if($(this).data('id')== s){$(this).parent('td').parent('tr').addClass('highLight');}});
