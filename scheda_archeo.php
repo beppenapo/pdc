@@ -47,7 +47,7 @@ $dgn_ogg=stripslashes($a['dgn_dnogg']);
 $pag = $tpsch.$livello;
 $stile = $a['tipo_scheda'];
 if($stile == 'fonte orale') {
- $stile = 'orale'; 
+ $stile = 'orale';
  $logo = 'logoSkMedia';
  $borderContent='borderOrale';
  $bgSez = 'bgSezOrale';
@@ -68,7 +68,7 @@ if($stile == 'fotografica') {
  $bgSezAperto = 'bgSezFotoAperto';
   $styleGeom = 'fotoAvs';
 }
-if($stile == 'cartografica') { 
+if($stile == 'cartografica') {
  $logo = 'logoSkCarto';
  $borderContent='borderCarto';
  $bgSez = 'bgSezCarto';
@@ -99,7 +99,7 @@ switch ($pag) {
 
 $qgeom1=("
   SELECT count(area_int_poly.id) as num_poly
-  FROM area_int_poly,aree,aree_scheda 
+  FROM area_int_poly,aree,aree_scheda
   WHERE area_int_poly.id_area = aree.nome_area AND
         aree_scheda.id_area = aree.nome_area AND
         aree_scheda.id_scheda = $id;
@@ -107,28 +107,28 @@ $qgeom1=("
 
 $qgeom2=("
   SELECT count(area_int_line.id) as num_line
-  FROM area_int_line,aree,aree_scheda 
+  FROM area_int_line,aree,aree_scheda
   WHERE area_int_line.id_area = aree.nome_area AND
         aree_scheda.id_area = aree.nome_area AND
         aree_scheda.id_scheda = $id;
   ");
 
 $qgeom3=("
-select st_extent(area_int_poly.the_geom) as extent 
-  FROM area_int_poly, aree,aree_scheda 
+select st_extent(area_int_poly.the_geom) as extent
+  FROM area_int_poly, aree,aree_scheda
   WHERE area_int_poly.id_area = aree.nome_area AND
         aree_scheda.id_area = aree.nome_area AND
         aree_scheda.id_scheda = $id;
 ");
 $qgeom4=("
-select st_extent(area_int_line.the_geom) as extent2 
-  FROM area_int_line, aree,aree_scheda 
+select st_extent(area_int_line.the_geom) as extent2
+  FROM area_int_line, aree,aree_scheda
   WHERE area_int_line.id_area = aree.nome_area AND
         aree_scheda.id_area = aree.nome_area AND
         aree_scheda.id_scheda = $id;
 ");
 
-$qgeom1Res = pg_query($connection, $qgeom1); 
+$qgeom1Res = pg_query($connection, $qgeom1);
 $qgeom2Res = pg_query($connection, $qgeom2);
 $qgeom3Res = pg_query($connection, $qgeom3);
 $qgeom4Res = pg_query($connection, $qgeom4);
@@ -188,336 +188,269 @@ $img=$imgres['path'];
 
 </head>
 <body onload="init();">
-<?php require("inc/licenze.php"); ?>
-<header id="head"><?php require_once('inc/head.php')?></header>
-<?php if(isset($_POST['p'])){ ?>
- <div id="backDiv">
-  <a href="index.php?r=si&s=<?php echo $id; ?>" class="prevent" id="backUrl"><i class="fa fa-arrow-left"></i> torna ai risultati della ricerca</a>
- </div>
-<?php } ?>
- <div id="container">
-  <input type="hidden" id="numPoly" value="<?php echo($numPoly);?>" />
-  <input type="hidden" id="numLine" value="<?php echo($numLine);?>" />
-  <div id="wrap">
-   <div id="content" class="<?php echo $borderContent; ?>">
-    <div id="logoSchedaDx"><img src="img/layout/loghiSchede/<?php echo($logo);?>.png" alt="logo scheda" /></div>
-
- <div id="skArcheoContent">
-  <div class="inner primo">
-   <div style="width:450px; float:left;" class="check bassa">
-        <table class="mainData">
-          <tr>
-           <td>
-            
-            <label>NUMERO SCHEDA</label>
-            <h1 class="<?php echo($stile);?>"><?php echo($numSch); ?></h1>
-           </td>
-           <td>
-             
-             <label>TIPO SCHEDA</label>
-             <div class="valori"><?php echo($tipologiaScheda); ?></div>
-           </td>
-          </tr>
-          <tr>
-           <td colspan="2">
-             <label>DEFINIZIONE OGGETTO</label>
-             <div class="valori" style="min-height:50px; font-size:18px;"><?php echo($dgn_ogg); ?></div>
-           </td>
-          </tr>
-          <tr>
-            <td colspan='2'>
-              <label>CRONOLOGIA</label>
-              <div class="valori"><?php echo($cro_spec); ?></div>
-            </td>
-          </tr>
-          <tr>
-           <td colspan="2">
-             <label>NOTE</label>
-             <div class="valori"><?php echo($note1); ?></div>
-           </td>
-          </tr>
-          <?php if($_SESSION['username']!='guest') {?>
-          <tr>
-           <td>
-             <label class="update" id="dati_principali">modifica sezione</label>
-           </td>
-           <td>
-             <label class="update" id="elimina_scheda" scheda="<?php echo ($id);?>">elimina scheda</label>
-           </td>
-          </tr>
-          <?php } ?>
-         </table>
-         <div class="updateContent" style="display:none">
-          <?php require("inc/form_update/dati_principali.php"); ?>
-         </div>
-       </div>
-       <div id="switchImgMap">
-          <label class="switchLabel" for="switchImg"><?php echo $mapSwitch; ?></label>
-          <label class="switchLabel" for="switchMappa">Mappa</label>
-          <input type="radio" id="switchMappa" class="switchImgMapButton" name="switchImgMapButton" /> 
-          <input type="radio" id="switchImg" class="switchImgMapButton" name="switchImgMapButton" />
+    <?php require("inc/licenze.php"); ?>
+    <header id="head"><?php require_once('inc/head.php'); ?></header>
+    <?php if(isset($_POST['p'])){ ?>
+        <div id="backDiv">
+            <a href="index.php?r=si&s=<?php echo $id; ?>" class="prevent" id="backUrl"><i class="fa fa-arrow-left"></i> torna ai risultati della ricerca</a>
         </div>
+    <?php } ?>
+    <div id="container">
+        <input type="hidden" id="numPoly" value="<?php echo($numPoly);?>" />
+        <input type="hidden" id="numLine" value="<?php echo($numLine);?>" />
+        <div id="wrap">
+            <div id="content" class="<?php echo $borderContent; ?>">
+                <div id="logoSchedaDx"><img src="img/layout/loghiSchede/<?php echo($logo);?>.png" alt="logo scheda" /></div>
+                <div id="skArcheoContent">
+                    <div class="inner primo">
+                        <div style="width:450px; float:left;" class="check bassa">
+                            <table class="mainData">
+                                <tr>
+                                    <td>
+                                        <label>NUMERO SCHEDA</label>
+                                        <h1 class="<?php echo($stile);?>"><?php echo($numSch); ?></h1>
+                                    </td>
+                                    <td>
+                                        <label>TIPO SCHEDA</label>
+                                        <div class="valori"><?php echo($tipologiaScheda); ?></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label>DEFINIZIONE OGGETTO</label>
+                                        <div class="valori" style="min-height:50px; font-size:18px;"><?php echo($dgn_ogg); ?></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan='2'>
+                                        <label>CRONOLOGIA</label>
+                                        <div class="valori"><?php echo($cro_spec); ?></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label>NOTE</label>
+                                        <div class="valori"><?php echo($note1); ?></div>
+                                    </td>
+                                </tr>
+                                <?php if($_SESSION['username']!='guest') {?>
+                                <tr>
+                                    <td><label class="update" id="dati_principali">modifica sezione</label></td>
+                                    <td><label class="update" id="elimina_scheda" scheda="<?php echo ($id);?>">elimina scheda</label></td>
+                                </tr>
+                                <?php } ?>
+                            </table>
+                            <div class="updateContent" style="display:none"><?php require("inc/form_update/dati_principali.php"); ?></div>
+                        </div>
+                        <div id="switchImgMap">
+                            <label class="switchLabel" for="switchImg"><?php echo $mapSwitch; ?></label>
+                            <label class="switchLabel" for="switchMappa">Mappa</label>
+                            <input type="radio" id="switchMappa" class="switchImgMapButton" name="switchImgMapButton" />
+                            <input type="radio" id="switchImg" class="switchImgMapButton" name="switchImgMapButton" />
+                        </div>
+                        <div id="mapImgWrap">
+                            <?php if($numPoly == 0 && $numLine == 0){?>
+                                <div id="noMap">
+                                    <div id="noMapAlert"><h2>Non sono presenti geometrie per la scheda visualizzata</h2></div>
+                                </div>
+                            <?php }else {?>
+                                <div id="smallMap">
+                                    <div id="smallMapPanel">
+                                        <a href="#" class="baseButton" id="sat" onclick="mappa.setBaseLayer(gsat)">SAT</a>
+                                        <a href="#" class="baseButton" id="osm" onclick="mappa.setBaseLayer(osm)">OSM</a>
+                                    </div>
+                                </div>
+                            <?php} if($tpsch!=1){?>
+                                <img id="imgOrig" src="<?php echo($folder.$img);?>" style="position:absolute; left:-1000%;">
+                            <?php } ?>
+                            <div id="imgDiv">
+                                <div id="noImgAlert">
+                                <?php
+                                    if($imgrow > 0) {
+                                        if($tpsch!=1){
+                                            echo "<img id='imgSmall' src='".$folder.$img."' />";
+                                            echo "<div id='panelFoto'>";
+                                                echo "<label id='ingrFoto' scheda='$id'>ingrandisci</label>&nbsp;&nbsp;";
+                                                if($idUsr) {echo"<label id='delFoto' scheda='$id' img='$img'>elimina</label>";}
+                                            echo "</div>";
+                                        }else{
+                                            echo "<audio preload='none' controls>";
+                                            echo "<source src='".$folder.$img."' type='audio/mp3'>";
+                                            echo "Il tuo browser non supporta l'elemento audio";
+                                            echo "</audio>";
+                                        }
+                                    }else{
+                                        echo $noFile;
+                                        if($idUsr) {
+                                ?>
+                                        <form action="inc/<?php echo $upload; ?>" method="post" id="uploadForm" enctype="multipart/form-data">
+                                            <input type="hidden" name="schedaFoto" value="<?php echo($id);?>" />
+                                            <input type="file" name="file" id="file"><br>
+                                            <input type="submit" name="submit" value="<?php echo $submitLabel; ?>">
+                                        </form>
+                                <?php }} ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+                    <?php
+                    $qcro =  ("SELECT c.cro_iniz, c.cro_fin, c.cro_spec, c.cro_motiv as cro_id, l.definizione AS cro_motiv, c.cro_note
+                        FROM public.cronologia as c, public.scheda as s, public.lista_cro_motiv as l
+                        WHERE c.cro_motiv = l.id AND c.id_scheda = s.id AND s.id = $id;");
+                    $rcro = pg_query($connection, $qcro);
+                    $acro = pg_fetch_array($rcro, 0, PGSQL_ASSOC);
+                    $rowcro = pg_num_rows($rcro);
+                    $cro_iniz= $acro['cro_iniz']; if($cro_iniz == '') {$cro_iniz=$nd;}
+                    $cro_fin= $acro['cro_fin']; if($cro_fin == '') {$cro_fin=$nd;}
+                    $cro_spec= stripslashes($acro['cro_spec']); if($cro_spec == '') {$cro_spec=$nd;}
+                    $cro_motiv= $acro['cro_motiv']; if($cro_motiv == '') {$cro_motiv=$nd;}
+                    $cro_motiv_id = $acro['cro_id'];
+                    $cro_note= stripslashes($acro['cro_note']); if($cro_note == '') {$cro_note=$nd;}
+                    $periodo = $cro_iniz.'-'.$cro_fin;
+                    if($rowcro>0) {
+                    ?>
+                    <div class="toggle check bassa">
+                        <div class="sezioni <?php echo $bgSez; ?>" style="margin-top:20px;"><h2>DETTAGLIO CRONOLOGIA</h2></div>
+                        <div class="slide">
+                            <table class="mainData" style="width:98% !important;">
+                                <tr>
+                                    <td width="50%;">
+                                        <label>SPECIFICA</label>
+                                        <div class="valori"><?php echo($cro_spec); ?></div>
+                                        <br/>
+                                        <label>GENERICA</label>
+                                        <div class="valori"><?php echo($periodo); ?></div>
+                                        <br/>
+                                        <label>MOTIVAZIONE CRONOLOGIA</label>
+                                        <div class="valori"><?php echo($cro_motiv); ?></div>
+                                    </td>
+                                    <td>
+                                        <label>NOTE</label>
+                                        <div class="valori" style="height:120px;overflow:auto;"><?php echo(nl2br($cro_note)); ?></div>
+                                    </td>
+                                </tr>
+                                <?php if($_SESSION['username']!='guest') {?>
+                                <tr>
+                                    <td colspan="2"><label class="update" id="dettagli_crono">modifica sezione</label></td>
+                                </tr>
+                                <?php } ?>
+                            </table>
+                            <div class="updateContent" style="display:none"><?php require("inc/form_update/dettagli_crono.php"); ?></div>
+                        </div>
+                    </div>
+                <?php } ?>
+                <?php
+                    $qcmp =  "SELECT r.id, r.denric, r.enresp, r.respric, s.compilatore, s.data_compilazione, s.cmp_note, u.nome, u.cognome FROM ricerca as r, scheda as s, usr as u WHERE s.compilatore = u.id_user and s.cmp_id = r.id and s.id = $id;";
+                    $rcmp = pg_query($connection, $qcmp);
+                    $acmp = pg_fetch_array($rcmp, 0, PGSQL_ASSOC);
+                    $rowcmp = pg_num_rows($rcmp);
+                    $idric=$acmp['id'];
+                    $denric= stripslashes($acmp['denric']); if($denric == '') {$denric=$nd;}
+                    $enresp= stripslashes($acmp['enresp']); if($enresp == '') {$enresp=$nd;}
+                    $respric= stripslashes($acmp['respric']); if($respric == '') {$respric=$nd;}
+                    $id_compilatore= $acmp['compilatore']; if($id_compilatore == '') {$id_compilatore=$nd;}
+                    $nome= stripslashes($acmp['nome']); if($nome == '') {$nome=$nd;}
+                    $cognome= stripslashes($acmp['cognome']); if($cognome == '') {$cognome=$nd;}
+                    $compilatore= $nome." ".$cognome;
+                    $datacmp= stripslashes($acmp['data_compilazione']); if($datacmp == '') {$datacmp=$nd;}
+                    $notecmp= stripslashes($acmp['cmp_note']); if($notecmp == '') {$notecmp=$nd;}
 
-       <div id="mapImgWrap">
-       <?php if($numPoly == 0 && $numLine == 0){?>
-         <div id="noMap"> 
-          <div id="noMapAlert">
-           <h2>Non sono presenti geometrie per la scheda visualizzata</h2>
-          </div>
-         </div>
-       <?php }else {?>
-         <div id="smallMap">
-          <div id="smallMapPanel">
-           <a href="#" class="baseButton" id="sat" onclick="mappa.setBaseLayer(gsat)">SAT</a>
-           <a href="#" class="baseButton" id="osm" onclick="mappa.setBaseLayer(osm)">OSM</a>
-          </div>
-         </div>
-       <?php 
-        }
-        if($tpsch==1){
-        
-        }else{ 
-       ?>
-        <img id="imgOrig" src="<?php echo($folder.$img);?>" style="position:absolute; left:-1000%;">
-       <?php } ?>
-        <div id="imgDiv">
-         <div id="noImgAlert">
-         <?php
-          if($imgrow > 0) {
-             if($tpsch!=1){
-                echo "<img id='imgSmall' src='".$folder.$img."' />";
-                echo "<div id='panelFoto'><label id='ingrFoto' scheda='$id'>ingrandisci</label>&nbsp;&nbsp;";
-                if($idUsr) {echo"<label id='delFoto' scheda='$id' img='$img'>elimina</label>";}
-            }else{
-                echo "<audio preload='none' controls>";
-                echo "<source src='".$folder.$img."' type='audio/mp3'>";
-                echo "Il tuo browser non supporta l'elemento audio";
-                echo "</audio>";
-            }
-            echo"</div>";
-          }else{
-             echo $noFile;
-             if($idUsr) {
-         ?>          
-           <form action="inc/<?php echo $upload; ?>" method="post" id="uploadForm" enctype="multipart/form-data">
-             <input type="hidden" name="schedaFoto" value="<?php echo($id);?>" />
-             <input type="file" name="file" id="file"><br>
-             <input type="submit" name="submit" value="<?php echo $submitLabel; ?>">
-           </form>
-         <?php }} ?>
-          </div>
-         </div>
-       </div>
-       <div style="clear:both"></div>
+                    $qprv = "SELECT scheda.prv_note, ricerca.id, ricerca.denric, ricerca.enresp, ricerca.respric, ricerca.data, scheda.prv_note, ricerca.redattore
+                    FROM public.ricerca, public.scheda WHERE scheda.prv_id = ricerca.id and scheda.id = $id;";
+                    $rprv = pg_query($connection, $qprv);
+                    $aprv = pg_fetch_array($rprv, 0, PGSQL_ASSOC);
+                    $rowprv = pg_num_rows($rprv);
+                    $idricprv=$aprv['id'];
+                    $denricprv= stripslashes($aprv['denric']); if($denricprv == '') {$denricprv=$nd;}
+                    $enrespprv= stripslashes($aprv['enresp']); if($enrespprv== '') {$prvprv=$nd;}
+                    $respricprv= stripslashes($aprv['respric']); if($respricprv == '') {$respricprv=$nd;}
+                    $compilatoreprv= stripslashes($aprv['redattore']); if($compilatoreprv == '') {$compilatoreprv=$nd;}
+                    $dataprv= stripslashes($aprv['data']); if($dataprv == '') {$dataprv=$nd;}
+                    $noteprv= stripslashes($aprv['prv_note']); if($noteprv == '') {$noteprv=$nd;}
 
-       <?php
-         $qcro =  ("SELECT c.cro_iniz, c.cro_fin, c.cro_spec, c.cro_motiv as cro_id, l.definizione AS cro_motiv, c.cro_note
-                    FROM public.cronologia as c, public.scheda as s, public.lista_cro_motiv as l
-                    WHERE c.cro_motiv = l.id AND c.id_scheda = s.id AND s.id = $id;");
-         $rcro = pg_query($connection, $qcro);
-         $acro = pg_fetch_array($rcro, 0, PGSQL_ASSOC);
-         $rowcro = pg_num_rows($rcro);
-
-         $cro_iniz= $acro['cro_iniz']; if($cro_iniz == '') {$cro_iniz=$nd;}
-         $cro_fin= $acro['cro_fin']; if($cro_fin == '') {$cro_fin=$nd;}
-         $cro_spec= stripslashes($acro['cro_spec']); if($cro_spec == '') {$cro_spec=$nd;}
-         $cro_motiv= $acro['cro_motiv']; if($cro_motiv == '') {$cro_motiv=$nd;}
-         $cro_motiv_id = $acro['cro_id'];
-         $cro_note= stripslashes($acro['cro_note']); if($cro_note == '') {$cro_note=$nd;}
-
-         $periodo = $cro_iniz.'-'.$cro_fin;
-         if($rowcro>0) {
-        ?>
-       <div class="toggle check bassa">
-        <div class="sezioni <?php echo $bgSez; ?>" style="margin-top:20px;"><h2>DETTAGLIO CRONOLOGIA</h2></div>
-
-        <div class="slide">
-           <table class="mainData" style="width:98% !important;">
-            <tr>
-             <td width="50%;">
-               <label>SPECIFICA</label>
-               <div class="valori"><?php echo($cro_spec); ?></div>
-               <br/>
-               <label>GENERICA</label>
-               <div class="valori"><?php echo($periodo); ?></div>
-               <br/>
-               <label>MOTIVAZIONE CRONOLOGIA</label>
-               <div class="valori"><?php echo($cro_motiv); ?></div>
-             </td>
-             <td>
-              <label>NOTE</label>
-              <div class="valori" style="height:120px;overflow:auto;"><?php echo(nl2br($cro_note)); ?></div>
-             </td>
-           </tr>
-           <?php if($_SESSION['username']!='guest') {?>
-          <tr>
-           <td colspan="2">
-             <label class="update" id="dettagli_crono">modifica sezione</label>
-           </td>
-          </tr>
-          <?php } ?>
-          </table>
-           <div class="updateContent" style="display:none">
-           <?php require("inc/form_update/dettagli_crono.php"); ?>
-          </div>
-        </div>
-       </div>
-       <?php } ?>
-
-       <?php
-
-         $qcmp =  ("
-         SELECT r.id, r.denric, r.enresp, r.respric, s.compilatore, s.data_compilazione, s.cmp_note, u.nome, u.cognome
-         FROM ricerca as r, scheda as s, usr as u
-         WHERE s.compilatore = u.id_user and s.cmp_id = r.id and s.id = $id;
-         ");
-
-         $rcmp = pg_query($connection, $qcmp);
-         $acmp = pg_fetch_array($rcmp, 0, PGSQL_ASSOC);
-         $rowcmp = pg_num_rows($rcmp);
-
-         $idric=$acmp['id'];
-         $denric= stripslashes($acmp['denric']); if($denric == '') {$denric=$nd;}
-         $enresp= stripslashes($acmp['enresp']); if($enresp == '') {$enresp=$nd;}
-         $respric= stripslashes($acmp['respric']); if($respric == '') {$respric=$nd;}
-         $id_compilatore= $acmp['compilatore']; if($id_compilatore == '') {$id_compilatore=$nd;}
-         $nome= stripslashes($acmp['nome']); if($nome == '') {$nome=$nd;}
-         $cognome= stripslashes($acmp['cognome']); if($cognome == '') {$cognome=$nd;}
-         $compilatore= $nome." ".$cognome;
-         $datacmp= stripslashes($acmp['data_compilazione']); if($datacmp == '') {$datacmp=$nd;}
-         $notecmp= stripslashes($acmp['cmp_note']); if($notecmp == '') {$notecmp=$nd;}
-
-       ?>
-
-       <?php
-         $qprv =  ("
-           SELECT scheda.prv_note, ricerca.id, ricerca.denric, ricerca.enresp, ricerca.respric, ricerca.data, scheda.prv_note, ricerca.redattore
-           FROM public.ricerca, public.scheda
-           WHERE scheda.prv_id = ricerca.id and scheda.id = $id;
-         ");
-         $rprv = pg_query($connection, $qprv);
-         $aprv = pg_fetch_array($rprv, 0, PGSQL_ASSOC);
-         $rowprv = pg_num_rows($rprv);
-
-
-
-         $idricprv=$aprv['id'];
-         $denricprv= stripslashes($aprv['denric']); if($denricprv == '') {$denricprv=$nd;}
-         $enrespprv= stripslashes($aprv['enresp']); if($enrespprv== '') {$prvprv=$nd;}
-         $respricprv= stripslashes($aprv['respric']); if($respricprv == '') {$respricprv=$nd;}
-         $compilatoreprv= stripslashes($aprv['redattore']); if($compilatoreprv == '') {$compilatoreprv=$nd;}
-         $dataprv= stripslashes($aprv['data']); if($dataprv == '') {$dataprv=$nd;}
-         $noteprv= stripslashes($aprv['prv_note']); if($noteprv == '') {$noteprv=$nd;}
-
-        ?>
-
-       <?php
-
-$qai =  ("
-SELECT aree_scheda.id as id_as, aree_scheda.id_area, stato.id as id_stato, provincia.id as id_prov, aree.id as filtro, aree.id_localita, aree.id_comune, aree.id_indirizzo, aree_scheda.id_motivazione as id_motiv, localita.localita, comune.comune, lista_ai_motiv.definizione as motiv, indirizzo.indirizzo, provincia.provincia, stato.stato
-FROM aree_scheda
-LEFT JOIN aree ON aree.nome_area = aree_scheda.id_area
-LEFT JOIN comune ON aree.id_comune = comune.id
-LEFT JOIN provincia ON comune.provincia = provincia.id
-LEFT JOIN stato ON comune.stato = stato.id
-LEFT JOIN localita ON aree.id_localita = localita.id
-LEFT JOIN lista_ai_motiv ON lista_ai_motiv.id = aree_scheda.id_motivazione
-LEFT JOIN indirizzo ON indirizzo.id = aree.id_indirizzo
-WHERE aree.tipo = 1 AND aree_scheda.id_scheda = $id
-ORDER BY comune ASC, localita ASC, indirizzo ASC;
-");
-$rai = pg_query($connection, $qai);
-$rowai = pg_num_rows($rai);
-$param = '';
-?>
-       <div class="toggle check bassa">
-        <div class="sezioni <?php echo $bgSez; ?>"><h2>AREA DI INTERESSE</h2></div>
-
-        <div class="slide">
-        <div style="width:98%; margin:0px auto !important">
-        <?php if($rowai > 0) {?>
-         <table class="mainData zebra" style="margin-top:10px !important;">
-          <thead>
-           <th>STATO</th>
-           <th>PROVINCIA</th>
-           <th>COMUNE</th>
-           <th>LOCALITA'</th>
-           <th>INDIRIZZO</th>
-           <th>MOTIVAZIONE</th>
-           <th></th>
-          </thead>
-          <tbody>
-          <?php
-          for ($x = 0; $x < $rowai; $x++){
-             $id_as= pg_result($rai, $x,"id_as");
-             $id_area= pg_result($rai, $x,"id_area");
-             $id_stato=  pg_result($rai, $x,"id_stato");
-             $id_prov=  pg_result($rai, $x,"id_prov");
-             $id_loc=  pg_result($rai, $x,"id_localita");
-             $id_com=  pg_result($rai, $x,"id_comune");
-             $id_indirizzo=  pg_result($rai, $x,"id_indirizzo");
-             $id_motiv=  pg_result($rai, $x,"id_motiv");
-             $localitaai=  pg_result($rai, $x,"localita"); 
-             if($localitaai == '') {$localitaai=$nd;}else {$localitaai=stripslashes($localitaai);}
-             $comuneai=  pg_result($rai, $x,"comune"); 
-             if($comuneai== '') {$comuneai=$nd;}else {$comuneai=stripslashes($comuneai);}
-             $motivai=  pg_result($rai, $x,"motiv"); 
-             if($motivai == '') {$motivai=$nd;}else {$motivai=stripslashes($motivai);}
-             $indirizzoai=  pg_result($rai, $x,"indirizzo"); 
-             if($indirizzoai == '') {$indirizzoai=$nd;}else {$indirizzoai=stripslashes($indirizzoai);}
-             $provinciaai=  pg_result($rai, $x,"provincia"); 
-             if($provinciaai == '') {$provinciaai=$nd;}else {$provinciaai=stripslashes($provinciaai);}
-             $statoai=  pg_result($rai, $x,"stato"); 
-             if($statoai == '') {$statoai=$nd;}else {$statoai=stripslashes($statoai);} 
-             $filtro = pg_result($rai, $x, "filtro");
-             $param .= 'id_area='.$id_area.' OR ';
-             echo "
-              <tr data-id='$id_as'>
-               <td>$statoai</td>
-               <td>$provinciaai</td>
-               <td>$comuneai</td>
-               <td>$localitaai</td>
-               <td>$indirizzoai</td>
-               <td>$motivai</td>
-               <td>";
-               if ($_SESSION['username']!='guest'){
-                echo "<a href='javascript:removeArea($id_as)'><i class='fa fa-times fa-2x avviso'></i></a>";
-               }
-               echo "</td>
-              </tr>
-             ";
-            }
-          ?>
-          </tbody>
-         </table>
-         <?php }else {?>
-           <div style="width:98%;height:50px;margin:0px auto;text-align:center">
-            <h1 style="width:90% !important;">Nessuna area definita</h1>
-           </div>
-         <?php } if($_SESSION['username']!='guest') {?>
-          <div style="padding:10px;"><label class="update" id="area_interesse_add">aggiungi area</label></div>
-         <?php } ?>
-         </div>
-         <div>
-          <label style="margin-left:2.5%">NOTE</label>
-          <div class="valori" style="height:70px;overflow:auto;margin:0px auto 10px; width:94% !important;">
-           <?php echo(nl2br($noteAi))?>
-         </div>
-         <?php if($_SESSION['username']!='guest') {?>
-          <div style="padding:10px;"><label class="update" id="updatenoteai">aggiorna note</label></div>
-         <?php } ?>
-         </div>
-         <div class="updateContent" style="display:none">
-           <?php 
-            require("inc/form_update/area_interesse.php"); 
-            require("inc/form_update/area_interesse_add.php");
-            require("inc/form_update/noteai_update.php");
-           ?>
-          </div>
-        </div>
-       </div>
-
-       <?php 
+                    $qai = "SELECT aree_scheda.id as id_as, aree_scheda.id_area, stato.id as id_stato, provincia.id as id_prov, aree.id as filtro, aree.id_localita, aree.id_comune, aree.id_indirizzo, aree_scheda.id_motivazione as id_motiv, localita.localita, comune.comune, lista_ai_motiv.definizione as motiv, indirizzo.indirizzo, provincia.provincia, stato.stato FROM aree_scheda LEFT JOIN aree ON aree.nome_area = aree_scheda.id_area LEFT JOIN comune ON aree.id_comune = comune.id LEFT JOIN provincia ON comune.provincia = provincia.id LEFT JOIN stato ON comune.stato = stato.id LEFT JOIN localita ON aree.id_localita = localita.id LEFT JOIN lista_ai_motiv ON lista_ai_motiv.id = aree_scheda.id_motivazione LEFT JOIN indirizzo ON indirizzo.id = aree.id_indirizzo WHERE aree.tipo = 1 AND aree_scheda.id_scheda = $id ORDER BY comune ASC, localita ASC, indirizzo ASC;";
+                    $rai = pg_query($connection, $qai);
+                    $rowai = pg_num_rows($rai);
+                    $param = '';
+                ?>
+                <div class="toggle check bassa">
+                    <div class="sezioni <?php echo $bgSez; ?>"><h2>AREA DI INTERESSE</h2></div>
+                    <div class="slide">
+                        <div style="width:98%; margin:0px auto !important">
+                            <?php if($rowai > 0) {?>
+                            <table class="mainData zebra" style="margin-top:10px !important;">
+                                <thead>
+                                    <th>STATO</th>
+                                    <th>PROVINCIA</th>
+                                    <th>COMUNE</th>
+                                    <th>LOCALITA'</th>
+                                    <th>INDIRIZZO</th>
+                                    <th>MOTIVAZIONE</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    for ($x = 0; $x < $rowai; $x++){
+                                        $id_as= pg_result($rai, $x,"id_as");
+                                        $id_area= pg_result($rai, $x,"id_area");
+                                        $id_stato=  pg_result($rai, $x,"id_stato");
+                                        $id_prov=  pg_result($rai, $x,"id_prov");
+                                        $id_loc=  pg_result($rai, $x,"id_localita");
+                                        $id_com=  pg_result($rai, $x,"id_comune");
+                                        $id_indirizzo=  pg_result($rai, $x,"id_indirizzo");
+                                        $id_motiv=  pg_result($rai, $x,"id_motiv");
+                                        $localitaai=  pg_result($rai, $x,"localita");
+                                        if($localitaai == '') {$localitaai=$nd;}else {$localitaai=stripslashes($localitaai);}
+                                        $comuneai=  pg_result($rai, $x,"comune");
+                                        if($comuneai== '') {$comuneai=$nd;}else {$comuneai=stripslashes($comuneai);}
+                                        $motivai=  pg_result($rai, $x,"motiv");
+                                        if($motivai == '') {$motivai=$nd;}else {$motivai=stripslashes($motivai);}
+                                        $indirizzoai=  pg_result($rai, $x,"indirizzo");
+                                        if($indirizzoai == '') {$indirizzoai=$nd;}else {$indirizzoai=stripslashes($indirizzoai);}
+                                        $provinciaai=  pg_result($rai, $x,"provincia");
+                                        if($provinciaai == '') {$provinciaai=$nd;}else {$provinciaai=stripslashes($provinciaai);}
+                                        $statoai=  pg_result($rai, $x,"stato");
+                                        if($statoai == '') {$statoai=$nd;}else {$statoai=stripslashes($statoai);}
+                                        $filtro = pg_result($rai, $x, "filtro");
+                                        $param .= 'id_area='.$id_area.' OR ';
+                                        echo "<tr>";
+                                            echo "<td>$statoai</td>";
+                                            echo "<td>$provinciaai</td>";
+                                            echo "<td>$comuneai</td>";
+                                            echo "<td>$localitaai</td>";
+                                            echo "<td>$indirizzoai</td>";
+                                            echo "<td>$motivai</td>";
+                                            echo "<td>";
+                                                if ($_SESSION['username']!='guest'){echo "<a href='javascript:removeArea($id_as)'><i class='fa fa-times avviso'></i></a>";}
+                                            echo "</td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                            <?php }else {?>
+                                <div style="width:98%;height:50px;margin:0px auto;text-align:center">
+                                    <h1 style="width:90% !important;">Nessuna area definita</h1>
+                                </div>
+                            <?php } if($_SESSION['username']!='guest') {?>
+                                <div style="padding:10px;"><label class="update" id="area_interesse_add">aggiungi area</label></div>
+                            <?php } ?>
+                        </div>
+                        <div>
+                            <label style="margin-left:2.5%">NOTE</label>
+                            <div class="valori" style="height:70px;overflow:auto;margin:0px auto 10px; width:94% !important;"><?php echo(nl2br($noteAi))?></div>
+                            <?php if($_SESSION['username']!='guest') {?><div style="padding:10px;"><label class="update" id="updatenoteai">aggiorna note</label></div><?php } ?>
+                        </div>
+                        <div class="updateContent" style="display:none">
+                            <?php
+                            require("inc/form_update/area_interesse.php");
+                            require("inc/form_update/area_interesse_add.php");
+                            require("inc/form_update/noteai_update.php");
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
          $qubi =  ("
 SELECT
  aree_scheda.id as id_as,
@@ -553,7 +486,7 @@ WHERE aree.tipo = 2 AND aree_scheda.id_scheda = $id;");
          $rubi = pg_query($connection, $qubi);
          $aubi = pg_fetch_array($rubi, 0, PGSQL_ASSOC);
          $rowubi = pg_num_rows($rubi);
-         
+
          $id_us= $aubi['id_as'];
          $id_stato_ubi= $aubi['id_stato'];
          $id_prov_ubi= $aubi['id_prov'];
@@ -575,7 +508,7 @@ WHERE aree.tipo = 2 AND aree_scheda.id_scheda = $id;");
          else {$linkubi='<a href="'.$webubi.'" target="_blank" class="generico" title="[link esterno]">'.$webubi.'</a>';}
 
         ?>
-        
+
       <?php
          $qana =  ("SELECT
   scheda.id AS id_scheda,
@@ -727,7 +660,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
                             7=>array('FOTOGRAFICHE','fotografica'),
                             5=>array('BIBLIOGRAFICHE','bibliografica'),
                             10=>array('CARTOGRAFICHE','cartografica')
-                            ) 
+                            )
                as $idforeach=>$nomeforeach){
                  $qrif6 = ("select * from altrif where scheda = $id and tpsch_altrif = $idforeach");
                  $rrif6 = pg_query($connection, $qrif6);
@@ -738,8 +671,8 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
                     $idrif6 = pg_result($rrif6, $x,"scheda_altrif");
                     $numschrif6 = pg_result($rrif6, $x,"numsch_altrif");
                     $idaltrifprinc = pg_result($rrif6, $x,"id");
-                    echo "<a href=\"scheda_archeo.php?id=$idrif6\" target=\"_blank\" class=\"altrif ".$nomeforeach[1]."\">$numschrif6</a>";
-                    if ($_SESSION['username']!='guest'){echo '<a href="javascript:removeCorrela('.$idaltrifprinc.')"><img style="width:10px;height:10px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACHElEQVR42n2T70tTYRTHB73ddPfubq6ld5utYOQ2lsRYm7IyK6xBoC8CK+jHin5AWLEQgugPkG48OlEqMtIKhKAfrhFkJOVwlYVBSe1FvvDFSFj0B3x7zr1udOvOA1/Oc87nex547uGaTP9ErsHsM9WItZgp22Bex6W8CnpB2YDXZGo8c5gzn3q78HtyAHP74+C18hdj73s6VEaZvLrhxw4L+3BwL8ojF1Dqi6F8qx/5fXHwvkKs0N2B8mhaZb9uXgbV1FeHHzksvlyLFz8Hz2P5zDZN5yJYGUnjTVcM+QMJrAxfxPLZSJVTnfXL4LOyesmk3cKmwy78OBbG0vFVpVpRGrqEEuvD0onWap88L0Mu0IzuGQ/sdexF0IXvvQEUD63qSAjFw6FqTSwXWA/yGn7IcamOZbc48bXbj8Uevag35XeCPDVXOSbVs1x7GAvJzfic9Om0kNyEbCwI7jFe421bPXve2Ybi1ZOY392M+U6PTh/3bETx2mlM7YyCe/WXjNqsytNdcXy7kkIhIaPQ3qhqrk1TpX6XcHPPKTzZsR18RnvKsGj1jvk8+JI+itmoC7MRp6q3XPfdNjz0SOq50s9HN2CxP4U7zW7wWW2Ng6JVmZBteL1VwgwX5XFZBO8zEp0rjDTh1pjuGTdEgd1tFDHdIoAy1TrWxFlAwL0mgVjG8ENeFwRlSBJA2YCxjF1ltddIMSAI8hrsv9/5D5EYVSAsqeh8AAAAAElFTkSuQmCC"></a>   ';             }
+                    echo "<a href='scheda_archeo.php?id=$idrif6' target='_blank' class='altrif ".$nomeforeach[1]."'>$numschrif6</a>";
+                    if ($_SESSION['username']!='guest'){echo '<a href="javascript:removeCorrela('.$idaltrifprinc.')"><i class ="fa fa-times avviso"></i></a>';}
                    }
                    echo '</div><br/>';
                   }
@@ -794,7 +727,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
       </div>
      <?php } ?>
    </div>
-   
+
 <div class="inner">
  <div class="toggle check bassa">
   <div class="sezioni <?php echo $bgSez; ?>" style="border-top:none !important;">
@@ -803,9 +736,9 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
    SELECT tag.id_scheda, tag.tag1 as t1id, tag1.definizione as tag1, tag.tag2 as t2id, tag2.definizione as tag2, tag.tag3 as t3id, tag3.definizione as tag3, tag.tag4 as t4id, tag4.definizione as tag4, tag.tag5 as t5id, tag5.definizione as tag5
    FROM tag
    left join tag1 on tag.tag1 = tag1.id
-   left join tag2 on tag.tag2 = tag2.id 
-   left join tag3 on tag.tag3 = tag3.id 
-   left join tag4 on tag.tag4 = tag4.id 
+   left join tag2 on tag.tag2 = tag2.id
+   left join tag3 on tag.tag3 = tag3.id
+   left join tag4 on tag.tag4 = tag4.id
    left join tag5 on tag.tag5 = tag5.id
    WHERE tag.id_scheda = $id
   ";
@@ -913,7 +846,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
          $id_parente1 = pg_result($r1, $x,"id_parente");
          $ap_dgn_numsch1 = pg_result($r1, $x,"dgn_numsch");
          echo "<a href=\"scheda_archeo.php?id=$id_parente1\" target=\"_blank\" class=\"altrif $stile\">$ap_dgn_numsch1</a>  ";
-         if ($_SESSION['username']!='guest'){echo '<a href="javascript:removeParente('.$ap_id1.')"><img style="width:10px;height:10px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACHElEQVR42n2T70tTYRTHB73ddPfubq6ld5utYOQ2lsRYm7IyK6xBoC8CK+jHin5AWLEQgugPkG48OlEqMtIKhKAfrhFkJOVwlYVBSe1FvvDFSFj0B3x7zr1udOvOA1/Oc87nex547uGaTP9ErsHsM9WItZgp22Bex6W8CnpB2YDXZGo8c5gzn3q78HtyAHP74+C18hdj73s6VEaZvLrhxw4L+3BwL8ojF1Dqi6F8qx/5fXHwvkKs0N2B8mhaZb9uXgbV1FeHHzksvlyLFz8Hz2P5zDZN5yJYGUnjTVcM+QMJrAxfxPLZSJVTnfXL4LOyesmk3cKmwy78OBbG0vFVpVpRGrqEEuvD0onWap88L0Mu0IzuGQ/sdexF0IXvvQEUD63qSAjFw6FqTSwXWA/yGn7IcamOZbc48bXbj8Uevag35XeCPDVXOSbVs1x7GAvJzfic9Om0kNyEbCwI7jFe421bPXve2Ybi1ZOY392M+U6PTh/3bETx2mlM7YyCe/WXjNqsytNdcXy7kkIhIaPQ3qhqrk1TpX6XcHPPKTzZsR18RnvKsGj1jvk8+JI+itmoC7MRp6q3XPfdNjz0SOq50s9HN2CxP4U7zW7wWW2Ng6JVmZBteL1VwgwX5XFZBO8zEp0rjDTh1pjuGTdEgd1tFDHdIoAy1TrWxFlAwL0mgVjG8ENeFwRlSBJA2YCxjF1ltddIMSAI8hrsv9/5D5EYVSAsqeh8AAAAAElFTkSuQmCC"></a>';}
+         if ($_SESSION['username']!='guest'){echo '<a href="javascript:removeParente('.$ap_id1.')"><i class="fa fa-times avviso"></i></a>';}
         }
      }
      ?>
@@ -934,7 +867,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
          $id_parente2 = pg_result($r2, $x,"id_parente");
          $ap_dgn_numsch2 = pg_result($r2, $x,"dgn_numsch");
          echo "<a href=\"scheda_archeo.php?id=$id_parente2\" target=\"_blank\" class=\"altrif $stile\">$ap_dgn_numsch2</a>  ";
-         if ($_SESSION['username']!='guest'){echo '<a href="javascript:removeParente('.$ap_id2.')"><img style="width:10px;height:10px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACHElEQVR42n2T70tTYRTHB73ddPfubq6ld5utYOQ2lsRYm7IyK6xBoC8CK+jHin5AWLEQgugPkG48OlEqMtIKhKAfrhFkJOVwlYVBSe1FvvDFSFj0B3x7zr1udOvOA1/Oc87nex547uGaTP9ErsHsM9WItZgp22Bex6W8CnpB2YDXZGo8c5gzn3q78HtyAHP74+C18hdj73s6VEaZvLrhxw4L+3BwL8ojF1Dqi6F8qx/5fXHwvkKs0N2B8mhaZb9uXgbV1FeHHzksvlyLFz8Hz2P5zDZN5yJYGUnjTVcM+QMJrAxfxPLZSJVTnfXL4LOyesmk3cKmwy78OBbG0vFVpVpRGrqEEuvD0onWap88L0Mu0IzuGQ/sdexF0IXvvQEUD63qSAjFw6FqTSwXWA/yGn7IcamOZbc48bXbj8Uevag35XeCPDVXOSbVs1x7GAvJzfic9Om0kNyEbCwI7jFe421bPXve2Ybi1ZOY392M+U6PTh/3bETx2mlM7YyCe/WXjNqsytNdcXy7kkIhIaPQ3qhqrk1TpX6XcHPPKTzZsR18RnvKsGj1jvk8+JI+itmoC7MRp6q3XPfdNjz0SOq50s9HN2CxP4U7zW7wWW2Ng6JVmZBteL1VwgwX5XFZBO8zEp0rjDTh1pjuGTdEgd1tFDHdIoAy1TrWxFlAwL0mgVjG8ENeFwRlSBJA2YCxjF1ltddIMSAI8hrsv9/5D5EYVSAsqeh8AAAAAElFTkSuQmCC"></a>';}
+         if ($_SESSION['username']!='guest'){echo '<a href="javascript:removeParente('.$ap_id2.')"><i class="fa fa-times avviso"></i></a>';}
         }
      }
      ?>
@@ -955,7 +888,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
          $id_parente3 = pg_result($r3, $x,"id_parente");
          $ap_dgn_numsch3 = pg_result($r3, $x,"dgn_numsch");
          echo "<a href=\"scheda_archeo.php?id=$id_parente3\" target=\"_blank\" class=\"altrif $stile\">$ap_dgn_numsch3</a>  ";
-         if ($_SESSION['username']!='guest'){echo '<a href="javascript:removeParente('.$ap_id3.')"><img style="width:10px;height:10px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACHElEQVR42n2T70tTYRTHB73ddPfubq6ld5utYOQ2lsRYm7IyK6xBoC8CK+jHin5AWLEQgugPkG48OlEqMtIKhKAfrhFkJOVwlYVBSe1FvvDFSFj0B3x7zr1udOvOA1/Oc87nex547uGaTP9ErsHsM9WItZgp22Bex6W8CnpB2YDXZGo8c5gzn3q78HtyAHP74+C18hdj73s6VEaZvLrhxw4L+3BwL8ojF1Dqi6F8qx/5fXHwvkKs0N2B8mhaZb9uXgbV1FeHHzksvlyLFz8Hz2P5zDZN5yJYGUnjTVcM+QMJrAxfxPLZSJVTnfXL4LOyesmk3cKmwy78OBbG0vFVpVpRGrqEEuvD0onWap88L0Mu0IzuGQ/sdexF0IXvvQEUD63qSAjFw6FqTSwXWA/yGn7IcamOZbc48bXbj8Uevag35XeCPDVXOSbVs1x7GAvJzfic9Om0kNyEbCwI7jFe421bPXve2Ybi1ZOY392M+U6PTh/3bETx2mlM7YyCe/WXjNqsytNdcXy7kkIhIaPQ3qhqrk1TpX6XcHPPKTzZsR18RnvKsGj1jvk8+JI+itmoC7MRp6q3XPfdNjz0SOq50s9HN2CxP4U7zW7wWW2Ng6JVmZBteL1VwgwX5XFZBO8zEp0rjDTh1pjuGTdEgd1tFDHdIoAy1TrWxFlAwL0mgVjG8ENeFwRlSBJA2YCxjF1ltddIMSAI8hrsv9/5D5EYVSAsqeh8AAAAAElFTkSuQmCC"></a>';}
+         if ($_SESSION['username']!='guest'){echo '<a href="javascript:removeParente('.$ap_id3.')"><i class="fa fa-times avviso"></i></a>';}
         }
      }
      ?>
@@ -966,7 +899,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
       <div class="updateContent" style="display:none">
         <div id="newParente_form">
           <label>Inizia a digitare il nome della scheda da associare (es. "ARCHEO-"), la ricerca non e' case sensitive.</label>
-          
+
           <input class="form" id="termfiga2" style="width:150px !important; margin-top:10px !important;"/>
           <label id="numItems2"></label>
           <div id="resultfiga2"></div>
@@ -980,7 +913,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
  <?php if ($_SESSION['username']!='guest'){  ?>
   <div class="inner">
    <div id="fine">
-    <label style="display:block;text-align:center;">La scheda risulta <?php echo($statoScheda); ?>. 
+    <label style="display:block;text-align:center;">La scheda risulta <?php echo($statoScheda); ?>.
      <?php if($tipoUsr != 3) {?>Utilizza il pulsante in basso per cambiare lo stato della scheda.
     </label>
     <br/>
@@ -988,12 +921,12 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
    </div>
   </div>
  <?php }} ?>
-   
+
  </div><!--skArcheoContent-->
  </div><!--content-->
  <div id="footer"><?php require_once ("inc/footer.php"); ?></div><!--footer-->
- </div><!-- wrap-->
- </div><!--container-->
+        </div><!-- wrap-->
+    </div><!--container-->
 
  <!--div invisibili -->
  <div id="delDialog" style="display:none; text-align:center;">
@@ -1081,7 +1014,7 @@ else {$('.update').hide();}
      event.preventDefault();
     }
   });
-  
+
 $( "#termfiga2" ).autocomplete({
     source: "inc/autocomplete3.php?tpsch=<?php echo($tpsch);?>",
     minLength: 2,
@@ -1101,9 +1034,9 @@ $( "#termfiga2" ).autocomplete({
    $('.slide').hide();
     //$('.toggle').click(function(){$(this).children('.slide').slideToggle(); $(this).children('.sezioni').toggleClass(bgSezAperto); });
     $('.toggle > div > h2').click(function(){$(this).parent().next('.slide').slideToggle(); });
-   $("#switchImg").attr("checked", true);
+   $("#switchMappa").attr("checked", true);
    $(".switchImgMapButton").change(function(){
-     $("#imgDiv").slideToggle("fast"); 
+     $("#imgDiv").slideToggle("fast");
      $("label.switchlabel").toggleClass("switchLabelChecked");
    });
 
@@ -1239,11 +1172,11 @@ if (width >= height) {
    }
 }
 if(height > width){
-    ratio = minHeight / height; 
+    ratio = minHeight / height;
     width = width * ratio;    // Reset width to match scaled image
     $('#imgSmall').css({width:width, height:minHeight});
     //imgThumb.css("height", minHeight);   // Set new height
-    //imgThumb.css("width", width * ratio);    // Scale width based on ratio    
+    //imgThumb.css("width", width * ratio);    // Scale width based on ratio
     height = height * ratio;
 }
 
@@ -1267,7 +1200,7 @@ $("i").hover(function(){
 <script type="text/javascript">
 var mappa, gsat, aree, linee, arrayOSM, osm;
 var extent, extent2, bound, coo, numPoly, numLine, format, stile, param;
-var bingKey = 'Arsp1cEoX9gu-KKFYZWbJgdPEa8JkRIUkxcPr8HBVSReztJ6b0MOz3FEgmNRd4nM'; 
+var bingKey = 'Arsp1cEoX9gu-KKFYZWbJgdPEa8JkRIUkxcPr8HBVSReztJ6b0MOz3FEgmNRd4nM';
 OpenLayers.ProxyHost = "/cgi-bin/proxy.cgi?url=";
 format = 'image/png';
 numPoly = '<?php echo($numPoly); ?>';
@@ -1318,7 +1251,7 @@ var report = function(e) { OpenLayers.Console.log(e.type, e.feature.id); };
 
 if (numPoly != 0) {
  aree = new OpenLayers.Layer.WMS("Aree","http://www.lefontiperlastoria.it:80/geoserver/fonti/wms",{
-  layers: 'fonti:area_int_poly', 
+  layers: 'fonti:area_int_poly',
   styles: stile,
   srs: 'EPSG:3857',
   format: 'image/png',
@@ -1331,15 +1264,15 @@ if (numPoly != 0) {
 
 if(numLine != 0){
  linee = new OpenLayers.Layer.WMS("Tracciati","http://www.lefontiperlastoria.it:80/geoserver/fonti/wms",{
-	layers: 'fonti:area_int_line', 
+	layers: 'fonti:area_int_line',
 	//styles: stile+'_linea',
 	srs: 'EPSG:3857',
 	format: 'image/png',
 	transparent: true,
 	CQL_FILTER: cql
-	
+
 },{
-	isBaseLayer: false, 
+	isBaseLayer: false,
 	tileSize: new OpenLayers.Size(256,256)
 });
  mappa.addLayer(linee);
@@ -1351,3 +1284,4 @@ if (!mappa.getCenter()) {mappa.zoomToExtent(extent);}
 </script>
 </body>
 </html>
+
