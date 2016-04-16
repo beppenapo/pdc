@@ -472,7 +472,7 @@ $param = '';
              $filtro = pg_result($rai, $x, "filtro");
              $param .= 'id_area='.$id_area.' OR ';
              echo "
-              <tr>
+              <tr data-id='$id_as'>
                <td>$statoai</td>
                <td>$provinciaai</td>
                <td>$comuneai</td>
@@ -481,9 +481,7 @@ $param = '';
                <td>$motivai</td>
                <td>";
                if ($_SESSION['username']!='guest'){
-                echo "<a href=\"javascript:removeArea($id_as)\">
-                 <img style='width:14px;height:14px;' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACHElEQVR42n2T70tTYRTHB73ddPfubq6ld5utYOQ2lsRYm7IyK6xBoC8CK+jHin5AWLEQgugPkG48OlEqMtIKhKAfrhFkJOVwlYVBSe1FvvDFSFj0B3x7zr1udOvOA1/Oc87nex547uGaTP9ErsHsM9WItZgp22Bex6W8CnpB2YDXZGo8c5gzn3q78HtyAHP74+C18hdj73s6VEaZvLrhxw4L+3BwL8ojF1Dqi6F8qx/5fXHwvkKs0N2B8mhaZb9uXgbV1FeHHzksvlyLFz8Hz2P5zDZN5yJYGUnjTVcM+QMJrAxfxPLZSJVTnfXL4LOyesmk3cKmwy78OBbG0vFVpVpRGrqEEuvD0onWap88L0Mu0IzuGQ/sdexF0IXvvQEUD63qSAjFw6FqTSwXWA/yGn7IcamOZbc48bXbj8Uevag35XeCPDVXOSbVs1x7GAvJzfic9Om0kNyEbCwI7jFe421bPXve2Ybi1ZOY392M+U6PTh/3bETx2mlM7YyCe/WXjNqsytNdcXy7kkIhIaPQ3qhqrk1TpX6XcHPPKTzZsR18RnvKsGj1jvk8+JI+itmoC7MRp6q3XPfdNjz0SOq50s9HN2CxP4U7zW7wWW2Ng6JVmZBteL1VwgwX5XFZBO8zEp0rjDTh1pjuGTdEgd1tFDHdIoAy1TrWxFlAwL0mgVjG8ENeFwRlSBJA2YCxjF1ltddIMSAI8hrsv9/5D5EYVSAsqeh8AAAAAElFTkSuQmCC'>
-                 </a>";
+                echo "<a href='javascript:removeArea($id_as)'><i class='fa fa-times fa-2x avviso'></i></a>";
                }
                echo "</td>
               </tr>
