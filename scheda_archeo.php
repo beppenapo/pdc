@@ -260,7 +260,7 @@ $img=$imgres['path'];
                                         <a href="#" class="baseButton" id="osm" onclick="mappa.setBaseLayer(osm)">OSM</a>
                                     </div>
                                 </div>
-                            <?php} if($tpsch!=1){?>
+                            <?php } if($tpsch!=1){ ?>
                                 <img id="imgOrig" src="<?php echo($folder.$img);?>" style="position:absolute; left:-1000%;">
                             <?php } ?>
                             <div id="imgDiv">
