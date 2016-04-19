@@ -22,7 +22,7 @@ if (isset($_GET['site'])) {
     <body>
         <?php require("inc/cookieBanner.php"); ?>
         <?php require("inc/licenze.php"); ?>
-        <header id="head"><?php require_once('inc/head.php')?></header>
+        <header id="head"><?php require_once('inc/head.php'); ?></header>
         <div id="mainContent">
             <section id="image"><label class="caption"></label></section>
             <section id="main"></section>

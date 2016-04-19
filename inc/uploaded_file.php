@@ -1,4 +1,5 @@
 <?php
+session_start();
 ob_start();
 $id = $_POST['schedaFoto'];
 $allowedExts = array("gif", "jpeg", "jpg", "png");

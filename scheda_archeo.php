@@ -24,14 +24,12 @@ $fine = $a['fine'];
 
 if($tpsch==1){
     $upload = "uploaded_audio.php";
-    $submitLabel = "Carica audio";
     $noFile="<h2>Non sono presenti file audio</h2>";
     $tipoFile = 2;
     $folder = "audio/";
     $mapSwitch="multimedia";
 }else{
     $upload = "uploaded_file.php";
-    $submitLabel = "Carica foto";
     $noFile = "<h2>Non sono presenti foto</h2>";
     $tipoFile = 1;
     $folder = "../foto/";
@@ -286,7 +284,7 @@ $img=$imgres['path'];
                                         <form action="inc/<?php echo $upload; ?>" method="post" id="uploadForm" enctype="multipart/form-data">
                                             <input type="hidden" name="schedaFoto" value="<?php echo($id);?>" />
                                             <input type="file" name="file" id="file"><br>
-                                            <input type="submit" name="submit" value="<?php echo $submitLabel; ?>">
+                                            <input type="submit" name="submit" id="submitFile" value="Carica file selezionato">
                                         </form>
                                 <?php }} ?>
                             </div>
@@ -1284,4 +1282,3 @@ if (!mappa.getCenter()) {mappa.zoomToExtent(extent);}
 </script>
 </body>
 </html>
-
