@@ -51,17 +51,12 @@
 </div>
 
 <div class="sez" id="sez_intervistato">
-    <label>DATI PERSONALI</label>
-    <textarea id="oral2_att_datipers" class="form noteform"><?php echo($att_datipers); ?></textarea>
-
-    <label>RUOLO</label>
-    <textarea id="oral2_att_ruolo" class="form"><?php echo($att_ruolo); ?></textarea>
-
-    <label>MESTIERE O PROFESSIONE</label>
-    <textarea id="oral2_att_mestiere" class="form noteform"><?php echo($att_mestiere); ?></textarea>
-
-    <label>NASCITA</label>
-    <textarea id="oral2_att_nascita" class="form"><?php echo($att_nascita); ?></textarea>
+    <label>INTERVISTATO</label>
+    <textarea id="oral2_att_datipers" class="form noteform"><?php echo $intervistato; ?></textarea>
+    <label>DESCRIZIONE CONTESTO</label>
+    <textarea id="oral2_loc_contst" class="form"><?php echo($loc_contst); ?></textarea>
+    <label>AUTORE/INTERVISTATORE</label>
+    <textarea id="oral2_autore" class="form"><?php echo $autore; ?></textarea>
 
     <label>NOTE</label>
     <textarea id="oral2_att_note" class="form"><?php echo($att_note); ?></textarea>
@@ -118,5 +113,3 @@
  <div class="login2" style="margin-top:20px;" id="oral2_salva">Salva modifiche</div>
  <div class="chiudiForm login2">Annulla modifiche</div>
 </div>
-
-
