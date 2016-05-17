@@ -156,7 +156,7 @@ $('#provenienza_update').click(function(){
    //var check = id+'\n'+old_ubi+'\n'+localita_update+'\n'+motiv_update;
    //alert(check);return false;
    if (localita_update!=672 && motiv_update == 16) {
-     alert("Se scegli un'ubicazione devi compilare anche il campo motivazione!"); 
+     alert("Se scegli un'ubicazione devi compilare anche il campo motivazione!");
      return false;
    }else {
      $.ajax({
@@ -176,7 +176,7 @@ $('#provenienza_update').click(function(){
         ;
        }//success
      });//ajax
-   }  
+   }
  });
 
  $('#anagrafica_update').click(function(){
@@ -283,7 +283,7 @@ $('#provenienza_update').click(function(){
     }//success
    });//ajax
  });
- 
+
  $('#conservazione_update').click(function(){
  	var scn_update = $('#scn_update').val();
    var scn_note_update = $('#scn_note_update').val();
@@ -496,7 +496,7 @@ $('#provenienza_update').click(function(){
    var bib_descfis = $('#biblio2_descrizione_update').val();
    //var bib_lingua = $('#biblio2_lingua_update').val();
    var bib_notestor = $('#biblio2_note_update').val();
-   
+
    var bib_lingua ='';
    $("input[name=biblio2_lingua_update]:checked").each(function () {
     var linguaB2 = $(this).val();
@@ -526,7 +526,7 @@ $('#archiv1_descr_update').click(function(){
  var archiv1FondiSegn_update   = $('#archiv1FondiSegn_update').val();
  var archiv1_fondi_update      = $('#archiv1_fondi_update').val();
  var archiv1_note_update       = $('#archiv1_note_update').val();
- 
+
  var archiv1_tipoDoc_update='';
  $("input[name=archiv1_tipoDoc_update]:checked").each(function () {
     var archtipoA1 = $(this).val();
@@ -728,7 +728,7 @@ $('#archiv1_descr_update').click(function(){
  $("#archiv2_fondo_salva").click(function () {
    var idArchiv2 = $("#idArchiv2").val();
    var archiv2_dscfondo_update = $("#archiv2_dscfondo_update").val();
-   var archiv2_consist_update = $("#archiv2_consist_update").val();   
+   var archiv2_consist_update = $("#archiv2_consist_update").val();
    var archiv2_tipodoc_update='';
    $("input[name=archiv2_tipodoc_update]:checked").each(function () {
     var archtipoA2 = $(this).val();
@@ -739,7 +739,7 @@ $('#archiv1_descr_update').click(function(){
     var archLinguaA2 = $(this).val();
     archiv2_lingua_update+=archLinguaA2+', ';
    });
- 
+
    var archiv2_fondonote_update = $("#archiv2_fondonote_update").val();
    $.ajax({
     url: 'inc/update_archiv2_fondo_script.php',
@@ -819,17 +819,17 @@ $('#archiv1_descr_update').click(function(){
    var archiv3_descrizione_update= $("#archiv3_descrizione_update").val();
    var archiv3_tipo_update='';
    var archiv3_lingua_update='';
-   
+
    $("input[name=archiv3_tipo_update]:checked").each(function () {
     var archtipoA3 = $(this).val();
     archiv3_tipo_update+=archtipoA3+', ';
    });
-   
+
    $("input[name=archiv3_lingua_update]:checked").each(function () {
     var linguaA3 = $(this).val();
     archiv3_lingua_update+=linguaA3+', ';
    });
-   
+
    var archiv3_note_update= $("#archiv3_note_update").val();
    //alert(archiv3_tipo_update); return false;
    $.ajax({
@@ -1010,7 +1010,7 @@ $('#archiv1_descr_update').click(function(){
     var mater1_dsc_gradutil=$("#mater1_dsc_gradutil").val();
     var mater1_dsc_oggpreg=$("#mater1_dsc_oggpreg").val();
     var mater1_dsc_oss=$("#mater1_dsc_oss").val();
-    
+
     var mater1_dsc_catman='';
     $("input[name=mater1CatMan]:checked").each(function () {
      var catman = $(this).val();
@@ -1142,13 +1142,13 @@ if (catspecclass == 2) {$("#sottocategorie").show();}else {$("#sottocategorie").
     var mater3_catspec=$("#mater3_catspec").val();
     var mater3_mrf_descr3=$("#mater3_mrf_descr3").val();
     var mater3_mrf_note3=$("#mater3_mrf_note3").val();
-    
+
     var mater3_mrf_matcost3='';
     $("input[name=matcos]:checked").each(function () {
      var matcos = $(this).val();
      mater3_mrf_matcost3+=matcos+', ';
     });
-    
+
     var mater3_mrf_modcostr3='';
     $("input[name=modcos]:checked").each(function () {
      var modcos = $(this).val();
@@ -1290,7 +1290,7 @@ if (catspecclass == 2) {$("#sottocategorie").show();}else {$("#sottocategorie").
     //var mater3_rpp_tagliato=$("#mater3_rpp_tagliato").val();
     //var mater3_rpp_conduce=$("#mater3_rpp_conduce").val();
     //var mater3_rpp_servita=$("#mater3_rpp_servita").val();
-    
+
     var newInfr = '';
     var add='';
     var rapp='';
@@ -1304,7 +1304,7 @@ if (catspecclass == 2) {$("#sottocategorie").show();}else {$("#sottocategorie").
         infrastrutture= datiInfr;
       });
     });
-    
+
     var mater3_rpp_note=$("#mater3_rpp_note").val();
     //alert('id: '+id+'\ninfrastrutture'+infrastrutture+'\nnote:'+mater3_rpp_note); return false;
    $.ajax({
@@ -1341,7 +1341,7 @@ if (catspecclass == 2) {$("#sottocategorie").show();}else {$("#sottocategorie").
       var infcom = $(this).val();
       mater3_cll_infcompl3+=infcom+', ';
     });
-    
+
     //alert('idMater3: '+idMater3+'\nmater3_catgen:'+mater3_catgen+'\nmater3_catspec:'+mater3_catspec+' \nmater3_mrf_descr3:'+mater3_mrf_descr3+'\nmater3_mrf_modcostr3:'+mater3_mrf_modcostr3+'\nmater3_mrf_matcost3:'+mater3_mrf_matcost3+'\nmater3_mrf_note3:'+mater3_mrf_note3); return false;
    $.ajax({
     url: 'inc/update_mater3_collegamenti_script.php',
@@ -1502,6 +1502,7 @@ if (catspecclass == 2) {$("#sottocategorie").show();}else {$("#sottocategorie").
               , oral2_riv_tpriv      : $('#oral2_riv_tpriv'     ).val()
               , oral2_riv_formato    : $('#oral2_riv_formato'   ).val()
               , oral2_riv_descform   : $('#oral2_riv_descform'  ).val()
+              , oral2_autore         : $('#oral2_autore'  ).val()
     };
 
    $.ajax({
@@ -1606,7 +1607,7 @@ if (catspecclass == 2) {$("#sottocategorie").show();}else {$("#sottocategorie").
     }//success
    });//ajax
  });
-  
+
 
 /////////////////////////////////////////////////
 //////////////   CARTOGRAFIA ////////////////////
@@ -1678,7 +1679,7 @@ $("#cartoDatiSalva").click(function(){
   $("#foto2_segn_salva").click(function () {
     var idFoto2=$("#idFoto2").val();
     var foto2_fot_collocazione=$("#foto2_fot_collocazione").val();
-    
+
    $.ajax({
     url: 'inc/update_foto2_segn_script.php',
     type: 'POST',
@@ -1700,7 +1701,7 @@ $("#cartoDatiSalva").click(function(){
     var foto2_sog_sogg=$("#foto2_sog_sogg").val();
     var foto2_sog_noteaut=$("#foto2_sog_noteaut").val();
     var foto2_sog_note=$("#foto2_sog_note").val();
-    
+
    $.ajax({
     url: 'inc/update_foto2_descr_script.php',
     type: 'POST',
@@ -1744,7 +1745,7 @@ $("#cartoDatiSalva").click(function(){
     var foto2_dtc_note=$("#foto2_dtc_note").val();
     var foto2_dtc_presneg=$("#foto2_dtc_presneg").val();
     var foto2_dtc_tpapp=$("#foto2_dtc_tpapp").val();
-    
+
    $.ajax({
     url: 'inc/update_foto2_datitec_script.php',
     type: 'POST',
@@ -1757,7 +1758,7 @@ $("#cartoDatiSalva").click(function(){
     }//success
    });//ajax
  });
-  
+
 //----------------altre note -----------------------//
 $("#foto2_altrenote_salva").click(function () {
  var idFoto2=$("#idFoto2").val();

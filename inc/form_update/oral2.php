@@ -53,7 +53,7 @@
 <div class="sez" id="sez_intervistato">
     <label>INTERVISTATO</label>
     <textarea id="oral2_att_datipers" class="form noteform"><?php echo $intervistato; ?></textarea>
-    <label>DESCRIZIONE CONTESTO</label>
+    <label>CONTESTO</label>
     <textarea id="oral2_loc_contst" class="form"><?php echo($loc_contst); ?></textarea>
     <label>AUTORE/INTERVISTATORE</label>
     <textarea id="oral2_autore" class="form"><?php echo $autore; ?></textarea>

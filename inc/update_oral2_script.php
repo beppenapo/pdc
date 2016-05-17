@@ -32,6 +32,7 @@ $sup_oss        = pg_escape_string($_POST['oral2_sup_oss']);
 $riv_tpriv      = pg_escape_string($_POST['oral2_riv_tpriv']);
 $riv_formato    = pg_escape_string($_POST['oral2_riv_formato']);
 $riv_descform   = pg_escape_string($_POST['oral2_riv_descform']);
+$autore   = pg_escape_string($_POST['oral2_autore']);
 
 
 
@@ -68,8 +69,8 @@ BEGIN;
     sup_oss        = '$sup_oss',
     riv_tpriv      = '$riv_tpriv',
     riv_formato    = '$riv_formato',
-    riv_descform   = '$riv_descform'
-
+    riv_descform   = '$riv_descform',
+    autore = '$autore'
     where id = $idOral2;
 COMMIT;
 ");
