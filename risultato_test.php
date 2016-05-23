@@ -22,7 +22,7 @@ if($tipi[0] != 0){
  foreach($tipi as $t){
   switch($t) {
    case 7: $coalesce .= "coalesce(foto2.foto2_vector,'') || "; break;
-   case 10: $test .= 'cartografiche '; break; 
+   case 10: $test .= 'cartografiche '; break;
   }
  }
  $tipo = "s.dgn_tpsch = " . implode(" OR s.dgn_tpsch = ", $tipi);
@@ -31,9 +31,9 @@ if($tipi[0] != 0){
 }
 
 $query = "
-with 
+with
  tipo as (select s.id, s.dgn_numsch, s.dgn_dnogg
-          from scheda s, ricerca r 
+          from scheda s, ricerca r
           where s.cmp_id = r.id and r.hub = 2 and s.fine = 2 and ($tipo))
 ,a as (select t.id, t.dgn_numsch, t.dgn_dnogg
           from tipo t
@@ -44,14 +44,14 @@ with
           left join indirizzo i on aree.id_indirizzo = i.id
           where $com and $loc and $ind)
 ,crono as (select a.id, a.dgn_numsch, a.dgn_dnogg, c.cro_spec
-           from a, cronologia c 
+           from a, cronologia c
            where a.id = c.id_scheda and ((c.cro_iniz between $ci and  $cf) or (c.cro_fin between $ci and $cf)))
 , fts as (select c.id
         , c.cro_spec
         , c.dgn_numsch
         , c.dgn_dnogg
-        , coalesce(foto1.foto1_vector,'')||coalesce(foto2.foto2_vector,'')||coalesce(scheda.scheda_vector) as v 
-          from crono c 
+        , coalesce(foto1.foto1_vector,'')||coalesce(foto2.foto2_vector,'')||coalesce(scheda.scheda_vector) as v
+          from crono c
           left join scheda on scheda.id = c.id
           left join foto on foto.id_scheda = c.id
           left join foto1 on foto1.dgn_numsch1 = foto.dgn_numsch
@@ -66,7 +66,7 @@ with
           left join fonti_orali2 on fonti_orali2.dgn_numsch2 = fonti_orali.dgn_numsch
           left join fonti_orali3 on fonti_orali3.dgn_numsch3 = fonti_orali.dgn_numsch
          )
-select distinct fts.id, fts.cro_spec, fts.dgn_numsch, fts.dgn_dnogg, file.path 
+select distinct fts.id, fts.cro_spec, fts.dgn_numsch, fts.dgn_dnogg, file.path
 from fts
 left join file on file.id_scheda = fts.id
 $fts
@@ -74,10 +74,14 @@ order by dgn_numsch asc;
 ";
 
 $e = pg_query($connection, $query);
-$row = pg_num_rows($e);
+if(!$e){
+  die("Errore nella query: \n" . pg_last_error($connection));
+} else {
+  $row = pg_num_rows($e);
+}
 
 ?>
-  <?php 
+  <?php
   echo "<div style='display:none'>".$query."</div>";
    if($row == 0){
     echo "<header>La ricerca non ha prodotto risultati</header>";
@@ -102,7 +106,7 @@ $row = pg_num_rows($e);
    </tr>
   </thead>
   <tbody>
-   <?php 
+   <?php
     while ($r = pg_fetch_array($e)) {
      echo "<tr>";
      echo "<td>".$r['dgn_numsch']."</td>";
@@ -119,8 +123,8 @@ $row = pg_num_rows($e);
      echo "<td><a href='#' data-id=".$r['id']." data-p='c' class='linkScheda'><i class='fa fa-external-link-square'></i></a></td>";
      echo "</tr>";
     }
-   
-    } 
+
+    }
    ?>
   </tbody>
   </table>
@@ -145,12 +149,12 @@ $row = pg_num_rows($e);
  sessionStorage.setItem("ciStored",ciStored);
  sessionStorage.setItem("cfStored",cfStored);
  sessionStorage.setItem("tipiStored",tipiStored);
- 
+
  $(".linkScheda").click(function(e) {
   var id = $(this).data('id');
   var p = $(this).data('p');
   $("input[name='id']").val(id);
-  $("input[name='p']").val(p);  
+  $("input[name='p']").val(p);
   $("#schedaFom").submit();
  });
 </script>
