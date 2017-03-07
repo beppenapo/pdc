@@ -7,8 +7,10 @@ $dir = '../audio/';
 $file = basename($_FILES['file']['name']);
 $up = $dir . $file;
 $size = filesize($_FILES['file']['name']);
+$allowedExts = array("mp3", "mp4", "wav", "wma", "ogg");
+$extension = substr($file, strrpos($file, '.') + 1);
 
-if ($type == "audio/mp3" || $type == "audio/ogg" || $type == "audio/wav"){
+if(in_array($extension, $allowedExts)){
     if($size > 2000000000){
         echo "Le dimensioni del file superano quelle permesse!<br/>Il file da caricare non può superare i 2GB di dimensioni";
         echo "2000000000 / ".$size;
@@ -39,5 +41,5 @@ if ($type == "audio/mp3" || $type == "audio/ogg" || $type == "audio/wav"){
 }else{
     echo "Il tipo di file non è tra quelli permessi!<br/>Puoi caricare solo file con estensione .mp3, .ogg, .wav";
 }
-header("Refresh: 5; URL=../scheda_archeo.php);
+header("Refresh: 5; URL=../scheda_archeo.php");
 ?>
