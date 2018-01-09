@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("../inc/db.php");
+require("inc/db.php");
 if (isset($_GET['site'])) {
     if (!preg_match("/^(http|https):/", $_GET['site'])) { $_GET['site'] = 'http://'.$_GET['site']; }
     $go = $_GET['site'];
