@@ -32,9 +32,7 @@ function init() {
  gsat = new OpenLayers.Layer.Bing({name: "Aerial",key: bingKey,type: "Aerial"});
  map.addLayer(gsat);
 
-arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile2.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg"];
-
-osm = new OpenLayers.Layer.OSM("MapQuest", arrayOSM, {attribution: "Data, imagery and map information provided by <a href='http://www.mapquest.com/'  target='_blank'>MapQuest</a>, <a href='http://www.openstreetmap.org/' target='_blank'>Open Street Map</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/' target='_blank'>CC-BY-SA</a>  <img src='http://developer.mapquest.com/content/osm/mq_logo.png' border='0'>", transitionEffect: "resize" });
+osm = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
 map.addLayer(osm);
 
 comuni = new OpenLayers.Layer.WMS("comuni", "http://www.lefontiperlastoria.it/geoserver/wms",{

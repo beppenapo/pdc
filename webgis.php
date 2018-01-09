@@ -152,6 +152,7 @@ while($topo = pg_fetch_array($topoR)){
   <script type="text/javascript" src="lib/jquery-ui-lampi/js/jquery-ui-1.8.18.custom.min.js"></script>
   <script type="text/javascript" src="lib/OpenLayers-2.12/OpenLayers.js"></script>
   <script type="text/javascript" src="lib/OpenLayers-2.12/ScaleBar.js"></script>
+  <script src="https://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
   <script src="http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false"></script>
   <script type="text/javascript" src="lib/jquery.qtip.min-2.0.1.js"></script>
   <script src="script/webgis.js"></script>

@@ -7,10 +7,8 @@ $dir = '../audio/';
 $file = basename($_FILES['file']['name']);
 $up = $dir . $file;
 $size = filesize($_FILES['file']['name']);
-$allowedExts = array("mp3", "mp4", "wav", "wma", "ogg");
-$extension = substr($file, strrpos($file, '.') + 1);
 
-if(in_array($extension, $allowedExts)){
+if ($type == "audio/mp3" || $type == "audio/mpeg" || $type == "audio/ogg" || $type == "audio/wav"){
     if($size > 2000000000){
         echo "Le dimensioni del file superano quelle permesse!<br/>Il file da caricare non può superare i 2GB di dimensioni";
         echo "2000000000 / ".$size;

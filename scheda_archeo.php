@@ -366,7 +366,7 @@ $img=$imgres['path'];
                     $dataprv= stripslashes($aprv['data']); if($dataprv == '') {$dataprv=$nd;}
                     $noteprv= stripslashes($aprv['prv_note']); if($noteprv == '') {$noteprv=$nd;}
 
-                    $qai = "SELECT aree_scheda.id as id_as, aree_scheda.id_area, stato.id as id_stato, provincia.id as id_prov, aree.id as filtro, aree.id_localita, aree.id_comune, aree.id_indirizzo, aree_scheda.id_motivazione as id_motiv, localita.localita, comune.comune, lista_ai_motiv.definizione as motiv, indirizzo.indirizzo, provincia.provincia, stato.stato FROM aree_scheda LEFT JOIN aree ON aree.nome_area = aree_scheda.id_area LEFT JOIN comune ON aree.id_comune = comune.id LEFT JOIN provincia ON comune.provincia = provincia.id LEFT JOIN stato ON comune.stato = stato.id LEFT JOIN localita ON aree.id_localita = localita.id LEFT JOIN lista_ai_motiv ON lista_ai_motiv.id = aree_scheda.id_motivazione LEFT JOIN indirizzo ON indirizzo.id = aree.id_indirizzo WHERE aree.tipo = 1 AND aree_scheda.id_scheda = $id ORDER BY comune ASC, localita ASC, indirizzo ASC;";
+                    $qai ="select aree_scheda.id as id_as, area.id as filtro, area.nome,lista_ai_motiv.definizione as motiv, localita.localita, comune.comune, provincia.provincia, stato.stato, indirizzo.indirizzo from area inner join aree on aree.nome_area = area.id inner join aree_scheda on aree_scheda.id_area = area.id inner join lista_ai_motiv on aree_scheda.id_motivazione = lista_ai_motiv.id left join localita on aree.id_localita = localita.id left join comune on aree.id_comune = comune.id LEFT JOIN indirizzo ON indirizzo.id = aree.id_indirizzo left join provincia on comune.provincia = provincia.id left join stato on comune.stato=stato.id where aree_scheda.id_scheda = $id and area.tipo <> 2 order by comune asc, localita asc;";
                     $rai = pg_query($connection, $qai);
                     $rowai = pg_num_rows($rai);
                     $param = '';
@@ -388,41 +388,22 @@ $img=$imgres['path'];
                                 </thead>
                                 <tbody>
                                     <?php
-                                    for ($x = 0; $x < $rowai; $x++){
-                                        $id_as= pg_result($rai, $x,"id_as");
-                                        $id_area= pg_result($rai, $x,"id_area");
-                                        $id_stato=  pg_result($rai, $x,"id_stato");
-                                        $id_prov=  pg_result($rai, $x,"id_prov");
-                                        $id_loc=  pg_result($rai, $x,"id_localita");
-                                        $id_com=  pg_result($rai, $x,"id_comune");
-                                        $id_indirizzo=  pg_result($rai, $x,"id_indirizzo");
-                                        $id_motiv=  pg_result($rai, $x,"id_motiv");
-                                        $localitaai=  pg_result($rai, $x,"localita");
-                                        if($localitaai == '') {$localitaai=$nd;}else {$localitaai=stripslashes($localitaai);}
-                                        $comuneai=  pg_result($rai, $x,"comune");
-                                        if($comuneai== '') {$comuneai=$nd;}else {$comuneai=stripslashes($comuneai);}
-                                        $motivai=  pg_result($rai, $x,"motiv");
-                                        if($motivai == '') {$motivai=$nd;}else {$motivai=stripslashes($motivai);}
-                                        $indirizzoai=  pg_result($rai, $x,"indirizzo");
-                                        if($indirizzoai == '') {$indirizzoai=$nd;}else {$indirizzoai=stripslashes($indirizzoai);}
-                                        $provinciaai=  pg_result($rai, $x,"provincia");
-                                        if($provinciaai == '') {$provinciaai=$nd;}else {$provinciaai=stripslashes($provinciaai);}
-                                        $statoai=  pg_result($rai, $x,"stato");
-                                        if($statoai == '') {$statoai=$nd;}else {$statoai=stripslashes($statoai);}
-                                        $filtro = pg_result($rai, $x, "filtro");
-                                        $param .= 'id_area='.$id_area.' OR ';
-                                        echo "<tr>";
-                                            echo "<td>$statoai</td>";
-                                            echo "<td>$provinciaai</td>";
-                                            echo "<td>$comuneai</td>";
-                                            echo "<td>$localitaai</td>";
-                                            echo "<td>$indirizzoai</td>";
-                                            echo "<td>$motivai</td>";
-                                            echo "<td>";
-                                                if ($_SESSION['username']!='guest'){echo "<a href='javascript:removeArea($id_as)'><i class='fa fa-times avviso'></i></a>";}
-                                            echo "</td>";
-                                        echo "</tr>";
-                                    }
+                                    while ($x = pg_fetch_array($rai)){
+                                      $param .= 'id_area='.$x['filtro'].' OR ';
+                                      echo "
+                                        <tr>
+                                        <td>".$x['stato']."</td>
+                                        <td>".$x['provincia']."</td>
+                                        <td>".stripslashes($x['comune'])."</td>
+                                        <td>".stripslashes($x['localita'])."</td>
+                                        <td>".stripslashes($x['indirizzo'])."</td>
+                                        <td>".stripslashes($x['motiv'])."</td>
+                                        <td>";
+                                          if ($_SESSION['username']!='guest'){ 
+                                            echo "<a href='#' id='removeArea' class='avviso' title='Rimuovi area' data-id='".$x['id_as']."'><i class='fa fa-times fa-2x'></i></a>"; 
+                                          }
+                                          echo "</td>
+                                        </tr>";}                                   
                                     ?>
                                 </tbody>
                             </table>
