@@ -14,7 +14,6 @@ if (isset($_GET['site'])) {
         <?php require("inc/metatag.php"); ?>
         <style>
             section#image{
-            background-image:url('../img/icone/loader.gif');
             background-repeat: no-repeat;
             background-position:center center; }
         </style>
