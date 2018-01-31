@@ -2,7 +2,7 @@
 setlocale(LC_ALL, 'ita', 'it_IT.utf8');
 $data = strftime("%d %B %Y");
 require("inc/db.php");
-$r = ("SELECT scheda.id FROM scheda, ricerca WHERE scheda.cmp_id = ricerca.id and ricerca.hub=2;");
+$r = "SELECT scheda.id FROM scheda, ricerca WHERE scheda.cmp_id = ricerca.id and ricerca.hub = 2;";
 $exec = pg_query($connection, $r);
 $tot = pg_num_rows($exec);
 if (isset($_SESSION['id_user'])&&$_SESSION['id_user']>0){require("inc/sessione.php"); }

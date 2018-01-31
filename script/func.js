@@ -50,31 +50,31 @@ $(document).ready(function() {
   });
  }
 
- $('.mainLink').click(function(){
-  var div = $(this).attr('id');
-  $('.mainLink').removeClass('attivo');
-  $(this).addClass('attivo');
-  //var div = $(this).attr('id');
-  $('html, body').stop().animate({scrollTop: $("#main").scrollTop()}, 800);
-  $('section#main').load('inc/progettoContent.php #'+div, function(){
-   $('section#main').fadeIn('slow');
-   $('html, body').stop().animate({scrollTop: $("#main").offset().top-headH-100}, 800);
-   $('.removeContent').click(function(){
-    $('section#main').fadeOut('slow',function(){$(this).html('')});
-    $('html, body').animate({scrollTop: $("#main").scrollTop()}, 800);
-    $('.mainLink').removeClass('attivo');
-   });
-      //pulsanti tipo scheda
-   $('input[name="tipoButt"]').on("click",function(){
-    var label = $(this).attr('id');
-    $("label[for='"+label+"']").toggleClass('labelRadioActive');
-   });
+$('.mainLink').click(function(){
+	var div = $(this).attr('id');
+	$('.mainLink').removeClass('attivo');
+	$(this).addClass('attivo');
+	//var div = $(this).attr('id');
+	$('html, body').stop().animate({scrollTop: $("#main").scrollTop()}, 800);
+	$('section#main').load('inc/progettoContent.php #'+div, function(){
+	$('section#main').fadeIn('slow');
+	$('html, body').stop().animate({scrollTop: $("#main").offset().top-headH-100}, 800);
+	$('.removeContent').click(function(){
+    		$('section#main').fadeOut('slow',function(){$(this).html('')});
+    		$('html, body').animate({scrollTop: $("#main").scrollTop()}, 800);
+    		$('.mainLink').removeClass('attivo');
+	});
+	//pulsanti tipo scheda
+	$('input[name="tipoButt"]').on("click",function(){
+		var label = $(this).attr('id');
+		$("label[for='"+label+"']").toggleClass('labelRadioActive');
+   	});
 
-   //select dinamica comune
-   $("#comSel").on("change", function(){
-    var com = $(this).val();
-    dinSel(com);
-   });
+   	//select dinamica comune
+   	$("#comSel").on("change", function(){
+    		var com = $(this).val();
+    		dinSel(com);
+   	});
 
    //slider
    $(function() {
