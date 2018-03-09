@@ -13,7 +13,7 @@ a{text-decoration: none;}
 #map { margin: 0px; padding:0px; width: 100%; height: 100%;}
 
 div#text, div#result { position: absolute; font-family: "Lucida Grande", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif; font-size: 100%; color: #222; height: auto; margin: 0px auto; overflow:hidden; z-index: 20000; background-color: rgba(255,255,255,0.8);}
-div#text{top: 16%;right: 60px;width: 135px;padding: 15px 10px;}
+div#text{top: 16%;right: 20px;width: 160px;padding: 15px 10px;}
 div#text h1{text-align:center;}
 div#text h1.switcher{text-align:left !important;margin-bottom:5px;}
 div#text h1{font-size:11px; color:#43321C; text-align:center;}
@@ -36,7 +36,7 @@ input.checkLiv{width: 10px; height: 10px;padding: 0px; margin:0px; vertical-alig
 #scalebar{ left: 40%; width: 180px; height: auto;}
 #topoSearch{ position: absolute; bottom:15px; left: 60px; z-index: 1005; padding: 5px; background: rgba(255,255,255,0.5);}
 #topoSearch select{font-size: .55em; padding: 5px; background: #fff; border:none}
-div.livelli{position: relative; display: block;width: 125px; margin:5px 0px;font-size:10px;}
+div.livelli{position: relative; display: block;width: 140px; margin:5px 0px;font-size:10px;}
 .legende{float:right; width: 20px; height:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
 .legendeAreeBiblio{background-color: rgba(231,149,91,1);}
 .legendeAreeFoto{background-color: rgba(97,108,229,1);}

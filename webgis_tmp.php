@@ -32,10 +32,6 @@ while($topo = pg_fetch_array($topoR)){
 <link rel="stylesheet" href="lib/OpenLayers-2.12/theme/default/style.css" type="text/css">
 <link rel="stylesheet" href="lib/jquery-ui-lampi/css/humanity/jquery-ui-1.8.18.custom.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" />
-<style>
-    h1.switcher{margin-top:20px;}
-    h1.primo{margin-top:0px;}
-</style>
 
 </head>
  <body onload="init()"> 
@@ -53,7 +49,7 @@ while($topo = pg_fetch_array($topoR)){
     <div id="topoSearch"> <select> <?php echo $opt; ?> </select> </div>
   <div id="text"> 
    <div id="switcher">
-    <div id="cartografiaToggle"><h1 class="switcher primo">CARTOGRAFIA DI BASE</h1></div>
+    <div id="cartografiaToggle"><h1 class="switcher">CARTOGRAFIA DI BASE</h1></div>
     <div id='cartografiaSwitch'>
      <div class="livelli">
       <input type="radio" name="baselayer" id="gsat" value="gsat" class='checkLiv' onclick="map.setBaseLayer(gsat)" checked />
@@ -73,7 +69,7 @@ while($topo = pg_fetch_array($topoR)){
      </div>
     </div><!--cartografiaSwitch-->
     
-    <div><h1 class="switcher" style="cursor:pointer;" title="il layer è in fase di implementazione">CARTOGRAFIA STORICA <i class="fa fa-info-circle"></i></h1></div>
+    <div><h1 class="switcher">CARTOGRAFIA STORICA</h1></div>
     <div>
      <div class="livelli">
       <input type="checkbox" name="baselayer" id="catasto1859"class='checkLiv' value="catasto1859" />
@@ -84,18 +80,6 @@ while($topo = pg_fetch_array($topoR)){
       <label for="catasto1980">PGTIS 1983</label>
      </div>
     </div> 
-    
-    <div><h1 class="switcher">FILTRA PROGETTI</h1></div>
-    <div>
-     <div class="livelli">
-      <input type="radio" name="projectLayer" id="projAll"class='checkLiv' value="63" checked />
-      <label for="projAll" title="Archivio inconografico dei paesaggi di comunità">ARCHIVIO COMPLETO <i class="fa fa-info-circle"></i></label>
-     </div>
-     <div class="livelli">
-      <input type="radio" name="projectLayer" id="miniere"class='checkLiv' value="70" />
-      <label for="miniere" title="Quando andavamo in miniera">MINIERE <i class="fa fa-info-circle"></i></label>
-     </div>
-    </div>
     
     <div id="areaToggle" class="hover tip" tip="Mostra/nascondi le aree di interesse"><h1 class="switcher">AREA DI INTERESSE</h1></div>
     <div id='areaSwitch' class="chiuso">
@@ -174,8 +158,6 @@ while($topo = pg_fetch_array($topoR)){
   <script src="script/webgis.js"></script>
   <script type="text/javascript">
    var u = <?php echo $_SESSION["id_user"]; ?>;
-   var cql = "hub=2 AND (progetto = 63 or progetto = 70)";
-   console.log(cql);
   </script>
  </body> 
 </html> 

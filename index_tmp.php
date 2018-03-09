@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("inc/db.php");
+require("../inc/db.php");
 if (isset($_GET['site'])) {
     if (!preg_match("/^(http|https):/", $_GET['site'])) { $_GET['site'] = 'http://'.$_GET['site']; }
     $go = $_GET['site'];
@@ -17,8 +17,6 @@ if (isset($_GET['site'])) {
             background-image:url('../img/icone/loader.gif');
             background-repeat: no-repeat;
             background-position:center center; }
-            .labelCheck {display: inline-block; background-color: rgb(230,230,230); color: rgb(136,136,136); border: 1px solid rgb(136,136,136); font-size: 0.8em; padding: 0.3% 1%;}
-            input[name='tipoProg']{ width: auto; margin: 2px;}
         </style>
     </head>
     <body>
@@ -46,14 +44,13 @@ if (isset($_GET['site'])) {
             var s = "<?php echo($_GET['s']); ?>";
             if(r){
                 var comStored = sessionStorage.getItem("comStored");
-                var progettoStored = sessionStorage.getItem("progettoStored");
                 var locStored = sessionStorage.getItem("locStored");
                 var indStored = sessionStorage.getItem("indStored");
                 var ftsStored = sessionStorage.getItem("ftsStored");
                 var ciStored = sessionStorage.getItem("ciStored");
                 var cfStored = sessionStorage.getItem("cfStored");
                 var tipiStored = sessionStorage.getItem("tipiStored");
-                cerca(tipiStored,progettoStored, comStored,locStored,indStored,ftsStored,ciStored,cfStored);
+                cerca(tipiStored,comStored,locStored,indStored,ftsStored,ciStored,cfStored);
             }
             $(document).ready(function() {
                 var section = $("section#image");

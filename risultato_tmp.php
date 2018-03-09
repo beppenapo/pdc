@@ -3,35 +3,37 @@ session_start();
 require("inc/db.php");
 $t = $_POST['t'];
 if(is_array($t)){ $tipi = $t;}else{ $tipi = explode(",",$t);}
-$progetto = ($_POST['progetto']==63)?'> 0':'= '.$_POST['progetto'];
 $comune = $_POST['com'];
 $localita = $_POST['loc'];
 $indirizzo = $_POST['ind'];
 $vector = $_POST['fts'];
 $ci = $_POST['ci'];
 $cf = $_POST['cf'];
+
 $com = ($comune == 0)?'c.id > 0':'c.id='.$comune;
 $loc = ($localita == 0)?'l.id > 0':'l.id='.$localita;
 $ind = ($indirizzo == 0)?'i.id > 0':'i.id='.$indirizzo;
 $fts = ($vector == 'no')?"":"where fts.v @@ to_tsquery('".$vector."')";
+
+
 $coalesce='';
 if($tipi[0] != 0){
-    foreach($tipi as $t){
-        switch($t) {
-            case 7: $coalesce .= "coalesce(foto2.foto2_vector,'') || "; break;
-            case 10: $test .= 'cartografiche '; break;
-        }
-    }
-    $tipo = "s.dgn_tpsch = " . implode(" OR s.dgn_tpsch = ", $tipi);
+ foreach($tipi as $t){
+  switch($t) {
+   case 7: $coalesce .= "coalesce(foto2.foto2_vector,'') || "; break;
+   case 10: $test .= 'cartografiche '; break;
+  }
+ }
+ $tipo = "s.dgn_tpsch = " . implode(" OR s.dgn_tpsch = ", $tipi);
 }else{
-    $tipo = "s.dgn_tpsch > 0";
+ $tipo = "s.dgn_tpsch > 0";
 }
 
 $query = "
 with
  tipo as (select s.id, s.dgn_numsch, s.dgn_dnogg
           from scheda s, ricerca r
-          where r.hub = 2 and r.id ".$progetto." and s.fine = 2 and s.cmp_id = r.id and ($tipo))
+          where r.hub = 2 and s.fine = 2 and s.cmp_id = r.id and ($tipo))
 ,a as (select t.id, t.dgn_numsch, t.dgn_dnogg
           from tipo t
           left join aree_scheda a on a.id_scheda = t.id
@@ -64,7 +66,7 @@ with
           left join fonti_orali2 on fonti_orali2.dgn_numsch2 = fonti_orali.dgn_numsch
           left join fonti_orali3 on fonti_orali3.dgn_numsch3 = fonti_orali.dgn_numsch
          )
-select distinct fts.id, fts.cro_spec, fts.dgn_numsch, fts.dgn_dnogg, file.path, file.tipo
+select distinct fts.id, fts.cro_spec, fts.dgn_numsch, fts.dgn_dnogg, file.path
 from fts
 left join file on file.id_scheda = fts.id
 $fts
@@ -86,7 +88,6 @@ if(!$e){
    }else{?>
  <input type="hidden" id="filtriStored" value="si" />
  <input type="hidden" id="tipoStored" value="<?php echo json_encode($t); ?>" />
- <input type="hidden" id="progettoStored" value="<?php echo $_POST['progetto']; ?>" />
  <input type="hidden" id="comStored" value="<?php echo $comune; ?>" />
  <input type="hidden" id="locStored" value="<?php echo $localita; ?>" />
  <input type="hidden" id="indStored" value="<?php echo $indirizzo; ?>" />
@@ -109,10 +110,10 @@ if(!$e){
     while ($r = pg_fetch_array($e)) {
      echo "<tr>";
      echo "<td>".$r['dgn_numsch']."</td>";
-     echo "<td>".stripslashes($r['dgn_dnogg'])."</td>";
+     echo "<td>".$r['dgn_dnogg']."</td>";
      echo "<td>".$r['cro_spec']."</td>";
      echo "<td>";
-     if($r['path']&&$r['tipo']==1){
+     if($r['path']){
       echo "<a href='#' class='imgLink' data-src='".$r['path']."' data-id='".$r['id']."'><i class='fa fa-picture-o'></i></a>
             <div class='imgContent' id='imgContent".$r['id']."'>
              <div class='chiudiThumb'><i class='fa fa-times'></i></div>
@@ -134,7 +135,6 @@ if(!$e){
 <script type="text/javascript">
  var stored = document.getElementById("filtriStored").value;
  var comStored = document.getElementById("comStored").value;
- var progettoStored = document.getElementById("progettoStored").value;
  var locStored = document.getElementById("locStored").value;
  var indStored = document.getElementById("indStored").value;
  var ftsStored = document.getElementById("ftsStored").value;
@@ -142,7 +142,6 @@ if(!$e){
  var cfStored = document.getElementById("cfStored").value;
  var tipiStored= <?php echo json_encode($tipi); ?>;
  sessionStorage.setItem("stored",stored);
- sessionStorage.setItem("progettoStored",progettoStored);
  sessionStorage.setItem("comStored",comStored);
  sessionStorage.setItem("locStored",locStored);
  sessionStorage.setItem("indStored",indStored);

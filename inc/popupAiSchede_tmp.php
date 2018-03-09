@@ -3,7 +3,6 @@ include('db.php');
 
 $idArea = $_POST['idArea'];
 $tpsch = $_POST['tpsch'];
-$progetto =$_POST['progetto'];
 $dir = 'scheda_archeo.php?id=';
 
 $query = ("
@@ -19,11 +18,8 @@ FROM
   aree_scheda, 
   scheda, 
   cronologia, 
-  lista_dgn_tpsch,
-  ricerca r
+  lista_dgn_tpsch
 WHERE 
-  r.id=$progetto AND
-  scheda.cmp_id = r.id AND 
   aree_scheda.id_area = area.id AND
   aree_scheda.id_scheda = scheda.id AND
   scheda.dgn_tpsch = lista_dgn_tpsch.id AND
@@ -68,7 +64,7 @@ if(!$result){
 <script type="text/javascript">
 $(".viewScheda").click(function(e) {
  var id = $(this).data('id');
- $("body").append('<form action="scheda_archeo.php" method="post" target="_blank"  id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
+ $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
  $("#viewScheda").submit();
 });
 </script>

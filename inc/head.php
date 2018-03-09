@@ -17,7 +17,7 @@ if (isset($_SESSION['id_user'])&&$_SESSION['id_user']>0){require("inc/sessione.p
         <div id="record" class="bianco">Ad oggi l'archivio contiene <?php echo $tot; ?> record</div>
         <nav class="headDiv">
             <ul>
-                <li><a href="#" id="progetto" class="mainLink prevent" title="Vai alla pagina del progetto">PROGETTO</a></li>
+                <li><a href="#" id="progetto" class="mainLink prevent" title="Vai alla pagina del progetto">PROGETTI</a></li>
                 <li><a href="webgis.php" title="Vai alla pagina del webgis">WEBGIS</a></li>
                 <li><a href="#" id="catalogo" class="mainLink prevent" title="Vai alla pagina del catalogo">CATALOGO</a></li>
                 <li><a href="#" id="collezioni" class="mainLink prevent" title="Vai alla pagina delle collezioni">COLLEZIONI</a></li>

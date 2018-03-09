@@ -1,8 +1,12 @@
-headH = $("#head").outerHeight(true);
-windowX =  $( window ).width();
-windowY =  $( window ).height();
-currentYear = (new Date).getFullYear();
+var headH = $("#head").outerHeight(true);
+var windowX =  $( window ).width();
+var windowY =  $( window ).height();
+var currentYear = (new Date).getFullYear();
+//console.log(headH);
+
 $(document).ready(function() {
+    // la funzione toogle è deprecata dalla versione 1.9 di jquery
+    // bisogna riscrivere il metodo creando la nuova funzione clickToggle che verrà chiamata al posto della vecchia toggle
     (function ($) {
         $.fn.clickToggle = function (func1, func2) {
             var funcs = [func1, func2];
@@ -16,6 +20,7 @@ $(document).ready(function() {
             return this;
         };
     }(jQuery));
+
     $('.prevent').click(function(e){ e.preventDefault(); });
     $("#headLogo, #headTitle").on("click",function(){ window.open('index.php', '_self'); });
     if(div){mainLink(div);}
@@ -24,24 +29,28 @@ $(document).ready(function() {
     $('#nuova_scheda')
         .click(function() { $(this).next().slideToggle(); })
         .clickToggle( function() {$('#schedaToggle').text('-');}, function() {$('#schedaToggle').text('+');});
+
     $('#account')
         .click(function() { $(this).next().slideToggle();})
         .clickToggle(function() {$('#accountToggle').text('-');}, function() {$('#accountToggle').text('+');});
+
     $('#liste')
         .click(function() { $(this).next().slideToggle();})
         .clickToggle(function() {$('#listeToggle').text('-');}, function() {$('#listaToggle').text('+');});
+
     $('#catalogo')
         .click(function() { $(this).next().slideToggle();})
         .clickToggle(function() {$('#catalogoToggle').text('-');}, function() {$('#catalogoToggle').text('+');});
+
     if(hub==2){
         $("#nuovaScheda li").each(function(){
             var remove = $( this ).attr("class");
             $( "#nuovaScheda > li:not([class='link1']):not([class='link5']):not([class='link7']):not([class='link10'])" ).remove();
         });
     }
+
     $('.mainLink').click(function(){
-        div = $(this).attr('id');
-        console.log(div);
+        var div = $(this).attr('id');
         $('.mainLink').removeClass('attivo');
         $(this).addClass('attivo');
         $('html, body').stop().animate({scrollTop: $("#main").scrollTop()}, 800);
@@ -58,11 +67,18 @@ $(document).ready(function() {
                 var label = $(this).attr('id');
                 $("label[for='"+label+"']").toggleClass('labelRadioActive');
             });
+
+            $('input[name="tipoProg"]').on("click",function(){
+                var label = $(this).attr('id');
+                $('input[name="tipoProg"]').parent('label').toggleClass('labelCheckActive');
+            });
+
             //select dinamica comune
             $("#comSel").on("change", function(){
                 var com = $(this).val();
                 dinSel(com);
             });
+
             //slider
             $(function() {
                 var tooltip = function(sliderObj, ui){
@@ -89,11 +105,14 @@ $(document).ready(function() {
                 $('.ui-slider-handle').first().removeClass('ui-state-default').addClass('ui-state-default1');
                 $('.ui-slider-handle').last().removeClass('ui-state-default').addClass('ui-state-default2');
             });
+
             $("#ftsError").hide();
             //attiva ricerca
             $("#filtroButt").click(function(){
-                tipo = new Array();
-                var fts, ci, cf;
+                var tipo = new Array();
+                var progetto, fts, ci, cf;
+
+                //valori tipo scheda
                 if($("input[name=tipoButt]:checked").length < 1){
                     tipo.push(0);
                 }else{
@@ -102,70 +121,46 @@ $(document).ready(function() {
                         tipo.push(t);
                     });
                 }
+
+                //valori progetto
+                progetto = $("input[name='tipoProg']:checked").val();
+
                 //valori area geografica
-                comSel = $("#comSel").val();
-                locSel = $("#locSel").val();
-                indSel = $("#indSel").val();
+                var comSel = $("#comSel").val();
+                var locSel = $("#locSel").val();
+                var indSel = $("#indSel").val();
+
                 //valori full text search
-                fts1 = $('#fts1').val();
-                fts1=fts1.slice(0, -1);
-                fts1=fts1+':*';
-                fts2 = $('#fts2').val();
-                fts2=fts2.slice(0, -1);
-                fts2=fts2+':*';
-                fts3 = $('#fts3').val();
-                fts3=fts3.slice(0, -1);
-                fts3=fts3+':*';
-                op1 = $('#op1').val();
-                op2 = $('#op2').val();
-                ftsError;
+                var fts1 = $('#fts1').val();fts1=fts1.slice(0, -1);fts1=fts1+':*';
+                var fts2 = $('#fts2').val();fts2=fts2.slice(0, -1);fts2=fts2+':*';
+                var fts3 = $('#fts3').val();fts3=fts3.slice(0, -1);fts3=fts3+':*';
+                var op1 = $('#op1').val();
+                var op2 = $('#op2').val();
+                var ftsError;
+
                 if(fts1 == ':*' && fts2 == ':*' && fts3 == ':*'){vect = 'no';}
                 else if(fts2 == ':*' && fts3 == ':*'){vect=fts1;}
                 else if(fts2 != ':*' && fts3 == ':*'){
-                    if(fts1 == ':*'){
-                        $("#ftsError").text('manca la prima parola').fadeIn('fast');
-                        return false;
-                    }
-                    else if(op1=='--'){
-                        $("#ftsError").text('manca operatore').fadeIn('fast');
-                        return false;
-                    }
-                    else{
-                        vect=fts1+" "+op1+" "+fts2;
-                        $("#ftsError").text('').fadeOut('fast');
-                    }
+                    if(fts1 == ':*'){ $("#ftsError").text('manca la prima parola').fadeIn('fast'); return false;}
+                    else if(op1=='--'){$("#ftsError").text('manca operatore').fadeIn('fast'); return false;}
+                    else{ vect=fts1+" "+op1+" "+fts2; $("#ftsError").text('').fadeOut('fast');}
                 }
                 else if(fts3 != ':*'){
-                    if(fts1 == ':*' && fts2 == ':*'){
-                        $("#ftsError").text('mancano le prime due parole').fadeIn('fast');
-                        return false;
-                    }
-                    else if(fts1 == ':*'){
-                        $("#ftsError").text('manca la prima parola').fadeIn('fast');
-                        return false;
-                    }
-                    else if(fts2 == ':*'){
-                        $("#ftsError").text('manca la seconda parola').fadeIn('fast');
-                        return false;
-                    }
-                    else if(op1=='--'){
-                        $("#ftsError").text('manca primo operatore').fadeIn('fast');
-                        return false;
-                    }
-                    else if(op2 == '--'){
-                        $("#ftsError").text('manca secondo operatore').fadeIn('fast');
-                        return false;
-                    }
-                    else{
-                        vect=fts1+" "+op1+" "+fts2+" "+op2+" "+fts3;
-                        $("#ftsError").text('').fadeOut('fast');
-                    }
+                    if(fts1 == ':*' && fts2 == ':*'){ $("#ftsError").text('mancano le prime due parole').fadeIn('fast');  return false;}
+                    else if(fts1 == ':*'){ $("#ftsError").text('manca la prima parola').fadeIn('fast');  return false;}
+                    else if(fts2 == ':*'){ $("#ftsError").text('manca la seconda parola').fadeIn('fast');  return false;}
+                    else if(op1=='--'){$("#ftsError").text('manca primo operatore').fadeIn('fast'); return false;}
+                    else if(op2 == '--'){$("#ftsError").text('manca secondo operatore').fadeIn('fast'); return false;}
+                    else{vect=fts1+" "+op1+" "+fts2+" "+op2+" "+fts3;$("#ftsError").text('').fadeOut('fast');}
                 }
+
                 //valori cronologia
                 ci = $('#ci').val();
                 cf = $('#cf').val();
-                cerca(tipo,comSel,locSel,indSel,vect,ci,cf);
+
+                cerca(tipo,progetto,comSel,locSel,indSel,vect,ci,cf);
             });
+
             var cache = {};
             $( ".term" ).autocomplete({
                 minLength: 2,
@@ -190,6 +185,7 @@ $(document).ready(function() {
                     data: {ana:ana},
                     success: function(data){
                         $('#viewRecTab > tbody').html(data);
+
                         $('.imgLink').click(function(e){
                             e.preventDefault();
                             $(".imgContent").hide();
@@ -221,27 +217,25 @@ $(document).ready(function() {
                         });
                     }
                 });
-                $("#viewRecDivHead i").click(function(){
-                    $("#viewRecDiv").fadeOut('fast');
-                });
+                $("#viewRecDivHead i").click(function(){ $("#viewRecDiv").fadeOut('fast'); });
             });
-            /*-------------------------------*/
         });
     });//mainLink function
 
     $("#apriLicenze").click(function(){ $("#licenzeWrap").fadeIn('fast'); });
     $("#chiudiLicenze").click(function(){ $("#licenzeWrap").fadeOut('fast'); });
+
+
+    //$("#policy").hide();
     $('#cookie-policy').click(function () {
         $("#policy").fadeIn('fast');
-        $("#chiudiPolicy").click(function(){
-            $("#policy").fadeOut('fast');
-        });
+        $("#chiudiPolicy").click(function(){$("#policy").fadeOut('fast');});
     });
     $('#cookie-accept,#chiudiPolicy').click(function () {
-        days = 182;
+        days = 182; //giorni di validità cookie
         myDate = new Date();
         myDate.setTime(myDate.getTime()+(days*24*60*60*1000));
-        document.cookie = "comply_cookie = comply_yes; expires = " + myDate.toGMTString();
+        document.cookie = "comply_cookie = comply_yes; expires = " + myDate.toGMTString(); //crea cookie: name|value|expiry
         $("#cookies").slideUp("slow");
     });
 });
@@ -279,15 +273,19 @@ function mainLink(i){
             $('html, body').animate({scrollTop: $("#main").scrollTop()}, 800);
             $('.mainLink').removeClass('attivo');
         });
+        //pulsanti tipo scheda
         $('input[name="tipoButt"]').on("click",function(){
             var label = $(this).attr('id');
             $("label[for='"+label+"']").toggleClass('labelRadioActive');
         });
+
+        //select dinamica comune
         $("#comSel").on("change", function(){
             var com = $(this).val();
             dinSel(com);
         });
 
+        //slider
         $(function() {
             var tooltip = function(sliderObj, ui){
                 val1 = '<span class="sliderTip1">'+ sliderObj.slider("values", 0) +'</span>';
@@ -313,10 +311,13 @@ function mainLink(i){
             $('.ui-slider-handle').first().removeClass('ui-state-default').addClass('ui-state-default1');
             $('.ui-slider-handle').last().removeClass('ui-state-default').addClass('ui-state-default2');
         });
+
         $("#ftsError").hide();
+        //attiva ricerca
         $("#filtroButt").click(function(){
             var tipo = new Array();
-            var fts, ci, cf;
+            var progetto, fts, ci, cf;
+            //valori tipo scheda
             if($("input[name=tipoButt]:checked").length < 1){
                 tipo.push(0);
             }else{
@@ -325,15 +326,23 @@ function mainLink(i){
                     tipo.push(t);
                 });
             }
+
+            //valori progetto
+            progetto = $("input[name='tipoProg']:checked").val();
+
+            //valori area geografica
             var comSel = $("#comSel").val();
             var locSel = $("#locSel").val();
             var indSel = $("#indSel").val();
+
+            //valori full text search
             var fts1 = $('#fts1').val();fts1=fts1.slice(0, -1);fts1=fts1+':*';
             var fts2 = $('#fts2').val();fts2=fts2.slice(0, -1);fts2=fts2+':*';
             var fts3 = $('#fts3').val();fts3=fts3.slice(0, -1);fts3=fts3+':*';
             var op1 = $('#op1').val();
             var op2 = $('#op2').val();
             var ftsError;
+
             if(fts1 == ':*' && fts2 == ':*' && fts3 == ':*'){vect = 'no';}
             else if(fts2 == ':*' && fts3 == ':*'){vect=fts1;}
             else if(fts2 != ':*' && fts3 == ':*'){
@@ -349,20 +358,22 @@ function mainLink(i){
                 else if(op2 == '--'){$("#ftsError").text('manca secondo operatore').fadeIn('fast'); return false;}
                 else{vect=fts1+" "+op1+" "+fts2+" "+op2+" "+fts3;$("#ftsError").text('').fadeOut('fast');}
             }
+
+            //valori cronologia
             ci = $('#ci').val();
             cf = $('#cf').val();
+
             clearStorage();
-            cerca(tipo,comSel,locSel,indSel,vect,ci,cf);
+            cerca(tipo, progetto, comSel,locSel,indSel,vect,ci,cf);
         });
+
         var cache = {};
         $( ".term" ).autocomplete({
             minLength: 2,
             source: function( request, response ) {
                 var term = request.term;
                 if ( term in cache ) { response( cache[ term ] ); return; }
-                $.getJSON( "inc/ftsSearchAutocomplete.php", request, function( data, status, xhr ) {
-                    cache[ term ] = data; response( data );
-                });
+                $.getJSON( "inc/ftsSearchAutocomplete.php", request, function( data, status, xhr ) { cache[ term ] = data; response( data ); });
             }
         });
         /*-------------------------------*/
@@ -395,14 +406,16 @@ function mainLink(i){
                             w = this.width/2;
                             h = this.height/2;
                             $("#imgContent"+id)
-                                .css({"top":y,"width":w,"height":h, "background-image":"url("+src+")"})
-                                .fadeIn('fast');
+                            .css({"top":y,"width":w,"height":h, "background-image":"url("+src+")"})
+                            .fadeIn('fast')
+                            ;
                             $('.chiudiThumb').click(function(){
                                 $(this).parent('div').fadeOut('fast');
                                 $('.zebra tr').removeClass('highLight');
                             });
                         };
                     });
+
                     $(".viewScheda").click(function(e) {
                         var id = $(this).data('id');
                         $("body").append('<form action="scheda_archeo.php" method="post" id="viewScheda"><input type="hidden" name="id" value="' + id + '" /></form>');
@@ -410,18 +423,20 @@ function mainLink(i){
                     });
                 }
             });
-            $("#viewRecDivHead i").click(function(){ $("#viewRecDiv").fadeOut('fast'); });
+            $("#viewRecDivHead i").click(function(){
+                $("#viewRecDiv").fadeOut('fast');
+            });
         });
         /*-------------------------------*/
     });
 }
 
 function clearStorage(){ sessionStorage.clear(); }
-function cerca(tipo,comSel,locSel,indSel,vect,ci,cf){
+function cerca(tipo,progetto,comSel,locSel,indSel,vect,ci,cf){
     $.ajax({
-        url: 'risultato_test.php',
+        url: 'risultato.php',
         type: 'POST',
-        data: {t:tipo,com:comSel,loc:locSel,ind:indSel,fts:vect,ci:ci,cf:cf},
+        data: {t:tipo,progetto:progetto,com:comSel,loc:locSel,ind:indSel,fts:vect,ci:ci,cf:cf},
         beforeSend: function() { $("#filtroButt i").removeClass('fa-search').addClass('fa-spinner fa-spin'); },
         success: function(data){
             $('section#main').html(data);
@@ -436,7 +451,7 @@ function cerca(tipo,comSel,locSel,indSel,vect,ci,cf){
                 $(this).parent('td').parent('tr').addClass('highLight');
                 var id = $(this).data('id');
                 var y = $(this).position().top;
-                var src = 'foto/'+$(this).data('src');
+                var src = '../foto/'+$(this).data('src');
                 var img = new Image();
                 var w, h;
                 img.src = src;
