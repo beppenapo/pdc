@@ -3,7 +3,6 @@ include('db.php');
 $array = $_POST['arr'];
 $arrayActive = $_POST['arrActive'];
 $arrayArea = $_POST['arrArea'];
-$progetto = $_POST['progetto'];
 $i = count($array);
 $y = count($arrayActive);
 $w = count($arrayArea);
@@ -98,23 +97,22 @@ else {
        $xmax = pg_result($result, $x, "xmax");
        $ymax = pg_result($result, $x, "ymax");
        $extent = $xmin.','.$ymin.','.$xmax.','.$ymax;
-       echo "<li id='$idArea' ext='$extent' class='openSchede' onclick='openSchede($idArea, $progetto)'>$area</li>";
+       echo "<li id='$idArea' ext='$extent' class='openSchede' onclick='openSchede($idArea)'>$area</li>";
     }
    }else {echo "<li><h1>L'area selezionata presenta schede in lavorazione</h1></li>";}
-   echo "</ul>";
-   echo "</div>";
+   echo "</ul></div>";
 }
 ?>
 <div id="resContentSchede"></div>
 
 <script type="text/javascript">
 var tpsch = "<?php echo($tpsch); ?>";
-function openSchede(idArea, progetto){
-   console.log('area: '+idArea+'\nproj: '+progetto);
+function openSchede(idArea){
+   //console.log('area: '+idArea+'\ntipo: '+tpsch);
    $.ajax({
     url: 'inc/popupAiSchede.php',
     type: 'POST',
-    data: {idArea:idArea, tpsch:tpsch, hub:2, progetto:progetto},
+    data: {idArea:idArea, tpsch:tpsch, hub:2},
     success: function(data){console.log(data);$("#resContentSchede").html(data);}
    });//ajax*/
 }

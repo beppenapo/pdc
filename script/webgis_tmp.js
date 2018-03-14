@@ -32,8 +32,7 @@ function init() {
  gsat = new OpenLayers.Layer.Bing({name: "Aerial",key: bingKey,type: "Aerial"});
  map.addLayer(gsat);
 
-//osm = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
-osm = new OpenLayers.Layer.OSM();
+osm = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
 map.addLayer(osm);
 
 comuni = new OpenLayers.Layer.WMS("comuni", "http://www.lefontiperlastoria.it/geoserver/wms",{
@@ -104,7 +103,7 @@ pergine.setVisibility(false);
 aree_biblio = new OpenLayers.Layer.WMS("Aree bibliografiche", "http://www.lefontiperlastoria.it/geoserver/wms",{
    srs: 'EPSG:3857',
    layers: ['fonti:ai_biblio_poly'],
-   CQL_FILTER: cql,
+   CQL_FILTER: "hub=2",
    styles: 'biblioAvs',
    format: format, 
    transparent: true
@@ -116,7 +115,7 @@ aree_biblio.setVisibility(false);
 aree_foto = new OpenLayers.Layer.WMS("Aree foto", "http://www.lefontiperlastoria.it/geoserver/wms",{
    srs: 'EPSG:3857',
    layers: ['fonti:aree_foto_poly'],
-   CQL_FILTER: cql,
+   CQL_FILTER: "hub=2",
    styles: 'fotoAvs',
    format: format, 
    transparent: true
@@ -128,7 +127,7 @@ aree_foto.setVisibility(false);
 aree_orale = new OpenLayers.Layer.WMS("Aree orale", "http://www.lefontiperlastoria.it/geoserver/wms",{
    srs: 'EPSG:3857',
    layers: ['fonti:aree_orale_poly'],
-   CQL_FILTER: cql,
+   CQL_FILTER: "hub=2",
    styles: '',
    format: format, 
    transparent: true
@@ -140,7 +139,7 @@ aree_orale.setVisibility(false);
 aree_carto = new OpenLayers.Layer.WMS("Aree cartografia", "http://www.lefontiperlastoria.it/geoserver/wms",{
    srs: 'EPSG:3857',
    layers: ['fonti:aree_carto_poly'],
-   CQL_FILTER: cql,
+   CQL_FILTER: "hub=2",
    styles: 'cartoAvs',
    format: format, 
    transparent: true
@@ -203,7 +202,6 @@ info = new OpenLayers.Control.WMSGetFeatureInfo({
  queryVisible: true,
  layers: listalayer,
  infoFormat: 'application/vnd.ogc.gml',
- vendorParams: {CQL_FILTER: cql},
  //vendorParams: {buffer: 10},
  eventListeners: {
   getfeatureinfo: function(event) {
@@ -216,24 +214,20 @@ info = new OpenLayers.Control.WMSGetFeatureInfo({
     var id_ai = attributes.id_geom;  
     var id_area = attributes.id_area;
     arr.push(id_ai);   
-    arrArea.push(id_area);   
+    arrArea.push(id_area);                  
    }
    $(".ai:checked").map(function(){arrActive.push($(this).attr('data-tipo'));});
-   var progetto = $("input[name='projectLayer']:checked").val();
-   
    $.ajax({
     url: 'inc/popupAi.php',
     type: 'POST',
-    data: {arr:arr,arrActive:arrActive,arrArea:arrArea,progetto:progetto},
+    data: {arr:arr,arrActive:arrActive,arrArea:arrArea},
     success: function(data){
      $("#result").animate({left:"0px"});
      $("#resultContent").html(data);
     }
    });//ajax*/
-   console.log(progetto);
    console.log(arr);
    console.log(arrArea);
-   console.log(arrActive);
   }
  }
 });
@@ -424,26 +418,6 @@ $("#drag").click(function(){
  $('#zoomArea').removeClass('attivo');
  zoomin.deactivate();
  pan.activate();
-});
-
-$("input[name='projectLayer']").on("change", function(){
-    var v = ($(this).val()==63)?"(progetto = 63 or progetto = 70)":"progetto = 70";
-    cql = "hub = 2 AND "+v;
-    cqlBiblio = cql;
-    cqlFoto = cql;
-    cqlAudio = cql;
-    cqlCarto = cql;
-    info_filter = cqlBiblio+";"+cqlFoto+";"+cqlAudio+";"+cqlCarto;
-    info.vendorParams= {'CQL_FILTER': info_filter};
-    console.log(cql);
-    aree_biblio.params.CQL_FILTER = cql;
-    aree_foto.params.CQL_FILTER = cql;
-    aree_orale.params.CQL_FILTER = cql;
-    aree_carto.params.CQL_FILTER = cql;
-    aree_biblio.redraw();
-    aree_foto.redraw();
-    aree_orale.redraw();
-    aree_carto.redraw();
 });
 
 

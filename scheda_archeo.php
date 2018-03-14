@@ -24,15 +24,15 @@ $fine = $a['fine'];
 
 if($tpsch==1){
     $upload = "uploaded_audio.php";
-    $noFile="<h2>Non sono presenti file audio</h2>";
-    $tipoFile = 2;
-    $folder = "audio/";
+    $noFile="<h2>Non sono presenti file multimediali</h2>";
+    $tipoFile = '>1';
+    //$folder = "audio/";
     $mapSwitch="multimedia";
 }else{
     $upload = "uploaded_file.php";
     $noFile = "<h2>Non sono presenti foto</h2>";
-    $tipoFile = 1;
-    $folder = "../foto/";
+    $tipoFile = '=1';
+    //$folder = "../foto/";
     $mapSwitch="foto";
 }
 
@@ -147,11 +147,13 @@ $extent2 = $g4['extent2'];
 $extent2 = substr($extent2, 4, -1);
 $extent2 = str_replace(' ', ',', $extent2);
 
-$imgq = ("select path from file where id_scheda = $id and tipo = $tipoFile;");
+$imgq = ("select path,tipo from file where id_scheda = $id and tipo $tipoFile;");
 $imgexec = pg_query($connection, $imgq);
 $imgrow = pg_num_rows($imgexec);
 $imgres = pg_fetch_array($imgexec, 0, PGSQL_ASSOC);
+if($imgres['tipo']==2){$folder = "audio/";}else{$folder = "";}
 $img=$imgres['path'];
+$urlVideo = str_replace("www.youtube.com/embed", "youtu.be", $img);
 ?>
 
 <!DOCTYPE html>
@@ -182,6 +184,8 @@ $img=$imgres['path'];
   #backDiv{position:fixed; top:16%;width:100%; text-align:center;background-color:#d6d6d6;padding:5px 0px;z-index:19999;}
   #backDiv a{color:#555753;}
   #uploadForm input{margin-top:10px;width:60%;}
+  .youtubeLink{color:#578509;text-decoration:none;font-size:11px; padding: 5px;}
+  
  </style>
 
 </head>
@@ -266,16 +270,22 @@ $img=$imgres['path'];
                                 <?php
                                     if($imgrow > 0) {
                                         if($tpsch!=1){
-                                            echo "<img id='imgSmall' src='".$folder.$img."' />";
+                                            echo "<img id='imgSmall' data-f='folder: ".$folder." tpsch: ".$tpsch."' src='../foto/".$folder.$img."' />";
                                             echo "<div id='panelFoto'>";
                                                 echo "<label id='ingrFoto' scheda='$id'>ingrandisci</label>&nbsp;&nbsp;";
                                                 if($idUsr) {echo"<label id='delFoto' scheda='$id' img='$img'>elimina</label>";}
                                             echo "</div>";
                                         }else{
-                                            echo "<audio preload='none' controls>";
-                                            echo "<source src='".$folder.$img."' type='audio/mp3'>";
-                                            echo "Il tuo browser non supporta l'elemento audio";
-                                            echo "</audio>";
+                                            if($imgres['tipo']==2){
+                                                echo "<audio preload='none' controls>";
+                                                echo "<source src='".$folder.$img."' type='audio/mp3'>";
+                                                echo "Il tuo browser non supporta l'elemento audio";
+                                                echo "</audio>";
+                                            }
+                                            if($imgres['tipo']==3){
+                                                echo "<iframe width='100%' height='280' src='".$img."' frameborder='0' allowfullscreen></iframe>";
+                                                echo "<div class='inlineVideoUrlContent'><a href = '".$urlVideo."' class='youtubeLink' title='guarda video su youtube' target='_blank'><i class='fa fa-youtube-play' aria-hidden='true'></i> guarda video su YouTube</a></div>";
+                                            }
                                         }
                                     }else{
                                         echo $noFile;
@@ -922,7 +932,7 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
  <div id="siFoto" class="login2">SI, procedi con l'eliminazione</div>
 </div>
 
-<?php if($tpsch!=1){?><div id="fotoOrig" style="display:none;"><img src="<?php echo($folder.$img); ?>" /></div><?php } ?>
+<?php if($tpsch!=1){?><div id="fotoOrig" style="display:none;"><img src="<?php echo "../foto/".$folder.$img; ?>" /></div><?php } ?>
 
   <script type="text/javascript" src="lib/OpenLayers-2.12/OpenLayers.js"></script>
   <script src="http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false"></script>
@@ -1013,7 +1023,7 @@ $( "#termfiga2" ).autocomplete({
    $('.slide').hide();
     //$('.toggle').click(function(){$(this).children('.slide').slideToggle(); $(this).children('.sezioni').toggleClass(bgSezAperto); });
     $('.toggle > div > h2').click(function(){$(this).parent().next('.slide').slideToggle(); });
-   $("#switchMappa").attr("checked", true);
+   $("#switchImg").attr("checked", true);
    $(".switchImgMapButton").change(function(){
      $("#imgDiv").slideToggle("fast");
      $("label.switchlabel").toggleClass("switchLabelChecked");
