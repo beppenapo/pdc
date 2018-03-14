@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:500,600,400,300);
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 @import url("reset.css");
-@import url("../../css/ico-font/css/font-awesome.css");
+@import url("ico-font/css/font-awesome.css");
 /*******  LAYOUT GENERICO  ****/
 /*******  MOBILE **************/
 /*******  IN FONDO MEDIA QUERIES PER TABLET E PC  *********/
@@ -20,10 +20,6 @@ header#head {
  background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0.2) 100%);
  background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(0,0,0,0.2) 100%);
  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 );
- /*background: -webkit-linear-gradient(#000, #AFB5B9);
- background: -o-linear-gradient(#000, #AFB5B9);
- background: -moz-linear-gradient(#000, #AFB5B9);
- background: linear-gradient(#000, #AFB5B9);*/
  z-index: 100;
 }
 
@@ -83,19 +79,36 @@ footer .wrap{width:85% !important;}
 .ui-widget-content{border:transparent !important;}
 .ui-state-hover,.ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,.ui-state-active,.ui-widget-content .ui-state-active, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{border:transparent !important;background:none !important;}
 
-.imgContent{display:none;position:absolute;border:1px solid #000;background-size:cover;background-repeat:no-repeat;left:50%;}
-.imgContent div{position:absolute;top:-10px;right:-10px;color: rgb(229, 168, 9);font-size: 1.5em;padding: 3px;background-color: rgb(130,100,6);border-radius: 15px;width: 20px;height: 20px;text-align: center;border: 2px solid rgb(229, 168, 9);cursor:pointer;}
-
-
+.imgContent{display:none;position:fixed; top:200px; border:1px solid #000; background-size:cover; background-repeat:no-repeat; z-index:30;}
+.imgContent div{
+    position:absolute;
+    top:-15px;
+    right:-15px;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    font-size: 20px;
+    /*color: rgb(229, 168, 9);*/
+    color: rgb(255,255,255);
+    text-align: center;
+    /*background-color: rgb(130,100,6);*/
+    background-color: rgb(0,0,0);
+    border-radius: 15px;
+    /*border: 2px solid rgb(229, 168, 9);*/
+    border: 2px solid rgb(255,255,255);
+    box-shadow: 0px 0px 7px rgb(0,0,0);
+    cursor:pointer;
+}
 .ui-autocomplete{font-size:.9em !important;border-radius:0px !important; background:rgb(230,230,230) !important;}
 .ui-autocomplete li a{cursor:pointer !important;color: rgb(136,136,136) !important;}
 .ui-autocomplete li a:hover{background:#888888 !important; color:#fff !important;}
 /**********************************/
 /******* COLLEZIONI *****/
-#viewRecDiv{display:none;position:fixed;top:20%;bottom:1%;left:10%; right:10%; border:1px solid #888888;background-color:#888888;margin:0;padding:0;z-index:20004;}
-#viewRecDivHead{height:25px;background-color:#ADADAD; color:#333333;width:100%;margin:0;padding:0;}
-#viewRecDivHead i{position: absolute; cursor: pointer; width: 16px; height: 16px; right: 0px; top: 4px;}
-.wrapTable{position:relative;width:100%;height:90%;margin-top:10px;overflow:auto;}
+#viewRecDiv{display:none;position:fixed;top:200px;left:10%; right:10%; border:1px solid #888888;background-color:#888888;margin:0;padding:0;z-index:10;height:auto;}
+#viewRecDivHead{background-color:#ADADAD; color:#333333;margin:0;padding:15px;box-shadow: 3px 0px 5px rgba(0,0,0,0.6);text-align:center;}
+#viewRecDivHead h3{font-size:18px;margin-bottom:10px;}
+/*#viewRecDivHead i,*/ .closeModal{position: absolute; cursor: pointer !important; right: 0; top: 0;padding:15px;border:none;background:none;}
+.wrapTable{position:relative;width:100%; height:auto; max-height:600px;margin:10px auto;overflow:auto;}
 #nomeCollezione { position: relative; width: 94%; height: 20px; margin: 3px 9px; display: inline-block;}
 /* Tablets */
 @media only screen and (min-width:481px) and (max-width:1024px) {
@@ -106,43 +119,42 @@ footer .wrap{width:85% !important;}
 
 /* pc */
 @media screen and (min-width: 1025px){
-.wrap{width:95%;}
-#headLogo{width:5.5%;/*height:62%;*/}
-#headTitle{width:40%;}
-#headTitle h1{font-size: 1.1em;margin-bottom: 0;}
-#headTitle h2{font-size: 0.9em;margin-top:3px;font-weight:bold;line-height:1.2em;}
+    .wrap{width:95%;}
+    #headLogo{width:5.5%;/*height:62%;*/}
+    #headTitle{width:40%;}
+    #headTitle h1{font-size: 1.1em;margin-bottom: 0;}
+    #headTitle h2{font-size: 0.9em;margin-top:3px;font-weight:bold;line-height:1.2em;}
 
-#headNav {width:53%;}
-#headNav #record{font-size:1em;width:100%;text-align:right;margin-bottom:2%;}
-#headNav nav {width:100%;text-align:right;}
-#headNav nav li{display:inline-block;font-size: .8em;}
-#headNav nav li:not(:last-child){padding:0px 1%;}
+    #headNav {width:53%;}
+    #headNav #record{font-size:1em;width:100%;text-align:right;margin-bottom:2%;}
+    #headNav nav {width:100%;text-align:right;}
+    #headNav nav li{display:inline-block;font-size: .8em;}
+    #headNav nav li:not(:last-child){padding:0px 1%;}
 
-section#image{height:96.6%;}
-section#image label{bottom: 3.3%;}
-footer{height:3%;font-size:0.7em;}
-ul#partnerList li{margin-bottom:1%;}
-ul#partnerList li span{display:block;}
-ul#partnerList li span:nth-child(odd){font-weight:bold;}
-ul.partnerLogo{margin-top:1%;}
-ul.first{margin-top:3% !important;}
-ul.partnerLogo li{display:inline-block;vertical-align:top;}
-.footable{width:95% !important; margin:1.7% 2.5% !important;font-size:0.8em !important;text-align:left;}
-.footable thead tr{background-color:rgb(230,230,230) !important;}
-.footable th, .footable td{padding:5px !important;}
+    section#image{height:96.6%;}
+    section#image label{bottom: 3.3%;}
+    footer{height:3%;font-size:0.7em;}
+    ul#partnerList li{margin-bottom:1%;}
+    ul#partnerList li span{display:block;}
+    ul#partnerList li span:nth-child(odd){font-weight:bold;}
+    ul.partnerLogo{margin-top:1%;}
+    ul.first{margin-top:3% !important;}
+    ul.partnerLogo li{display:inline-block;vertical-align:top;}
+    .footable{width:95% !important; margin:1.7% 2.5% !important;font-size:0.8em     !important;text-align:left;}
+    .footable thead tr{background-color:rgb(230,230,230) !important;}
+    .footable th, .footable td{padding:5px !important;}
 
-div#utente{width:100%;text-align:center;color: #fff; position: absolute; top: 0; right: 0;background-color:rgba(255,255,255,0.4)}
-a.sessionLink{color:rgba(255,255,255,0.7);text-decoration: none; padding:0px 5px;display: inline-block;width:80px;}
-a.sessionLink:hover{color:rgb(255,255,255)}
-#sessionMenu li{display: inline-block;font-size:0.7em; position:relative;padding:0px 1px;margin:0px 8px;text-align: center;}
-#sessionMenu li ul{position:absolute; z-index: 10000;left:-7px}
-.submenu li{position:relative;display: inline-block;padding:3px 5px !important;width:80px;background-color: #66686A;
-border-bottom: 1px dashed ghostwhite;font-size:1em !important;}
-.submenu li:hover{background-color: rgba(248,248,246,1);}
-.submenu li a{text-decoration: none;color:ghostwhite;display: block;width:80px;}
-.submenu li a:hover{color:rgb(150,134,118);}
+    div#utente{width:100%;text-align:center;color: #fff; position: absolute; top: 0; right: 0;background-color:rgba(255,255,255,0.4)}
+    a.sessionLink{color:rgba(255,255,255,0.7);text-decoration: none; padding:0px 5px;display: inline-block;width:80px;}
+    a.sessionLink:hover{color:rgb(255,255,255)}
+    #sessionMenu li{display: inline-block;font-size:0.7em; position:relative;padding:0px 1px;margin:0px 8px;text-align: center;}
+    #sessionMenu li ul{position:absolute; z-index: 10000;left:-7px}
+    .submenu li{position:relative;display: inline-block;padding:3px 5px !important;width:80px;background-color: #66686A;border-bottom: 1px dashed ghostwhite;font-size:1em !important;}
+    .submenu li:hover{background-color: rgba(248,248,246,1);}
+    .submenu li a{text-decoration: none;color:ghostwhite;display: block;width:80px;}
+    .submenu li a:hover{color:rgb(150,134,118);}
 
-h2.titoletto{ width: 500px; font-size: 1.4em; font-weight: bold; color: #FF8952; margin: 20px 0px 10px; border-bottom:1px solid #ff8952;}
+    h2.titoletto{ width: 500px; font-size: 1.4em; font-weight: bold; color: #FF8952; margin: 20px 0px 10px; border-bottom:1px solid #ff8952;}
 }
 /*******  CLASSI GENERICHE *****************/
 .bianco, .attivo{color:#fff !important;}

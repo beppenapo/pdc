@@ -78,84 +78,82 @@ if(!$e){
   $row = pg_num_rows($e);
 }
 
-?>
-  <?php
-  echo "<div style='display:none'>".$query."</div>";
-   if($row == 0){
+echo "<div style='display:none'>".$query."</div>";
+if($row == 0){
     echo "<header>La ricerca non ha prodotto risultati</header>";
-   }else{?>
- <input type="hidden" id="filtriStored" value="si" />
- <input type="hidden" id="tipoStored" value="<?php echo json_encode($t); ?>" />
- <input type="hidden" id="progettoStored" value="<?php echo $_POST['progetto']; ?>" />
- <input type="hidden" id="comStored" value="<?php echo $comune; ?>" />
- <input type="hidden" id="locStored" value="<?php echo $localita; ?>" />
- <input type="hidden" id="indStored" value="<?php echo $indirizzo; ?>" />
- <input type="hidden" id="ftsStored" value="<?php echo $vector; ?>" />
- <input type="hidden" id="ciStored" value="<?php echo $ci; ?>" />
- <input type="hidden" id="cfStored" value="<?php echo $cf; ?>" />
- <header>La ricerca ha restituito <?php echo $row; ?> record</header>
- <table class="zebra footable toggle-arrow" data-filter="#filtro" data-filter-text-only="true">
-  <thead>
-   <tr class='csv'>
-    <th data-sort-initial="true">RECORD N.</th>
-    <th data-hide="phone">DENOMINAZIONE OGGETTO</th>
-    <th data-hide="phone">CRONOLOGIA</th>
-    <th data-hide="phone"></th>
-    <th data-hide="phone"></th>
-   </tr>
-  </thead>
-  <tbody>
-   <?php
-    while ($r = pg_fetch_array($e)) {
-     echo "<tr>";
-     echo "<td>".$r['dgn_numsch']."</td>";
-     echo "<td>".stripslashes($r['dgn_dnogg'])."</td>";
-     echo "<td>".$r['cro_spec']."</td>";
-     echo "<td>";
-     if($r['path']&&$r['tipo']==1){
-      echo "<a href='#' class='imgLink' data-src='".$r['path']."' data-id='".$r['id']."'><i class='fa fa-picture-o'></i></a>
-            <div class='imgContent' id='imgContent".$r['id']."'>
-             <div class='chiudiThumb'><i class='fa fa-times'></i></div>
-            </div>";
-     }
-     echo "</td>";
-     echo "<td><a href='#' data-id=".$r['id']." data-p='c' class='linkScheda'><i class='fa fa-external-link-square'></i></a></td>";
-     echo "</tr>";
+}else{
+?>
+<input type="hidden" id="filtriStored" value="si" />
+<input type="hidden" id="tipoStored" value="<?php echo json_encode($t); ?>" />
+<input type="hidden" id="progettoStored" value="<?php echo $_POST['progetto']; ?>" />
+<input type="hidden" id="comStored" value="<?php echo $comune; ?>" />
+<input type="hidden" id="locStored" value="<?php echo $localita; ?>" />
+<input type="hidden" id="indStored" value="<?php echo $indirizzo; ?>" />
+<input type="hidden" id="ftsStored" value="<?php echo $vector; ?>" />
+<input type="hidden" id="ciStored" value="<?php echo $ci; ?>" />
+<input type="hidden" id="cfStored" value="<?php echo $cf; ?>" />
+<header>La ricerca ha restituito <?php echo $row; ?> record</header>
+<table class="zebra footable toggle-arrow" data-filter="#filtro" data-filter-text-only="true">
+    <thead>
+        <tr class='csv'>
+            <th data-sort-initial="true">RECORD N.</th>
+            <th data-hide="phone">DENOMINAZIONE OGGETTO</th>
+            <th data-hide="phone">CRONOLOGIA</th>
+            <th data-hide="phone"></th>
+            <th data-hide="phone"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        while ($r = pg_fetch_array($e)) {
+            echo "<tr>";
+            echo "<td>".$r['dgn_numsch']."</td>";
+            echo "<td>".stripslashes($r['dgn_dnogg'])."</td>";
+            echo "<td>".$r['cro_spec']."</td>";
+            echo "<td>";
+            if($r['path']&&$r['tipo']==1){
+                echo "<a href='#' class='imgLink' data-src='".$r['path']."' data-id='".$r['id']."'><i class='fa fa-picture-o'></i></a>";
+            }
+            echo "</td>";
+            echo "<td><a href='#' data-id=".$r['id']." data-p='c' class='linkScheda'><i class='fa fa-external-link-square'></i></a></td>";
+            echo "</tr>";
+        }
     }
-
-    }
-   ?>
-  </tbody>
-  </table>
+    ?>
+    </tbody>
+</table>
+<div class='imgContent' id='imgContent'>
+    <div class='chiudiThumb'><i class='fa fa-times'></i></div>
+</div>
 <form action="scheda_archeo.php" method="post" id="schedaFom">
- <input type="hidden" name="id" value="" />
- <input type="hidden" name="p" value="" />
+    <input type="hidden" name="id" value="" />
+    <input type="hidden" name="p" value="" />
 </form>
 <script type="text/javascript">
- var stored = document.getElementById("filtriStored").value;
- var comStored = document.getElementById("comStored").value;
- var progettoStored = document.getElementById("progettoStored").value;
- var locStored = document.getElementById("locStored").value;
- var indStored = document.getElementById("indStored").value;
- var ftsStored = document.getElementById("ftsStored").value;
- var ciStored = document.getElementById("ciStored").value;
- var cfStored = document.getElementById("cfStored").value;
- var tipiStored= <?php echo json_encode($tipi); ?>;
- sessionStorage.setItem("stored",stored);
- sessionStorage.setItem("progettoStored",progettoStored);
- sessionStorage.setItem("comStored",comStored);
- sessionStorage.setItem("locStored",locStored);
- sessionStorage.setItem("indStored",indStored);
- sessionStorage.setItem("ftsStored",ftsStored);
- sessionStorage.setItem("ciStored",ciStored);
- sessionStorage.setItem("cfStored",cfStored);
- sessionStorage.setItem("tipiStored",tipiStored);
+    var stored = document.getElementById("filtriStored").value;
+    var comStored = document.getElementById("comStored").value;
+    var progettoStored = document.getElementById("progettoStored").value;
+    var locStored = document.getElementById("locStored").value;
+    var indStored = document.getElementById("indStored").value;
+    var ftsStored = document.getElementById("ftsStored").value;
+    var ciStored = document.getElementById("ciStored").value;
+    var cfStored = document.getElementById("cfStored").value;
+    var tipiStored= <?php echo json_encode($tipi); ?>;
+    sessionStorage.setItem("stored",stored);
+    sessionStorage.setItem("progettoStored",progettoStored);
+    sessionStorage.setItem("comStored",comStored);
+    sessionStorage.setItem("locStored",locStored);
+    sessionStorage.setItem("indStored",indStored);
+    sessionStorage.setItem("ftsStored",ftsStored);
+    sessionStorage.setItem("ciStored",ciStored);
+    sessionStorage.setItem("cfStored",cfStored);
+    sessionStorage.setItem("tipiStored",tipiStored);
 
- $(".linkScheda").click(function(e) {
-  var id = $(this).data('id');
-  var p = $(this).data('p');
-  $("input[name='id']").val(id);
-  $("input[name='p']").val(p);
-  $("#schedaFom").submit();
- });
+    $(".linkScheda").click(function(e) {
+        var id = $(this).data('id');
+        var p = $(this).data('p');
+        $("input[name='id']").val(id);
+        $("input[name='p']").val(p);
+        $("#schedaFom").submit();
+    });
 </script>
