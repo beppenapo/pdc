@@ -1,5 +1,6 @@
 <?php
 session_start();
+require("inc/db.php");
 if (isset($_GET['site'])) {
     if (!preg_match("/^(http|https):/", $_GET['site'])) { $_GET['site'] = 'http://'.$_GET['site']; }
     $go = $_GET['site'];
@@ -11,12 +12,7 @@ if (isset($_GET['site'])) {
     <head>
         <?php require("inc/metatag.php"); ?>
         <style>
-            section#image{
-            background-image:url('img/icone/loader.gif');
-            background-repeat: no-repeat;
-            background-position:center center; }
-            .labelCheck {display: inline-block; background-color: rgb(230,230,230); color: rgb(136,136,136); border: 1px solid rgb(136,136,136); font-size: 0.8em; padding: 0.3% 1%;}
-            input[name='tipoProg']{ width: auto; margin: 2px;}
+            
         </style>
     </head>
     <body>
@@ -28,7 +24,7 @@ if (isset($_GET['site'])) {
             <section id="main"></section>
             <footer><?php require_once("inc/footer.php"); ?></footer>
         </div>
-        
+
         <script type="text/javascript" src="lib/jquery.js"></script>
         <script type="text/javascript" src="lib/jquery-ui-1.10.4.custom.min.js"></script>
         <script type="text/javascript" src="lib/FooTable/js/footable.js"></script>
