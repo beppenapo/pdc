@@ -1,179 +1,62 @@
-/******************************************************************************/
-/*****************  FUNZIONI OPENLAYERS  ******************************************/
-/******************************************************************************/
-var gsat, osm, comuni, toponomastica, catasto1859, catasto1980, pergine, aree_foto, aree_carto, aree_orale, aree_biblio;
-var highlightLayer, listalayer, control, hover,actLayer;
-var info, extent, highlightCtrl, selectCtrl, pan, zoomin, cqlHub; //funzioni o comandi
-wms = 'http://localhost:8080/geoserver/pdc/wms';
-wfs = 'http://localhost:8080/geoserver/pdc/wfs';
-bingKey = 'Arsp1cEoX9gu-KKFYZWbJgdPEa8JkRIUkxcPr8HBVSReztJ6b0MOz3FEgmNRd4nM';
-format = 'image/png';
 function init() {
-    OpenLayers.ProxyHost = "/cgi-bin/proxy.cgi?url=";
-    map = new OpenLayers.Map ("map", {
-        controls:[
-            new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.Zoom(),
-            new OpenLayers.Control.MousePosition({div:document.getElementById("coord")}),
-        ],
-        resolutions: [156543.03390625, 78271.516953125, 39135.7584765625, 19567.87923828125, 9783.939619140625, 4891.9698095703125, 2445.9849047851562, 1222.9924523925781, 611.4962261962891, 305.74811309814453, 152.87405654907226, 76.43702827453613, 38.218514137268066, 19.109257068634033, 9.554628534317017, 4.777314267158508, 2.388657133579254, 1.194328566789627, 0.5971642833948135, 0.29858214169740677, 0.14929107084870338, 0.07464553542435169, 0.037322767712175846, 0.018661383856087923, 0.009330691928043961, 0.004665345964021981, 0.0023326729820109904, 0.0011663364910054952, 5.831682455027476E-4, 2.915841227513738E-4, 1.457920613756869E-4],
-        maxResolution: 'auto',
-        units: 'm',
-        projection: new OpenLayers.Projection("EPSG:3857"),
-        displayProjection: new OpenLayers.Projection("EPSG:4326")
-    });
-    var scalebar = new OpenLayers.Control.ScaleBar({div:document.getElementById("scalebar")});
-    map.addControl(scalebar);
-
-    proj900913 = new OpenLayers.Projection("EPSG:900913");
-    proj4326 = new OpenLayers.Projection("EPSG:4326");
-
+    OpenLayers.ProxyHost = proxy;
+    map = new OpenLayers.Map ("map", opzioni);
     gsat = new OpenLayers.Layer.Bing({name: "Aerial",key: bingKey,type: "Aerial"});
-    map.addLayer(gsat);
     osm = new OpenLayers.Layer.OSM();
-    map.addLayer(osm);
-
-    comuni = new OpenLayers.Layer.WMS("comuni", wms,{
-        srs: 'EPSG:3857',
-        layers: 'pdc:comuni_bassa',
-        styles: '',
-        format: format,
-        transparent: true
-    },{isBaseLayer: false},{singleTile: true, ratio: 1},{ tileSize: new OpenLayers.Size(256,256)}
+    comuni = new OpenLayers.Layer.WMS("comuni", wms,
+        {layers: 'pdc:comuni_bassa', format: format, transparent: true}
+        ,{isBaseLayer: false, singleTile: true, ratio: 1, tileSize:tile256}
     );
-    map.addLayer(comuni);
-    //comuni.setVisibility(false);
-
-    catasto1859 = new OpenLayers.Layer.WMS("catasto 1859", wms,{
-        LAYERS: 'pdc:1859',
-        STYLES: '',
-        format: format,
-        tiled: true,
-        tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom,
-        transparent: true
-    }
-    ,{buffer: 0, isBaseLayer: false,tileSize: new OpenLayers.Size(512,512)}
+    toponomastica = new OpenLayers.Layer.WMS("Toponomastica", wms,
+        {layers: ['pdc:toponomastica'], format: format,transparent: true}
+        ,{isBaseLayer: false},{singleTile: true, ratio: 1},{ tileSize:tile256}
     );
-    map.addLayer(catasto1859);
-    catasto1859.setVisibility(false);
+    catasto1859 = new OpenLayers.Layer.WMS("catasto 1859", wms,
+        {layers: ['pdc:1859','pdc:pergine'],format: format, tiled: true, tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom, transparent: true}
+        ,{visibility:false,buffer: 0, isBaseLayer: false,tileSize:tile512}
+    );
+    catasto1980 = new OpenLayers.Layer.WMS("catasto 1980", wms,
+        {layers: 'pdc:1980', format: format, tiled: true, tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom, transparent: true}
+        ,{visibility:false, buffer: 0,isBaseLayer: false, tileSize:tile512}
+    );
+    aree_foto = new OpenLayers.Layer.WMS("Aree foto",wms,
+        {layers:['pdc:foto'], CQL_FILTER:cql, format:format, transparent:true}
+        ,{visibility:false,isBaseLayer:false,singleTile:true, ratio:1, tileSize:tile256}
+    );
+    aree_carto = new OpenLayers.Layer.WMS("Aree cartografia", wms,
+        {layers: ['pdc:cartografia'], CQL_FILTER: cql, format:format, transparent: true}
+        ,{visibility:false,isBaseLayer: false,singleTile: true, ratio: 1,tileSize:tile256}
+    );
+    aree_biblio = new OpenLayers.Layer.WMS("Aree bibliografiche", wms,
+        {layers: ['pdc:pubblicazioni'], CQL_FILTER: cql, format: format, transparent: true}
+        ,{visibility:false,isBaseLayer: false,singleTile: true, ratio: 1, tileSize:tile256}
+    );
+    aree_orale = new OpenLayers.Layer.WMS("Aree orale", wms,
+        {layers: ['pdc:orali'], CQL_FILTER: cql, format: format, transparent: true}
+        ,{visibility:false,isBaseLayer: false,singleTile: true, ratio: 1,tileSize:tile256}
+    );
 
-    catasto1980 = new OpenLayers.Layer.WMS("catasto 1980", wms,{
-        LAYERS: 'pdc:1980',
-        STYLES: '',
-        format: format,
-        tiled: true,
-        tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom,
-        transparent: true
-    },{
-        buffer: 0,isBaseLayer: false, tileSize: new OpenLayers.Size(512,512)
-    });
-    map.addLayer(catasto1980);
-    catasto1980.setVisibility(false);
-
-    pergine = new OpenLayers.Layer.WMS("pergine", wms,{
-        LAYERS: 'pdc:pergine',
-        STYLES: '',
-        format: format,
-        tiled: true,
-        tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom,
-        transparent: true
-    },{
-        buffer: 0, isBaseLayer: false, tileSize: new OpenLayers.Size(512,512)
-    });
-    map.addLayer(pergine);
-    pergine.setVisibility(false);
-
-    aree_biblio = new OpenLayers.Layer.WMS("Aree bibliografiche", wms,{
-        srs: 'EPSG:3857',
-        layers: ['pdc:ai_biblio_poly'],
-        CQL_FILTER: cql,
-        styles: 'biblioAvs',
-        format: format,
-        transparent: true
-    }
-    ,{isBaseLayer: false,singleTile: true, ratio: 1, tileSize: new OpenLayers.Size(256,256)});
-    map.addLayer(aree_biblio);
-    aree_biblio.setVisibility(false);
-
-    aree_foto = new OpenLayers.Layer.WMS("Aree foto",wms,{
-        srs: 'EPSG:3857',
-        layers: ['pdc:aree_foto_poly'],
-        CQL_FILTER: cql,
-        styles: 'fotoAvs',
-        format: format,
-        transparent: true
-    },{isBaseLayer: false,singleTile: true, ratio: 1, tileSize: new OpenLayers.Size(256,256)});
-    map.addLayer(aree_foto);
-    aree_foto.setVisibility(false);
-
-    aree_orale = new OpenLayers.Layer.WMS("Aree orale", wms,{
-        srs: 'EPSG:3857',
-        layers: ['pdc:aree_orale_poly'],
-        CQL_FILTER: cql,
-        styles: '',
-        format: format,
-        transparent: true
-    },{isBaseLayer: false,singleTile: true, ratio: 1,tileSize: new OpenLayers.Size(256,256)});
-    map.addLayer(aree_orale);
-    aree_orale.setVisibility(false);
-
-    aree_carto = new OpenLayers.Layer.WMS("Aree cartografia", wms,{
-        srs: 'EPSG:3857',
-        layers: ['pdc:aree_carto_poly'],
-        CQL_FILTER: cql,
-        styles: 'cartoAvs',
-        format: format,
-        transparent: true
-    },{isBaseLayer: false,singleTile: true, ratio: 1,tileSize: new OpenLayers.Size(256,256)});
-    map.addLayer(aree_carto);
-    aree_carto.setVisibility(false);
-
-    var s = new OpenLayers.StyleMap({
+    stile = new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({fillOpacity:0,strokeOpacity:0}),
         "select": new OpenLayers.Style({strokeColor: "#1D22CF",strokeWidth:3,fillColor: "#1D22CF", fillOpacity:0.6, graphicZIndex: 2}),
         "active": new OpenLayers.Style({fillColor: "#7578F5", fillOpacity:0.6, graphicZIndex: 2})
     });
-    var hiLy = ["area_int_poly", "area_int_line"]
+    hiLy = ["area_int_poly", "area_int_line"];
     highlightLayer = new OpenLayers.Layer.Vector("Highlighted", {
         strategies: [new OpenLayers.Strategy.BBOX()],
-        styleMap: s,
-        protocol: new OpenLayers.Protocol.WFS({
-            version:     "1.0.0",
-            url:         wfs,
-            featureType: hiLy,
-            featureNS:   "http://localhost/pdc",
-            srsName:     "EPSG:3857",
-            geometryName:"the_geom"
-      })
-  });
-  map.addLayer(highlightLayer);
-
-  actLayer = new OpenLayers.Layer.Vector("Active", {
-        strategies: [new OpenLayers.Strategy.BBOX()],
-        styleMap: s,
-        protocol: new OpenLayers.Protocol.WFS({
-            version:     "1.0.0",
-            url:         wfs,
-            featureType: "area_int_poly",
-            featureNS:   "http://localhost/pdc",
-            srsName:     "EPSG:3857",
-            geometryName:"the_geom",
-            schema:      "http://localhost:8080/geoserver/pdc/wfs?service=WFS&version=1.0.0&request=DescribeFeatureType&TypeName=area_int_poly"
-        })
+        styleMap: stile,
+        protocol: new OpenLayers.Protocol.WFS({version:"1.0.0",url:wfs,featureType:hiLy, featureNS:nameSpace, srsName:"EPSG:3857",geometryName:"the_geom"})
     });
-    map.addLayer(actLayer);
 
-    toponomastica = new OpenLayers.Layer.WMS("Toponomastica", wms,{
-        srs: 'EPSG:3857',
-        layers: ['pdc:toponomastica'],
-        styles: '',
-        format: format,
-        transparent: true
-    },{isBaseLayer: false},{singleTile: true, ratio: 1},{ tileSize: new OpenLayers.Size(256,256)});
-    map.addLayer(toponomastica);
+    actLayer = new OpenLayers.Layer.Vector("Active", {
+        strategies: [new OpenLayers.Strategy.BBOX()],
+        styleMap: stile,
+        protocol: new OpenLayers.Protocol.WFS({version:"1.0.0",url:wfs, featureType:hiLy[0], featureNS:nameSpace, srsName:"EPSG:3857", geometryName:"the_geom",schema: schema+hiLy[0]})
+    });
+
+    map.addLayers([gsat,osm,comuni,catasto1859,catasto1980,aree_biblio,aree_foto,aree_orale,aree_carto,highlightLayer,actLayer,toponomastica]);
 
     listalayer= [aree_biblio, aree_foto, aree_orale,aree_carto];
-
     info = new OpenLayers.Control.WMSGetFeatureInfo({
         url: wms,
         title: 'Informazioni sui livelli interrogati',
@@ -181,17 +64,16 @@ function init() {
         layers: listalayer,
         infoFormat: 'application/vnd.ogc.gml',
         vendorParams: {CQL_FILTER: cql},
-        //vendorParams: {buffer: 10},
         eventListeners: {
             getfeatureinfo: function(event) {
-                var arr = new Array();
-                var arrActive = new Array();
-                var arrArea = new Array();
+                arr = new Array();
+                arrActive = new Array();
+                arrArea = new Array();
                 for (var i = 0; i < event.features.length; i++) {
-                    var feature = event.features[i];
-                    var attributes = feature.attributes;
-                    var id_ai = attributes.id_geom;
-                    var id_area = attributes.id_area;
+                    feature = event.features[i];
+                    attributes = feature.attributes;
+                    id_ai = attributes.id_geom;
+                    id_area = attributes.id_area;
                     arr.push(id_ai);
                     arrArea.push(id_area);
                 }
@@ -206,57 +88,33 @@ function init() {
                         $("#resultContent").html(data);
                     }
                 });
-                console.log(progetto);
-                console.log(arr);
-                console.log(arrArea);
-                console.log(arrActive);
             }
         }
     });
-    map.addControl(info);
-    info.activate();
 
-    var report = function(e) {OpenLayers.Console.log(e.type, e.feature.id);};
+    report = function(e) {OpenLayers.Console.log(e.type, e.feature.id);};
 
-    //Storico navigazione
+    scalebar = new OpenLayers.Control.ScaleBar({div:scalebar});
+    pan = new OpenLayers.Control.DragPan({div:panControl,isDefault: true,title:"Pan"});
+    zoomin = new OpenLayers.Control.ZoomBox({div: zoomControl, title:"Zoom in box",out: false});
     var history = new OpenLayers.Control.NavigationHistory();
+    btnPrev = new OpenLayers.Control.Panel({div:btnPrev, displayClass:"prev"});
+    btnNext = new OpenLayers.Control.Panel({div:btnNext, displayClass:"next"});
+
+    map.addControl(info);
+    map.addControl(scalebar);
+    map.addControl(pan);
+    map.addControl(zoomin);
     map.addControl(history);
-
-    var btnPrev = new OpenLayers.Control.Panel({
-        div: document.getElementById("btnPrev"),
-        displayClass:"prev"
-    });
-
-    var btnNext = new OpenLayers.Control.Panel({
-        div: document.getElementById("btnNext"),
-        displayClass:"next"
-    });
-
     map.addControl(btnPrev);
-    btnPrev.addControls([history.previous]);
     map.addControl(btnNext);
+    btnPrev.addControls([history.previous]);
     btnNext.addControls([history.next]);
 
-    pan = new OpenLayers.Control.DragPan({
-        div: document.getElementById("drag"),
-        isDefault: true,
-        title:"Pan"
-    });
-    map.addControl(pan);
+    info.activate();
     pan.activate();
-
-    zoomin = new OpenLayers.Control.ZoomBox({
-        div: document.getElementById("zoomArea"),
-        title:"Zoom in box",
-        out: false
-    });
-    map.addControl(zoomin);
     zoomin.deactivate();
 
-    var panControl = document.getElementById("drag");
-    var zoomControl = document.getElementById("zoomArea");
-
-    extent = new OpenLayers.Bounds(1216522,5769354,1294374,5813972);
     if (!map.getCenter()) {map.zoomToExtent(extent);}
 } //end init mappa
 
@@ -314,7 +172,6 @@ function toggleToponomastica(){
 }
 function toggle1859(){
     if (catasto1859.getVisibility() == true) {catasto1859.setVisibility(false);}else{catasto1859.setVisibility(true);}
-    if (pergine.getVisibility() == true) {pergine.setVisibility(false);}else{pergine.setVisibility(true);}
 }
 function toggle1980(){
     if (catasto1980.getVisibility() == true) {catasto1980.setVisibility(false);}else{catasto1980.setVisibility(true);}
@@ -403,7 +260,7 @@ $("#drag").click(function(){
 });
 
 $("input[name='projectLayer']").on("change", function(){
-    var v = ($(this).val()==63)?"(progetto = 63 or progetto = 70)":"progetto = 70";
+    v = ($(this).val()==63)?"(progetto = 63 or progetto = 70)":"progetto = 70";
     cql = "hub = 2 AND "+v;
     cqlBiblio = cql;
     cqlFoto = cql;

@@ -2,33 +2,20 @@
 session_start();
 require("inc/db.php");
 if (!isset($_SESSION['id_user'])){$_SESSION['id_user']=0;}
-if($_SESSION['hub']){
-    $hub=$_SESSION['hub'];
-}else{
-    if($_GET['hub']){
-        $hub=$_GET['hub'];
-    }
-}
-
+if($_SESSION['hub']){$hub=$_SESSION['hub'];}else{ if($_GET['hub']){ $hub=$_GET['hub']; }}
 ////  LISTA TOPONIMI PER FUNZIONE ZOOM ////////
 $topoQ="select t.gid, upper(top_nomai) toponimo, upper(comu2) comune, st_X(st_transform((t.geom),3857))||','||st_Y(st_transform((t.geom),3857)) as lonlat from toponomastica t, comuni_bassa c where st_contains(c.geom, st_transform(t.geom,3857)) order by 3,2;";
 $topoR=pg_query($connection,$topoQ);
 $opt="<option value='0'>--zoom su località--</option>";
-while($topo = pg_fetch_array($topoR)){
-    $opt.="<option value='".$topo['lonlat']."'>".$topo['comune']." - ".$topo['toponimo']."</option>";
-}
+while($topo = pg_fetch_array($topoR)){ $opt.="<option value='".$topo['lonlat']."'>".$topo['comune']." - ".$topo['toponimo']."</option>";}
 ?>
 
 <!DOCTYPE html>
 <html lang="it">
     <head>
         <?php require("inc/metatag.php"); ?>
-        <title>Archivio iconografico dei Paesaggi di Comunità':'Le fonti per la storia. Per un archivio delle fonti sulle valli di Primiero e Vanoi</title>
         <link rel="stylesheet" href="css/mappa.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="css/head.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="css/google.css" type="text/css">
         <link rel="stylesheet" href="lib/OpenLayers-2.12/theme/default/style.css" type="text/css">
-        <link rel="stylesheet" href="lib/jquery-ui-lampi/css/humanity/jquery-ui-1.8.18.custom.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" />
         <style>
             h1.switcher{margin-top:20px;}
@@ -38,7 +25,8 @@ while($topo = pg_fetch_array($topoR)){
     <body onload="init()">
         <header id="head"><?php require_once('inc/head.php'); ?></header>
         <div id="map"></div>
-        <div id="pannello"></div>
+        <div id="pannello">
+        </div>
         <div id="drag" class="attivo"></div>
         <div id="zoomArea"></div>
         <div id="zoomMax"></div>
@@ -167,10 +155,11 @@ while($topo = pg_fetch_array($topoR)){
         <script src="https://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
         <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyDMFkI5sKTgbqn4cHBbI7BbDNCbhXEhLkk" type="text/javascript"></script> -->
         <script type="text/javascript" src="lib/jquery.qtip.min-2.0.1.js"></script>
+        <script src="script/varMappa.js"></script>
         <script src="script/webgis.js"></script>
         <script type="text/javascript">
-            var u = <?php echo $_SESSION["id_user"]; ?>;
-            var cql = "hub=2 AND (progetto = 63 or progetto = 70)";
+            u = <?php echo $_SESSION["id_user"]; ?>;
+            cql = "hub=2 AND (progetto = 63 or progetto = 70)";
         </script>
     </body>
 </html>

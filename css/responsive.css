@@ -20,7 +20,7 @@ header#head {
  background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0.2) 100%);
  background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(0,0,0,0.2) 100%);
  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 );
- z-index: 100;
+ z-index: 1000;
 }
 
 .headDiv{display:inline-block;vertical-align:top;}
@@ -110,6 +110,11 @@ footer .wrap{width:85% !important;}
 /*#viewRecDivHead i,*/ .closeModal{position: absolute; cursor: pointer !important; right: 0; top: 0;padding:15px;border:none;background:none;}
 .wrapTable{position:relative;width:100%; height:auto; max-height:600px;margin:10px auto;overflow:auto;}
 #nomeCollezione { position: relative; width: 94%; height: 20px; margin: 3px 9px; display: inline-block;}
+
+section#image{background-image:url('img/icone/loader.gif'); background-repeat: no-repeat; background-position:center center; }
+.labelCheck {display: inline-block; background-color: rgb(230,230,230); color: rgb(136,136,136); border: 1px solid rgb(136,136,136); font-size: 0.8em; padding: 0.3% 1%;}
+input[name='tipoProg']{ width: auto; margin: 2px;}
+
 /* Tablets */
 @media only screen and (min-width:481px) and (max-width:1024px) {
 
