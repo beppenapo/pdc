@@ -1,8 +1,8 @@
 <?php
-$dbhost =  getenv('PDCH');
-$dbusername =  getenv('PDCU');
-$password=  getenv('PDCP');
-$database_name =  getenv('PDCD');
-
-$connection = pg_connect("host=".$dbhost." user=".$dbusername." password=".$password." dbname=$database_name") or die ("Impossibile connettersi al server");
+$dbhost = 'localhost';
+$dbusername = 'pdc';
+$password='pDcdBAdmiN';
+$database_name = 'pdc';
+$port = 5432;
+$connection = pg_connect("host=$dbhost port=$port user=$dbusername password=$password dbname=$database_name") or die ("Impossibile connettersi al server");
 ?>
