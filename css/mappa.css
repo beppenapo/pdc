@@ -2,7 +2,6 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 @import url("reset.css");
 @import url("default.css");
-@import url("../../css/ico-font/css/font-awesome.css");
 @import url("head.css");
 
 html,body{overflow:hidden;}
