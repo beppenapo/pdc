@@ -50,28 +50,28 @@ if($stile == 'fonte orale') {
  $borderContent='borderOrale';
  $bgSez = 'bgSezOrale';
  $bgSezAperto = 'bgSezOraleAperto';
- $styleGeom = 'audio';
+ $styleGeom = 'orale';
 }
 if($stile == 'bibliografica') {
  $logo = 'logoSkBiblio';
  $borderContent='borderBiblio';
  $bgSez = 'bgSezBiblio';
  $bgSezAperto = 'bgSezBiblioAperto';
- $styleGeom = 'biblioAvs';
+ $styleGeom = 'pubblicazioni';
 }
 if($stile == 'fotografica') {
  $logo = 'logoSkFoto';
  $borderContent='borderFoto';
  $bgSez = 'bgSezFoto';
  $bgSezAperto = 'bgSezFotoAperto';
-  $styleGeom = 'fotoAvs';
+  $styleGeom = 'foto';
 }
 if($stile == 'cartografica') {
  $logo = 'logoSkCarto';
  $borderContent='borderCarto';
  $bgSez = 'bgSezCarto';
  $bgSezAperto = 'bgSezCartoAperto';
- $styleGeom = 'cartoAvs';
+ $styleGeom = 'cartografia';
 }
 
 $numSch = $a['numsch'];
@@ -185,7 +185,7 @@ $urlVideo = str_replace("www.youtube.com/embed", "youtu.be", $img);
   #backDiv a{color:#555753;}
   #uploadForm input{margin-top:10px;width:60%;}
   .youtubeLink{color:#578509;text-decoration:none;font-size:11px; padding: 5px;}
-  
+
  </style>
 
 </head>
@@ -260,6 +260,7 @@ $urlVideo = str_replace("www.youtube.com/embed", "youtu.be", $img);
                                     <div id="smallMapPanel">
                                         <a href="#" class="baseButton" id="sat" onclick="mappa.setBaseLayer(gsat)">SAT</a>
                                         <a href="#" class="baseButton" id="osm" onclick="mappa.setBaseLayer(osm)">OSM</a>
+                                        <input type="hidden" id="coord" />
                                     </div>
                                 </div>
                             <?php } if($tpsch!=1){ ?>
@@ -270,7 +271,7 @@ $urlVideo = str_replace("www.youtube.com/embed", "youtu.be", $img);
                                 <?php
                                     if($imgrow > 0) {
                                         if($tpsch!=1){
-                                            echo "<img id='imgSmall' data-f='folder: ".$folder." tpsch: ".$tpsch."' src='../foto/".$folder.$img."' />";
+                                            echo "<img id='imgSmall' data-f='folder: ".$folder." tpsch: ".$tpsch."' src='foto/".$folder.$img."' />";
                                             echo "<div id='panelFoto'>";
                                                 echo "<label id='ingrFoto' scheda='$id'>ingrandisci</label>&nbsp;&nbsp;";
                                                 if($idUsr) {echo"<label id='delFoto' scheda='$id' img='$img'>elimina</label>";}
@@ -409,11 +410,11 @@ $urlVideo = str_replace("www.youtube.com/embed", "youtu.be", $img);
                                         <td>".stripslashes($x['indirizzo'])."</td>
                                         <td>".stripslashes($x['motiv'])."</td>
                                         <td>";
-                                          if ($_SESSION['username']!='guest'){ 
-                                            echo "<a href='#' id='removeArea' class='avviso' title='Rimuovi area' data-id='".$x['id_as']."'><i class='fa fa-times fa-2x'></i></a>"; 
+                                          if ($_SESSION['username']!='guest'){
+                                            echo "<a href='#' id='removeArea' class='avviso' title='Rimuovi area' data-id='".$x['id_as']."'><i class='fa fa-times fa-2x'></i></a>";
                                           }
                                           echo "</td>
-                                        </tr>";}                                   
+                                        </tr>";}
                                     ?>
                                 </tbody>
                             </table>
@@ -932,13 +933,14 @@ $noteana= stripslashes($a['ana_note']); if($noteana== '') {$noteana=$nd;}
  <div id="siFoto" class="login2">SI, procedi con l'eliminazione</div>
 </div>
 
-<?php if($tpsch!=1){?><div id="fotoOrig" style="display:none;"><img src="<?php echo "../foto/".$folder.$img; ?>" /></div><?php } ?>
+<?php if($tpsch!=1){?><div id="fotoOrig" style="display:none;"><img src="<?php echo "foto/".$folder.$img; ?>" /></div><?php } ?>
 
   <script type="text/javascript" src="lib/OpenLayers-2.12/OpenLayers.js"></script>
   <script src="http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false"></script>
   <script type="text/javascript" src="lib/menu.js"></script>
   <script type="text/javascript" src="lib/select.js"></script>
   <script type="text/javascript" src="script/update.js"></script>
+  <script src="script/varMappa.js"></script>
 
 <script type="text/javascript" >
 var hub = '<?php echo($hub); ?>'
@@ -1189,9 +1191,9 @@ $("i").hover(function(){
 <script type="text/javascript">
 var mappa, gsat, aree, linee, arrayOSM, osm;
 var extent, extent2, bound, coo, numPoly, numLine, format, stile, param;
-var bingKey = 'Arsp1cEoX9gu-KKFYZWbJgdPEa8JkRIUkxcPr8HBVSReztJ6b0MOz3FEgmNRd4nM';
-OpenLayers.ProxyHost = "/cgi-bin/proxy.cgi?url=";
-format = 'image/png';
+// var bingKey = 'Arsp1cEoX9gu-KKFYZWbJgdPEa8JkRIUkxcPr8HBVSReztJ6b0MOz3FEgmNRd4nM';
+// OpenLayers.ProxyHost = "/cgi-bin/proxy.cgi?url=";
+// format = 'image/png';
 numPoly = '<?php echo($numPoly); ?>';
 numLine = '<?php echo($numLine); ?>';
 param = '<?php echo($param);?>';
@@ -1211,64 +1213,52 @@ if ((numPoly == 0 && numLine > 0)){
 }
 
 function init() {
- extent = new OpenLayers.Bounds(bound[0], bound[1], bound[2], bound[3]);
- var options = {
-  controls: [
-   new OpenLayers.Control.Navigation(),
-   new OpenLayers.Control.Zoom(),
-  ],
-  resolutions: [156543.03390625, 78271.516953125, 39135.7584765625, 19567.87923828125, 9783.939619140625, 4891.9698095703125, 2445.9849047851562, 1222.9924523925781, 611.4962261962891, 305.74811309814453, 152.87405654907226, 76.43702827453613, 38.218514137268066, 19.109257068634033, 9.554628534317017, 4.777314267158508, 2.388657133579254, 1.194328566789627, 0.5971642833948135, 0.29858214169740677, 0.14929107084870338, 0.07464553542435169, 0.037322767712175846, 0.018661383856087923, 0.009330691928043961, 0.004665345964021981, 0.0023326729820109904, 0.0011663364910054952, 5.831682455027476E-4, 2.915841227513738E-4, 1.457920613756869E-4],
-  maxExtent:new OpenLayers.Bounds (-20037508.34,-20037508.34,20037508.34,20037508.34),
-  units: 'm',
-  projection: new OpenLayers.Projection("EPSG:900913"),
-  displayProjection: new OpenLayers.Projection("EPSG:4326")
- };
-mappa = new OpenLayers.Map('smallMap', options);
+    OpenLayers.ProxyHost = proxy;
+    extent = new OpenLayers.Bounds(bound[0], bound[1], bound[2], bound[3]);
+    options = {
+        controls: controlli,
+        resolutions: risoluzione,
+        maxResolution: 'auto',
+        // maxExtent:new OpenLayers.Bounds (-20037508.34,-20037508.34,20037508.34,20037508.34),
+        units: 'm',
+        projection: proj3857,
+        displayProjection: proj4326
+    };
+    mappa = new OpenLayers.Map('smallMap', options);
 
-gsat = new OpenLayers.Layer.Bing({name: "Aerial",key: bingKey,type: "Aerial"});
-mappa.addLayer(gsat);
+    gsat = new OpenLayers.Layer.Bing({name: "Aerial",key: bingKey,type: "Aerial"});
+    osm = new OpenLayers.Layer.OSM();
+    mappa.addLayers([gsat,osm]);
+    if (numPoly != 0) {
+        aree = new OpenLayers.Layer.WMS("aree",wms,{
+            layers: ['pdc:area_int_poly'],
+            styles: stile,
+            srs: 'EPSG:3857',
+            format: 'image/png',
+            transparent: true,
+            CQL_FILTER: cql
+        },{
+            isBaseLayer: false, tileSize: new OpenLayers.Size(256,256)
+        });
+        mappa.addLayer(aree);
+    }
 
-arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile2.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg", "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg"];
+    if(numLine != 0){
+        linee = new OpenLayers.Layer.WMS("Tracciati",wms,{
+            layers: ['pdc:area_int_line'],
+            //styles: stile+'_linea',
+            srs: 'EPSG:3857',
+            format: 'image/png',
+            transparent: true,
+            CQL_FILTER: cql
+        },{
+            isBaseLayer: false,
+            tileSize: new OpenLayers.Size(256,256)
+        });
+        mappa.addLayer(linee);
+    }
 
-osm = new OpenLayers.Layer.OSM(" MapQuest", arrayOSM, {
- attribution: "Data, imagery and map information provided by <a href='http://www.mapquest.com/'  target='_blank'>MapQuest</a>, <a href='http://www.openstreetmap.org/' target='_blank'>Open Street Map</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/' target='_blank'>CC-BY-SA</a>  <img src='http://developer.mapquest.com/content/osm/mq_logo.png' border='0'>",
- transitionEffect: "resize"
-});
-mappa.addLayer(osm);
-
-var report = function(e) { OpenLayers.Console.log(e.type, e.feature.id); };
-
-if (numPoly != 0) {
- aree = new OpenLayers.Layer.WMS("Aree","http://www.lefontiperlastoria.it:80/geoserver/fonti/wms",{
-  layers: 'fonti:area_int_poly',
-  styles: stile,
-  srs: 'EPSG:3857',
-  format: 'image/png',
-  transparent: true,
-  CQL_FILTER: cql
-},{isBaseLayer: false, tileSize: new OpenLayers.Size(256,256)
-});
- mappa.addLayer(aree);
-}
-
-if(numLine != 0){
- linee = new OpenLayers.Layer.WMS("Tracciati","http://www.lefontiperlastoria.it:80/geoserver/fonti/wms",{
-	layers: 'fonti:area_int_line',
-	//styles: stile+'_linea',
-	srs: 'EPSG:3857',
-	format: 'image/png',
-	transparent: true,
-	CQL_FILTER: cql
-
-},{
-	isBaseLayer: false,
-	tileSize: new OpenLayers.Size(256,256)
-});
- mappa.addLayer(linee);
-}
-
-if (!mappa.getCenter()) {mappa.zoomToExtent(extent);}
-
+    if (!mappa.getCenter()) {mappa.zoomToExtent(extent);}
 }
 </script>
 </body>
